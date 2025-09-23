@@ -65,28 +65,30 @@
         'SCRIPT_FILENAME'
         'REQUEST_URI'
         Prueba un volcado con var_dump($_SERVER) y también con
-        print_r($_SERVER). ¿Cuál es la diferencia?*/
-        
-        echo "<br><br>Información de \$_SERVER:<br>";
+        print_r($_SERVER). ¿Cuál es la diferencia? usar foreach*/
+        echo "<br><br>Valores específicos de \$_SERVER:<br>";
+        $claves = [
+            'DOCUMENT_ROOT',
+            'PHP_SELF',
+            'SERVER_NAME',
+            'SERVER_SOFTWARE',
+            'SERVER_PROTOCOL',
+            'HTTP_HOST',
+            'HTTP_USER_AGENT',
+            'REMOTE_ADDR',
+            'REMOTE_PORT',
+            'SCRIPT_FILENAME',
+            'REQUEST_URI'
+        ];
         echo "<ul>";
-        echo "<li>DOCUMENT_ROOT: ".$_SERVER['DOCUMENT_ROOT']."</li>";
-        echo "<li>PHP_SELF: ".$_SERVER['PHP_SELF']."</li>";
-        echo "<li>SERVER_NAME: ".$_SERVER['SERVER_NAME']."</li>";
-        echo "<li>SERVER_SOFTWARE: ".$_SERVER['SERVER_SOFTWARE']."</li>";
-        echo "<li>SERVER_PROTOCOL: ".$_SERVER['SERVER_PROTOCOL']."</li>";
-        echo "<li>HTTP_HOST: ".$_SERVER['HTTP_HOST']."</li>";
-        echo "<li>HTTP_USER_AGENT: ".$_SERVER['HTTP_USER_AGENT']."</li>";
-        echo "<li>REMOTE_ADDR: ".$_SERVER['REMOTE_ADDR']."</li>";
-        echo "<li>REMOTE_PORT: ".$_SERVER['REMOTE_PORT']."</li>";
-        echo "<li>SCRIPT_FILENAME: ".$_SERVER['SCRIPT_FILENAME']."</li>";
-        echo "<li>REQUEST_URI: ".$_SERVER['REQUEST_URI']."</li>";
+        foreach ($claves as $clave) {
+            if (isset($_SERVER[$clave])) {
+                echo "<li>$clave: " . $_SERVER[$clave] . "</li>";
+            } else {
+                echo "<li>$clave: No disponible</li>";
+            }
+        }
         echo "</ul>";
-
-        echo "<br>Volcado con var_dump(\$_SERVER):<br>";
-        var_dump($_SERVER);
-
-        echo "<br><br>Volcado con print_r(\$_SERVER):<br>";
-        print_r($_SERVER);
 
         echo "<br><br>La diferencia entre var_dump() y print_r() es que var_dump() proporciona información detallada sobre el tipo y el valor de cada elemento, mientras que print_r() ofrece una representación más legible pero menos detallada.";    
             
@@ -135,6 +137,88 @@
             echo "<li>".$dia.": ".$temp."°C</li>";
         }
         echo "</ol>";
+    ?>
+    <table border="1">
+        <tr>
+            <th>Día</th>
+            <th>Temperatura Máxima (°C)</th>
+        </tr>
+        <?php
+            foreach (TEMP_MAX_SEMANA as $dia => $temp) {
+                echo "<tr><td>$dia</td><td>$temp</td></tr>";
+            }
+        ?>
+
+    <?php  
+        /*7- Calcula la nota final de una persona a partir de la media de dos notasnuméricas iniciales, y descontando 0.25 por cada falta sin justificar. 
+        Muestra el resultado por pantalla, indicando si la persona aprueba o suspende.*/
+        $iNotaMates = 8.7;
+        $iNotaLeng = 7.5;     
+        $iFaltas = 3; //Faltas sin justificar
+        $fNotaFinal = ($iNotaMates + $iNotaLeng) / 2 - ($iFaltas * 0.25);
+        echo "<br>Nota final: ".$fNotaFinal."<br>";
+        if ($fNotaFinal >= 5) {
+            echo "<br>FELICIDADES ESTAS APROBADO<br>";
+        }else {
+            echo "<br>LO SIENTO, ESTAS SUSPENDIDO<br>";
+        }
+        /*8- Crea en un script PHP dos arrays asociativos paralelos, uno con la rúbrica de 4 calificaciones (inicial, primera, segunda y tercera) y otro con las notas particulares de una persona. A continuación, computará la nota final de esa persona, y muéstrala por pantalla.*/
+        $aRubrica = [
+            "inicial" => 0.1,
+            "primera" => 0.25,
+            "segunda" => 0.25,
+            "tercera" => 0.4
+        ];
+        $aNotas = [
+            "inicial" => 6.0,
+            "primera" => 7.5,
+            "segunda" => 8.0,
+            "tercera" => 9.0
+        ];
+        $fNotaFinal = 0.0;
+        foreach ($aRubrica as $clave => $peso) {
+            if (isset($aNotas[$clave])) {
+                $fNotaFinal += $aNotas[$clave] * $peso;
+            }
+        }
+        echo "<br>Nota final computada: ".$fNotaFinal."<br>";
+        /*9- En un programa PHP, valora a partir de los 3 lados de un triángulo si es equilátero, isósceles y escaleno, y muestra esa valoración por pantalla*/
+            $lado1 = 5;
+            $lado2 = 5;
+            $lado3 = 5;
+            if ($lado1 == $lado2 and $lado2 == $lado3) {
+                echo "<br>El triángulo es equilátero<br>";
+            } elseif ($lado1 == $lado2 or $lado1 == $lado3 or $lado2 == $lado3) {
+                echo "<br>El triángulo es isósceles<br>";
+            } else {
+                echo "<br>El triángulo es escaleno<br>";
+            }
+
+        /*10- Haz un programa PHP que resuelva una ecuación de segundo grado siempre que los resultados sean reales*/
+        $a = 1;
+        $b = -4;
+        $c = 2;
+
+        $radical = $b ** 2  - 4 * $a * $c;
+
+        if ($radical < 0) {
+            echo "Las raices no son reales";
+        } else {
+            $x1 = (- $b + sqrt($radical)) / (2 * $a);
+            $x2 = (- $b - sqrt($radical)) / (2 * $a);
+            echo "<br>Las raices son reales:<br>";
+            echo "x1 = ".$x1."<br>";
+            echo "x2 = ".$x2."<br>";
+        }
+        /*11- Haz un script PHP que calcule el factorial de un número natural*/
+        
+        /*12- Haz un programa PHP que calcule la suma de los n primeros números naturales*/
+        
+        /*13- Haz un script en PHP que calcule la división de dos números naturales utilizando el algoritmo de Euclides para la división*/
+        
+        /*14- Haz un programa en PHP que calcule el máximo común divisor de dos números naturales utilizando el algoritmo de Euclides*/
+        
+        /*15- Haz un script PHP en el que conviertas en binario un número natural*/
     ?>
 </body>
 </html>

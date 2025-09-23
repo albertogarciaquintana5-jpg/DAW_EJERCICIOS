@@ -158,30 +158,4 @@ if (iNum_ejer == 9):
     #g. Plaquetas: más de 150.000 cc
     #h. Proteínas totales: más de 6 gr/dl.
 if (iNum_ejer == 10):
-    sAyunas = input("¿Viene en ayunas? (si/no): ")
-    iEdad = int(input("Introduzca su edad: "))
-    fPeso = float(input("Introduzca su peso (kg): "))
-    iTensionDiastolica = int(input("Introduzca su tension diastolica (mm Hg): "))
-    iTensionSistolica = int(input("Introduzca su tension sistolica (mm Hg): "))
-    iPulso = int(input("Introduzca su pulso (pulsaciones por minuto): "))
-    fHemoglobina = float(input("Introduzca su nivel de hemoglobina (g/l): "))
-    iPlaquetas = int(input("Introduzca su nivel de plaquetas (cc): "))
-    fProteinasTotales = float(input("Introduzca su nivel de proteinas totales (gr/dl): "))
-    if (sAyunas == "si"):
-        print("No puede donar sangre. No debe venir en ayunas.")
-    elif (iEdad < 18) or (iEdad > 65):
-        print("No puede donar sangre. Edad no permitida.")
-    elif (fPeso <= 50):
-        print("No puede donar sangre. Peso insuficiente.")
-    elif (iTensionDiastolica < 50) or (iTensionDiastolica > 100) or (iTensionSistolica < 90) or (iTensionSistolica > 180):
-        print("No puede donar sangre. Tension arterial fuera de limites adecuados.")
-    elif (iPulso < 50) or (iPulso > 110):
-        print("No puede donar sangre. Pulso fuera de limites adecuados.")
-    elif (fHemoglobina <= 13.5):
-        print("No puede donar sangre. Nivel de hemoglobina insuficiente.")
-    elif (iPlaquetas <= 150000):
-        print("No puede donar sangre. Nivel de plaquetas insuficiente.")
-    elif (fProteinasTotales <= 6):
-        print("No puede donar sangre. Nivel de proteinas totales insuficiente.")
-    else:
-        print("Puede donar sangre.")
+    sAyuna = input("Esta usted")
