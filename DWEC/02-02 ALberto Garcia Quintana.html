@@ -1,0 +1,340 @@
+
+<!-- ALberto Garcia Quintana-->
+
+<!-- ¿Qué etiqueta se utiliza para insertar código JavaScript en HTML?
+La etiqueta que se utiliza para insertar código JavaScript en HTML es <script>. -->
+
+<!-- ¿Qué ventajas tiene incrustar el código JavaScript en un archivo externo?
+Las ventajas de usar archivos JavaScript externos son:
+- Mejora el mantenimiento del código.
+- Permite la reutilización del script en múltiples páginas.
+- Reduce el tamaño del archivo HTML.
+- Mejora la velocidad de carga al permitir el almacenamiento en caché del archivo .js. -->
+
+<!-- ¿Qué extensión suelen tener los archivos que contienen código JavaScript?
+La extensión habitual de los archivos que contienen código JavaScript es .js. -->
+
+<!-- ¿Cómo se referencia un archivo .js en HTML?
+Un archivo .js se referencia en HTML mediante la etiqueta <script> con el atributo src, por ejemplo:
+<script src="archivo.js"></script> -->
+
+<!-- ¿Qué debe hacer si el archivo JavaScript se encuentra en otro directorio?
+Debe especificar la ruta correcta relativa o absoluta al archivo en el atributo src. Por ejemplo:
+<script src="js/scripts/archivo.js"></script> -->
+
+<!-- ¿Qué etiqueta se usa para mostrar un mensaje si el navegador no soporta JavaScript?
+Se utiliza la etiqueta <noscript>. El contenido dentro de esta etiqueta se muestra solo si el navegador no tiene habilitado JavaScript.
+Ejemplo:
+<noscript>Tu navegador no soporta JavaScript.</noscript> -->
+
+<!-- ¿Qué diferencia hay al insertar JavaScript en XHTML?
+En XHTML, el JavaScript debe estar encerrado en comentarios CDATA para evitar conflictos con el analizador XML. Ejemplo:
+<script type="text/javascript">
+//<![CDATA[
+   // código JavaScript
+//]]>
+</script> -->
+
+<!-- ¿Qué es la ofuscación de código y por qué se utiliza?
+La ofuscación de código consiste en modificar el código fuente para hacerlo difícil de leer o entender, sin alterar su funcionalidad. Se utiliza como una medida de seguridad para proteger el código de copias, ingeniería inversa o modificaciones no autorizadas. -->
+
+<!-- ¿Cómo se llama el lenguaje que se menciona en el texto?
+El lenguaje que se menciona es JavaScript. -->
+
+<!-- ¿Qué nombre le dio Microsoft a JavaScript?
+Microsoft llamó a su versión de JavaScript: JScript. -->
+
+<!-- ¿Por qué Microsoft usó el nombre JScript?
+Microsoft utilizó el nombre JScript porque JavaScript era una marca registrada de Netscape, y necesitaban un nombre distinto para su propia implementación del lenguaje. -->
+
+<!-- ¿Qué problema surgió con la versión de JScript de Microsoft?
+El problema fue la falta de compatibilidad entre JScript y JavaScript, lo que causaba que los scripts funcionaran de forma diferente en distintos navegadores, dificultando el desarrollo web multiplataforma. -->
+
+<!-- ¿Qué es el DOM y por qué fue diseñado?
+El DOM (Document Object Model) es una interfaz de programación que representa los documentos HTML y XML como una estructura de objetos. Fue diseñado para permitir a los lenguajes de programación acceder y manipular dinámicamente el contenido, la estructura y el estilo de los documentos web. -->
+
+<!-- ¿Qué navegadores incorporaron el DOM desde su primera versión?
+Los navegadores que incorporaron el DOM desde su primera versión fueron Internet Explorer y Netscape, aunque con implementaciones diferentes, lo que dificultaba la compatibilidad. -->
+
+<!-- ¿Qué estándar regula el lenguaje JavaScript desde 1997?
+Desde 1997, el lenguaje JavaScript está regulado por el estándar ECMAScript, desarrollado por ECMA International. -->
+
+<!-- ¿Qué documento detalla las especificaciones del estándar ECMA?
+El documento que detalla las especificaciones del estándar ECMA es el ECMA-262. -->
+
+<!-- ¿Qué relación tiene JavaScript con Java?
+JavaScript y Java son lenguajes distintos. La relación entre ambos es más comercial que técnica. El nombre "JavaScript" fue elegido por razones de marketing para aprovechar la popularidad de Java en ese momento, aunque sus estructuras y objetivos son diferentes. -->
+
+<!-- ¿Quién desarrolló originalmente JavaScript y con qué nombre?
+JavaScript fue desarrollado originalmente por Brendan Eich en 1995 mientras trabajaba para Netscape. Inicialmente, el lenguaje se llamó Mocha, luego LiveScript, y finalmente JavaScript. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!--alert para enseñar el mensaje holamundo, En el alert un archivo y declara varias variables en una sola linea que caracteres y nombres  están prohibidos como nombre de variables-->
+<script>
+    alert("Hola Mundo");
+    var nombre, edad, _direccion, $telefono; // Nombres válidos
+    // var 1nombre, -edad, @direccion; // Nombres inválidos
+    // Caracteres prohibidos: espacios, guiones, símbolos especiales (excepto _ y $), números al inicio
+    console.log("Variables declaradas: ", nombre, edad, _direccion, $telefono);
+</script>
+
+<!--Crea un ejemplo para cada tipos de datos  (Crea una tabla en html5 en el documento htm)
+
+Cadena
+
+
+Número
+
+
+Boolean
+
+
+Null
+
+
+Object
+
+
+arrays
+
+
+Function-->
+<table border="1">
+    <tr>
+        <th>Tipo de Dato</th>
+        <th>Ejemplo</th>
+    </tr>
+    <tr>
+        <td>Cadena</td>
+        <td>"Hola Mundo"</td>
+    </tr>
+    <tr>
+        <td>Número</td>
+        <td>42</td>
+    </tr>
+    <tr>
+        <td>Boolean</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>Null</td>
+        <td>null</td>
+    </tr>
+    <tr>
+        <td>Object</td>
+        <td>{nombre: "Juan", edad: 30}</td>
+    </tr>
+    <tr>
+        <td>Array</td>
+        <td>[1, 2, 3, 4, 5]</td>
+    </tr>
+    <tr>
+        <td>Function</td>
+        <td>function saludar() { return "Hola"; }</td>
+    </tr>
+
+<!--Usa la función  typeof para mostrar el tipo de los códigos -->
+
+    <tr>
+        <td>typeof "Hola Mundo"</td>
+        <td>string</td>
+    </tr>
+    <tr>
+        <td>typeof 42</td>
+        <td>number</td>
+    </tr>
+    <tr>
+        <td>typeof true</td>
+        <td>boolean</td>
+    </tr>
+    <tr>
+        <td>typeof null</td>
+        <td>object (esto es un error histórico en JavaScript)</td>
+    </tr>
+    <tr>
+        <td>typeof {nombre: "Juan", edad: 30}</td>
+        <td>object</td>
+    </tr>
+    <tr>
+        <td>typeof [1, 2, 3, 4, 5]</td>
+        <td>object (los arrays son un tipo especial de objeto)</td>
+    </tr>
+    <tr>
+        <td>typeof function saludar() { return "Hola"; }</td>
+        <td>function</td>
+    </tr>
+
+
+<!--Ejecuta estos datos y muestralos en un documento htm
+var a=true;
+var b=hola;
+var c=1;
+
+4+4
+
+
+"4"+ 4
+
+
+a+c
+
+
+b+c
+
+
+ 2.9e3+1
+
+
+ 2.9e3 + b 
+
+
+ 2.9e3 + a -->
+    <tr>
+        <td>4 + 4</td>
+        <td>8</td>
+    </tr>
+    <tr>
+        <td>"4" + 4</td>
+        <td>"44"</td>
+    </tr>
+    <tr>
+        <td>true + 1</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>hola + 1</td>
+        <td>NaN (Not a Number)</td>
+    </tr>
+    <tr>
+        <td>2.9e3 + 1</td>
+        <td>2901</td>
+    </tr>
+    <tr>
+        <td>2.9e3 + hola</td>
+        <td>NaN (Not a Number)</td>
+    </tr>
+    <tr>
+        <td>2.9e3 + true</td>
+        <td>2901</td>
+    </tr>
+
+
+
+
+<!--Usa la función  parseFloat y  parseInt para convertir explícitamente los valores   2.9e3,  30.1e-3, 0,000000004 , 0,6, 3000000 , 301231000-->
+    <tr>
+        <td>parseFloat(2.9e3)</td>
+        <td>2900</td>
+    </tr>
+    <tr>
+        <td>parseFloat(30.1e-3)</td>
+        <td>0.0301</td>
+    </tr>
+    <tr>
+        <td>parseFloat(0.000000004)</td>
+        <td>4e-9</td>
+    </tr>
+    <tr>
+        <td>parseFloat(0.6)</td>
+        <td>0.6</td>
+    </tr>
+    <tr>
+        <td>parseFloat(3000000)</td>
+        <td>3000000</td>
+    </tr>
+    <tr>
+        <td>parseFloat(301231000)</td>
+        <td>301231000</td>
+    </tr>
+    <tr>
+        <td>parseInt(2.9e3)</td>
+        <td>2900</td>
+    </tr>
+    <tr>
+        <td>parseInt(30.1e-3)</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>parseInt(0.000000004)</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>parseInt(0.6)</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>parseInt(3000000)</td>
+        <td>3000000</td>
+    </tr>
+    <tr>
+        <td>parseInt(301231000)</td>
+        <td>301231000</td>
+    </tr>
+
+<!--Usa la función length para hallar el tamaño de las cadenas "123456" , -->
+    <tr>
+        <td>"123456".length</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>"Hola Mundo".length</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>"JavaScript".length</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>"".length</td>
+        <td>0</td>
+    </tr>
+
+<!--Declara varias variables con const e intenta cambiarlas y visualizalas con un alert que pasa? -->
+    <tr>
+        <td>const PI = 3.14; PI = 3.14159;</td>
+        <td>Error: Assignment to constant variable.</td>
+    </tr>
+    <tr>
+        <td>const NOMBRE = "Juan"; NOMBRE = "Pedro";</td>
+        <td>Error: Assignment to constant variable.</td>
+    </tr>
+
+<!--Declara varias variables con var dentro de un bloque if al principio e  intenta acceder a ellas para mostrarlas dentro del bloque y fuera del bloque con un alert que pasa? -->
+    <tr>
+        <td>
+            if (true) { var x = 10; } alert(x);
+        </td>
+        <td>10 (var tiene alcance de función, no de bloque)</td>
+    </tr>
+    <tr>
+        <td>
+            if (true) { var y = 20; } alert(y);
+        </td>
+        <td>20 (var tiene alcance de función, no de bloque)</td>
+    </tr>
+
+<!--Realiza el mismo ejercicio anterior pero con varias variables con let dentro de un bloque if . Se pueden ver el contenido de las variables. -->
+    <tr>
+        <td>
+            if (true) { let a = 10; } alert(a);
+        </td>
+        <td>Error: a is not defined (let tiene alcance de bloque)</td>
+    </tr>
+    <tr>
+        <td>
+            if (true) { let b = 20; } alert(b);
+        </td>
+        <td>Error: b is not defined (let tiene alcance de bloque)</td>
+    </tr>   
+
+
+    
+</body>
+</html>
+
