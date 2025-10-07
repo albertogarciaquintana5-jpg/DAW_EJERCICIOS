@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h1 class="text-center"> 02-08 JS BUCLES</h1>
+      <table border="1" style="background-color: orangered;">
+         <tr style="background-color: orangered;">
+               <td>Nombre</td>
+               <td>Apellidos</td>
+               <td>Fecha</td>
+               <td>Curso</td>
+         </tr>
+         <tr style="background-color: orangered;">
+               <td>ALberto</td>
+               <td>Garcia Quintana</td>
+               <td>03/10/2025</td>
+               <td>DWEC</td>
+         </tr>
+ 
+    <!--Ejercicio 1 Escribir un programa que pida al usuario una palabra y la muestre por pantalla 10 veces con for -->
+    <script>
+      let iNumEjercicio = prompt("introduce el ejercicio que desee ejecutar. Del 1 al 14.");
+
+      if (iNumEjercicio == 1) {
+         let sPalabra = prompt("Introduce su nombre: ");
+         for (let i = 0; i < 10; i++) {
+         document.write("Hola " + sPalabra + "<br>");
+         
+         }
+      }
+      
+   
+
+   //Ejercicio 2 Escribir un programa que pregunte al usuario su edad y muestre por pantalla todos los años que ha cumplido (desde 1 hasta su edad). (while) -->
+   if (iNumEjercicio == 2) {
+      let iEdad = prompt("Introduce tu edad: ");
+      let i = 1;
+      while (i <= iEdad) {
+         document.write("Has cumplido " + i + " años<br>");
+         i++;
+         
+      }
+   }
+    
+
+   //Ejercicio 3 Escribir un programa que pida al usuario un número entero positivo y muestre por pantalla todos los números impares desde 1 hasta ese número separados por comas.-->
+   if (iNumEjercicio == 3) {
+      let iNum = prompt("Introduce un numero entero positivo: ");
+
+      if (iNum < 0) {
+         document.write("El numero introducido no es positivo");
+         iNum = prompt("Introduce un numero entero positivo: ");
+         
+      }
+      for (let i = 1; i <= iNum; i+=2) {
+         document.write(i + ",");
+         
+      }
+   }
+
+   //Ejercicio 4 Escribir un programa que pida al usuario un número entero positivo y muestre por pantalla la cuenta atrás desde ese número hasta cero separados por comas.-->
+   if (iNumEjercicio == 4) {
+      let iNum = prompt("Introduce un numero entero positivo: ");
+
+      if (iNum < 0) {
+         document.write("El numero introducido no es positivo");
+         iNum = prompt("Introduce un numero entero positivo: ");
+         
+      }
+      for (let i = iNum; i >= 0; i--) {
+         document.write(i + ",");
+         
+      }
+   }
+
+   //Ejercicio 5 Escribir un programa que pregunte al usuario una cantidad a invertir, el interés anual y el número de años, y muestre por pantalla el capital obtenido en la inversión cada año que dura la inversión.-->
+   if (iNumEjercicio == 5) {
+      let iCantidad = prompt("Introduce la cantidad a invertir: ");
+      let iInteres = prompt("Introduce el interes anual: ");
+      let iAnios = prompt("Introduce el numero de años: ");
+
+      for (let i = 1; i <= iAnios; i++) {
+         iCantidad = iCantidad + (iCantidad * iInteres / 100);
+         document.write("El capital obtenido en el año " + i + " es de: " + iCantidad + "<br>");
+         
+      }
+   }
+
+   /*Ejercicio 6 Escribir un programa que pida al usuario un número entero y muestre por pantalla un triángulo rectángulo como el de más abajo, de altura el número introducido.
+*
+**
+***
+****
+*****
+*/
+   if (iNumEjercicio == 6) {
+      let iNum = prompt("Introduce un numero entero positivo: ");
+
+      if (iNum < 0) {
+         document.write("El numero introducido no es positivo");
+         iNum = prompt("Introduce un numero entero positivo: ");
+         
+      }
+      for (let i = 1; i <= iNum; i++) {
+         for (let j = 1; j <= i; j++) {
+            document.write("*");
+            
+         }
+         document.write("<br>");
+         
+      }
+   }
+
+
+   // Ejercicio 7 Escribir un programa que muestre por pantalla la tabla de multiplicar del 1 al 10.-->
+   if (iNumEjercicio == 7) {
+      for (let i = 1; i <= 10; i++) {
+         document.write("Tabla del " + i + "<br>");
+         for (let j = 1; j <= 10; j++) {
+            document.write(i + " x " + j + " = " + (i * j) + "<br>");
+            
+         }
+         document.write("<br>");
+         
+      }
+   }
+
+
+   /* Ejercicio 8 Escribir un programa que pida al usuario un número entero y muestre por pantalla un triángulo rectángulo como el de más abajo.
+1
+3 1
+5 3 1
+7 5 3 1
+9 7 5 3 1
+*/
+   if (iNumEjercicio == 8) {
+      let iNum = prompt("Introduce un numero entero positivo: ");
+
+      if (iNum < 0) {
+         document.write("El numero introducido no es positivo");
+         iNum = prompt("Introduce un numero entero positivo: ");
+         
+      } else{
+         for (let i = 1; i <= iNum; i+=2) {
+            for (let j = i; j >= 1; j-=2) {
+               document.write(j + " ");
+            
+            }
+            document.write("<br>");
+         
+         }
+         
+      }
+
+
+   }
+
+
+   //Ejercicio 9 Escribir un programa que almacene la cadena de caracteres contraseña en una variable, pregunte al usuario por la contraseña hasta que introduzca la contraseña correcta.-->
+   if (iNumEjercicio == 9) {
+      let sContrasena = "contraseña";
+      let sContrasenaUsuario = prompt("Introduce la contraseña: ");
+
+      while (sContrasenaUsuario != sContrasena) {
+         sContrasenaUsuario = prompt("Contraseña incorrecta. Introduce la contraseña: ");
+         
+      }
+      document.write("Contraseña correcta");
+   }
+
+   //Ejercicio 10 Escribir un programa que pida al usuario un número entero y muestre por pantalla si es un número primo o no.-->
+   if (iNumEjercicio == 10) {
+      let iNum = prompt("Introduce un numero entero positivo: ");
+      let bEsPrimo = true;
+
+      if (iNum < 0) {
+         document.write("El numero introducido no es positivo");
+         iNum = prompt("Introduce un numero entero positivo: ");
+         
+      }
+
+      for (let i = 2; i <= Math.sqrt(iNum); i++) {
+         if (iNum % i == 0) {
+            bEsPrimo = false;
+            break;
+            
+         }
+         
+      }
+
+      if (bEsPrimo) {
+         document.write(iNum + " es un numero primo");
+         
+      } else {
+         document.write(iNum + " no es un numero primo");
+         
+      }
+   }
+
+   //Ejercicio 11 Escribir un programa que pida al usuario una palabra y luego muestre por pantalla una a una las letras de la palabra introducida empezando por la última.-->
+   if (iNumEjercicio == 11) {
+      let sPalabra = prompt("Introduce una palabra: ");
+      
+      for (let i = sPalabra.length - 1; i >= 0; i--) {
+         document.write(sPalabra.charAt(i) + "<br>");
+         
+      }
+   }
+    
+   //Ejercicio 12 Escribir un programa en el que se pregunte al usuario por una frase y una letra, y muestre por pantalla el número de veces que aparece la letra en la frase.-->
+   if (iNumEjercicio == 12) {
+      let sFrase = prompt("Introduce una frase: ");
+      let sLetra = prompt("Introduce una letra: ");
+      let iContador = 0;
+
+      for (let i = 0; i < sFrase.length; i++) {
+         if (sFrase.charAt(i) == sLetra) {
+            iContador++;
+            
+         }
+         
+      }
+      document.write("La letra " + sLetra + " aparece " + iContador + " veces en la frase.");
+   }
+
+   //Ejercicio 13 Escribir un programa que muestre el eco de todo lo que el usuario introduzca hasta que el usuario escriba “salir” que terminará.-->
+   if (iNumEjercicio == 13) {
+      let sFrase = prompt("Introduce una frase (escribe 'salir' para terminar): ");
+
+      while (sFrase.toLowerCase() != "salir") {
+         document.write(sFrase + "<br>");
+         sFrase = prompt("Introduce una frase (escribe 'salir' para terminar): ");
+         
+      }
+      document.write("Has salido del programa.");
+   }
+
+   //Ejercicio 14 Escribir un programa que pregunte al usuario una cantidad a pedir, el interés anual y el número de años en el que lo amortizara, y muestre por pantalla las cuotas pagadas durante cada años suponiendo que actualizan los intereses cada año.-->
+   if (iNumEjercicio == 14) {
+      let iCantidad = prompt("Introduce la cantidad a pedir: ");
+      let iInteres = prompt("Introduce el interes anual: ");
+      let iAnios = prompt("Introduce el numero de años: ");
+      let iCuota = iCantidad / iAnios;
+
+      for (let i = 1; i <= iAnios; i++) {
+         iCantidad = iCantidad + (iCantidad * iInteres / 100);
+         document.write("La cuota pagada en el año " + i + " es de: " + (iCuota + (iCantidad * iInteres / 100)) + "<br>");
+         iCantidad -= iCuota;
+         
+      }
+   }
+
+   </script> 
+</body>
+</html>
