@@ -11,7 +11,12 @@
 <input type="number" name="Num" id="numInput" min="1" max="27">
 <button onclick="comprobarEjercicio()">Comprobar</button>
 
-<div id="resultado"></div>
+
+<div id="resultado">
+    <h3>Aqui el resultado</h3>
+</div>
+
+
 
 <script>
 function comprobarEjercicio() {
@@ -33,58 +38,67 @@ function comprobarEjercicio() {
     }
     
     if (iEjercicio === 2) {
-        let xFechaNacfake = prompt("Introduzca su fecha de nacimiento");
-        let xFechaNactrue = prompt("¿Perdon en que año fue? ");
+    let xFechaNacfake = prompt("Introduzca su fecha de nacimiento");
+    let xFechaNactrue = prompt("¿Perdón, en qué año fue?");
+    
+    let mensaje = "";
 
+    if (!xFechaNacfake || !xFechaNactrue) {
+        mensaje = "Se te olvidó rellenarlos";
+    } else {
         let iFechaNactrue = parseInt(xFechaNactrue);
         let iAñoActual = new Date().getFullYear();
+        let iEdadcal = iAñoActual - iFechaNactrue;
 
-        let iEdadcal =  iAñoActual - iFechaNactrue;
-
-        let mensaje = (iEdadcal < 18) ? "Eres menor de edad" : "Fuera esto es pa niños";
-
-        if (xFechaNacfake.isBlank() && xFechaNactrue.isBlank() ) {
-             let mensaje = "Se te olvido reyenarlos";
+        if (isNaN(iFechaNactrue)) {
+            mensaje = "Por favor, introduce un año válido.";
+        } else if (iEdadcal < 18) {
+            mensaje = "Eres menor de edad";
+        } else {
+            mensaje = "Fuera, esto es pa' niños";
         }
-
-        resultado.innerHTML = `
-            <h1>${mensaje}</h1>
-            <button onclick="comprobarEjercicioPorNumero(1)">Anterior ejercicio el 1</button>
-            <button onclick="comprobarEjercicioPorNumero(3)">Siguiente ejercicio el 3</button>
-        `;
     }
+
+    resultado.innerHTML = `
+        <h1><strong>${mensaje}</strong></h1>
+        <button onclick="comprobarEjercicioPorNumero(1)">Anterior ejercicio el 1</button>
+        <button onclick="comprobarEjercicioPorNumero(3)">Siguiente ejercicio el 3</button>
+    `;
+}
+
 
     //crea un programa que lea tu fecha de nacimiento y te diga si eres menor de edad  (<18) o en edad activa (>=18)
     if (iEjercicio === 3) {
         let xFechaNacfake = prompt("Introduzca su fecha de nacimiento");
         let xFechaNactrue = prompt("¿Perdon en que año fue? ");
+        let mensaje = "";
 
         let iFechaNactrue = parseInt(xFechaNactrue);
         let iAñoActual = new Date().getFullYear();
 
         let iEdadcal =  iAñoActual - iFechaNactrue;
-
-        if (xFechaNacfake.isBlank() && xFechaNactrue.isBlank() ) {
-            let mensaje = "Se te olvido reyenarlos";
-        }
         
-        if (iEdadcal < 18) {
-           let mensaje = "Eres menor de edad";
+        if (isNaN(iFechaNactrue)) {
+            mensaje = "Por favor, introduce un año válido.";
+        } else if (iEdadcal < 18) {
+           mensaje = "Eres menor de edad";
         } else if (iEdadcal >= 18) {
-           let mensaje = "Eres mayor de edad";
+           mensaje = "Eres mayor de edad";
         }
 
         resultado.innerHTML = `
             <h1>${mensaje}</h1>
-            <button onclick="comprobarEjercicioPorNumero(2)">Anterior ejercicio el 1</button>
-            <button onclick="comprobarEjercicioPorNumero(4)">Siguiente ejercicio el 3</button>
+            <button onclick="comprobarEjercicioPorNumero(2)">Anterior ejercicio el 2</button>
+            <button onclick="comprobarEjercicioPorNumero(4)">Siguiente ejercicio el 4</button>
         `;
+
     }
 
 //crea un programa que lea tu fecha de nacimiento y te diga si eres menor de edad (<18)  ,  en edad activa (>=18) o jubilado (>67)
         if (iEjercicio === 4) {
             let xFechaNacfake = prompt("Introduzca su fecha de nacimiento");
             let xFechaNactrue = prompt("¿Perdon en que año fue? ");
+            let mensaje = "";
 
             let iFechaNactrue = parseInt(xFechaNactrue);
             let iAñoActual = new Date().getFullYear();
@@ -92,53 +106,423 @@ function comprobarEjercicio() {
             let iEdadcal =  iAñoActual - iFechaNactrue;
         
             if (iEdadcal < 18) {
-                let mensaje = "Eres menor de edad"
+                mensaje = "Eres menor de edad"
             } else if (iEdadcal >= 18 && iEdadcal  < 67) {
-                let mensaje = "Eres mayor de edad";
+                mensaje = "Eres mayor de edad";
             } else if (iEdadcal >= 67){
-                let mensaje = "!Felicidades estas jubilado¡";
+                mensaje = "!Felicidades estas jubilado¡";
             }else {
-                "<h1>"+"Recarga la pagina y hazlo bien"+"</h1>"
+                mensaje = "Recarga la pagina y hazlo bien";
             }
             
             resultado.innerHTML = `
                 <h1>${mensaje}</h1>
-                <button onclick="comprobarEjercicioPorNumero(3)">Anterior ejercicio el 1</button>
-                <button onclick="comprobarEjercicioPorNumero(5)">Siguiente ejercicio el 3</button>
+                <button onclick="comprobarEjercicioPorNumero(3)">Anterior ejercicio el 3</button>
+                <button onclick="comprobarEjercicioPorNumero(5)">Siguiente ejercicio el 5</button>
             `;
         }
 
 //crea un programa que lea el año que es y te diga si es bisiesto o no  ( ayuda: modulo 4 de el numero es 0)
+        if (iEjercicio === 5) {
+            let xAñoActual = prompt("Introduzca el año actual");
+            let iAñoActual = parseInt(xAñoActual);
+            let mensaje = "";
+
+            if (iAñoActual % 4 === 0) {
+                mensaje = "El año " + iAñoActual + " es bisiesto";
+            } else {
+                mensaje = "El año " + iAñoActual + " no es bisiesto";
+            }
+
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(4)">Anterior ejercicio el 4</button>
+                <button onclick="comprobarEjercicioPorNumero(6)">Siguiente ejercicio el 6</button>
+            `;
+
+        }
 
 //crea un programa que leyendo la variable window.location.href y sacando sus primeros 4 valores substring(inicio,fin) decida si es una pagina local o remota. 
+        if (iEjercicio === 6) {
+            let url = window.location.href;
+            let protocolo = url.substring(0, 4);
+            let mensaje = "";
+
+            if (protocolo === "http") {
+                mensaje = "La página es remota";
+            } else if (protocolo === "file") {
+                mensaje = "La página es local";
+            } else {
+                mensaje = "Protocolo desconocido";
+            }
+
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(5)">Anterior ejercicio el 5</button>
+                <button onclick="comprobarEjercicioPorNumero(7)">Siguiente ejercicio el 7</button>
+            `;
+        }
 
 //Solicitar al usuario un número de cliente. Si el número es el 1000, imprimir "Ganaste un premio"
+       if (iEjercicio === 7) {
+        let iNumeroCliente = prompt("Introduzca su numero de cliente");
+        let mensaje = "";
+
+        if (iNumeroCliente == 1000) {
+            mensaje = "¡Ganaste un premio!";
+        } else {
+            mensaje = "Lo siento, sigue participando.";
+        }
+        resultado.innerHTML = `
+            <h1>${mensaje}</h1>
+            <button onclick="comprobarEjercicioPorNumero(6)">Anterior ejercicio el 6</button>
+            <button onclick="comprobarEjercicioPorNumero(8)">Siguiente ejercicio el 8</button>
+        `;
+
+       }
+ 
 
 //Solicitar al usuario que ingrese dos números y mostrar cuál de los dos es menor. No considerar el caso en que ambos números son iguales
+      if (iEjercicio === 8) {
+        let fNumero1 = prompt("Introduzca el primer número");
+        let fNumero2 = prompt("Introduzca el segundo número");
+        let mensaje = "";
+
+        let iNumero1 = parseFloat(fNumero1);
+        let iNumero2 = parseFloat(fNumero2);
+
+        if (isNaN(iNumero1) || isNaN(iNumero2)) {
+            mensaje = "Por favor, introduce números válidos.";
+        } else if (iNumero1 < iNumero2) {
+            mensaje = "El número menor es: " + iNumero1;
+        } else if (iNumero2 < iNumero1) {
+            mensaje = "El número menor es: " + iNumero2;
+        } else {
+            mensaje = "Los números son iguales.";
+        }
+
+        resultado.innerHTML = `
+            <h1>${mensaje}</h1>
+            <button onclick="comprobarEjercicioPorNumero(7)">Anterior ejercicio el 7</button>
+            <button onclick="comprobarEjercicioPorNumero(9)">Siguiente ejercicio el 9</button>
+        `;
+        
+      }
 
 //Solicitar al usuario que ingrese dos números y mostrar cuál de los dos es menor. Considerar el caso en que ambos números son iguales
+        if (iEjercicio === 9) {
+            let fNumero1 = prompt("Introduzca el primer número");
+            let fNumero2 = prompt("Introduzca el segundo número");
+            let mensaje = "";
+    
+            let iNumero1 = parseFloat(fNumero1);
+            let iNumero2 = parseFloat(fNumero2);
+    
+            if (isNaN(iNumero1) || isNaN(iNumero2)) {
+                mensaje = "Por favor, introduce números válidos.";
+            } else if (iNumero1 < iNumero2) {
+                mensaje = "El número menor es: " + iNumero1;
+            } else if (iNumero2 < iNumero1) {
+                mensaje = "El número menor es: " + iNumero2;
+            } else {
+                mensaje = "Los números son iguales: " + iNumero1;
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(8)">Anterior ejercicio el 8</button>
+                <button onclick="comprobarEjercicioPorNumero(10)">Siguiente ejercicio el 10</button>
+            `;
+            
+        }
 
 //Requerir al usuario que ingrese un día de la semana e imprimir un mensaje si es lunes, otro mensaje diferente si es viernes, otro mensaje diferente si es sábado o domingo. Si el día ingresado no es ninguno de esos, imprimir otro mensaje
+        if (iEjercicio === 10) {
+            let xDiaSemana = prompt("Introduzca un día de la semana");
+            let mensaje = "";
+    
+            if (!xDiaSemana) {
+                mensaje = "No has introducido ningún día.";
+            } else {
+                let dia = xDiaSemana.toLowerCase();
+    
+                if (dia === "lunes") {
+                    mensaje = "¡Comienza la semana!";
+                } else if (dia === "viernes") {
+                    mensaje = "¡Por fin es viernes!";
+                } else if (dia === "sábado" || dia === "domingo") {
+                    mensaje = "¡Es fin de semana!";
+                } else {
+                    mensaje = "Es un día entre semana.";
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(9)">Anterior ejercicio el 9</button>
+                <button onclick="comprobarEjercicioPorNumero(11)">Siguiente ejercicio el 11</button>
+            `;
+            
+        }
 
 //escribir un programa que, dado un número entero, muestre su valor absoluto. Nota: para los números positivos su valor absoluto es igual al número (el valor absoluto de 52 es 52), mientras que, para los negativos, su valor absoluto es el número multiplicado por -1 (el valor absoluto de -52 es 52). 
+        if (iEjercicio === 11) {
+            let fNumero = prompt("Introduzca un número entero");
+            let mensaje = "";
+    
+            let iNumero = parseInt(fNumero);
+    
+            if (isNaN(iNumero)) {
+                mensaje = "Por favor, introduce un número válido.";
+            } else if (iNumero < 0) {
+                mensaje = "El valor absoluto es: " + (-iNumero);
+            } else {
+                mensaje = "El valor absoluto es: " + iNumero;
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(10)">Anterior ejercicio el 10</button>
+                <button onclick="comprobarEjercicioPorNumero(12)">Siguiente ejercicio el 12</button>
+            `;
+            
+        }
 
 //Solicitar al usuario que ingrese los nombres de dos personas, los cuales se almacenarán en dos variables. A continuación, imprimir “coincidencia” si los nombres de ambas personas comienzan con la misma letra ó si terminan con la misma letra. Si no es así, imprimir “no hay coincidencia”
+        if (iEjercicio === 12) {
+            let nombre1 = prompt("Introduzca el nombre de la primera persona");
+            let nombre2 = prompt("Introduzca el nombre de la segunda persona");
+            let mensaje = "";
+    
+            if (!nombre1 || !nombre2) {
+                mensaje = "Por favor, introduce ambos nombres.";
+            } else {
+                let primeraLetra1 = nombre1.charAt(0).toLowerCase();
+                let primeraLetra2 = nombre2.charAt(0).toLowerCase();
+                let ultimaLetra1 = nombre1.charAt(nombre1.length - 1).toLowerCase();
+                let ultimaLetra2 = nombre2.charAt(nombre2.length - 1).toLowerCase();
+    
+                if (primeraLetra1 === primeraLetra2 || ultimaLetra1 === ultimaLetra2) {
+                    mensaje = "¡Coincidencia!";
+                } else {
+                    mensaje = "No hay coincidencia.";
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(11)">Anterior ejercicio el 11</button>
+                <button onclick="comprobarEjercicioPorNumero(13)">Siguiente ejercicio el 13</button>
+            `;
+            
+        }
 
 //crear un programa que permita al usuario elegir un candidato por el cual votar. Las posibilidades son: candidato A por el partido rojo, candidato B por el partido verde, candidato C por el partido azul. Según el candidato elegido (A, B ó C) se le debe imprimir el mensaje “Usted ha votado por el partido [color que corresponda al candidato elegido]”. Si el usuario ingresa una opción que no corresponde a ninguno de los candidatos disponibles, indicar “Opción errónea”
+        if (iEjercicio === 13) {
+            let candidato = prompt("Elija un candidato para votar (A, B, C)");
+            let mensaje = "";
+    
+            if (!candidato) {
+                mensaje = "No has elegido ningún candidato.";
+            } else {
+                let eleccion = candidato.toUpperCase();
+    
+                if (eleccion === "A") {
+                    mensaje = "Usted ha votado por el partido rojo.";
+                } else if (eleccion === "B") {
+                    mensaje = "Usted ha votado por el partido verde.";
+                } else if (eleccion === "C") {
+                    mensaje = "Usted ha votado por el partido azul.";
+                } else {
+                    mensaje = "Opción errónea.";
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(12)">Anterior ejercicio el 12</button>
+                <button onclick="comprobarEjercicioPorNumero(14)">Siguiente ejercicio el 14</button>
+            `;
+            
+        }
 
 //escribir un programa que solicite al usuario una letra y, si es una vocal, muestre el mensaje “es vocal”. Se debe validar que el usuario ingrese sólo un carácter. Si ingresa un string de más de un carácter, informarle que no se puede procesar el dato. (si length es mayor que 1 va a 0 si no un if con 5 OR con las vocales) 
+        if (iEjercicio === 14) {
+            let letra = prompt("Introduzca una letra");
+            let mensaje = "";
+    
+            if (!letra) {
+                mensaje = "No has introducido ninguna letra.";
+            } else if (letra.length > 1) {
+                mensaje = "No se puede procesar el dato. Por favor, introduce solo un carácter.";
+            } else {
+                let char = letra.toLowerCase();
+    
+                if ("aeiou".includes(char)) {
+                    mensaje = "Es vocal.";
+                } else {
+                    mensaje = "No es vocal.";
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(13)">Anterior ejercicio el 13</button>
+                <button onclick="comprobarEjercicioPorNumero(15)">Siguiente ejercicio el 15</button>
+            `;
+            
+        }
 
 //Hacer un programa que permita saber si un año es bisiesto. Para que un año sea bisiesto debe ser divisible por 4 y no debe ser divisible por 100, excepto que también sea divisible por 400
+        if (iEjercicio === 15) {
+            let xAñoActual = prompt("Introduzca el año actual");
+            let iAñoActual = parseInt(xAñoActual);
+            let mensaje = "";
+    
+            if (isNaN(iAñoActual)) {
+                mensaje = "Por favor, introduce un año válido.";
+            } else if ((iAñoActual % 4 === 0 && iAñoActual % 100 !== 0) || (iAñoActual % 400 === 0)) {
+                mensaje = "El año " + iAñoActual + " es bisiesto";
+            } else {
+                mensaje = "El año " + iAñoActual + " no es bisiesto";
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(14)">Anterior ejercicio el 14</button>
+                <button onclick="comprobarEjercicioPorNumero(16)">Siguiente ejercicio el 16</button>
+            `;
+        }
 
 //Hacer el ejercicio 14 con swicth
+        if (iEjercicio === 16) {
+            let letra = prompt("Introduzca una letra");
+            let mensaje = "";
+    
+            if (!letra) {
+                mensaje = "No has introducido ninguna letra.";
+            } else if (letra.length > 1) {
+                mensaje = "No se puede procesar el dato. Por favor, introduce solo un carácter.";
+            } else {
+                let char = letra.toLowerCase();
+    
+                switch (char) {
+                    case 'a':
+                        mensaje = "Es vocal.";
+                        break;
+                    case 'e':
+                        mensaje = "Es vocal.";
+                        break;
+                    case 'i':
+                        mensaje = "Es vocal.";
+                        break;
+                    case 'o':
+                        mensaje = "Es vocal.";
+                        break;
+                    case 'u':
+                        mensaje = "Es vocal.";
+                        break;
+                    default:
+                        mensaje = "No es vocal.";
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(15)">Anterior ejercicio el 15</button>
+                <button onclick="comprobarEjercicioPorNumero(17)">Siguiente ejercicio el 17</button>
+            `;
+        }
 
 //Pide un número y muestra si es par o impar usando el operador ternario
+        if (iEjercicio === 17) {
+            let fNumero = prompt("Introduzca un número entero");
+            let mensaje = "";
+    
+            let iNumero = parseInt(fNumero);
+    
+            if (isNaN(iNumero)) {
+                mensaje = "Por favor, introduce un número válido.";
+            } else {
+                mensaje = (iNumero % 2 === 0) ? "El número es par." : "El número es impar.";
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(16)">Anterior ejercicio el 16</button>
+                <button onclick="comprobarEjercicioPorNumero(18)">Siguiente ejercicio el 18</button>
+            `;
+        }
 
 //Verifica si una persona puede votar (mayor o igual a 18 años) usando el operador ternario
+        if (iEjercicio === 18) {
+            let xFechaNactrue = prompt("¿En qué año naciste?");
+            let mensaje = "";
+    
+            let iFechaNactrue = parseInt(xFechaNactrue);
+            let iAñoActual = new Date().getFullYear();
+    
+            if (isNaN(iFechaNactrue)) {
+                mensaje = "Por favor, introduce un año válido.";
+            } else {
+                let iEdadcal = iAñoActual - iFechaNactrue;
+                mensaje = (iEdadcal >= 18) ? "Puedes votar." : "No puedes votar.";
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(17)">Anterior ejercicio el 17</button>
+                <button onclick="comprobarEjercicioPorNumero(19)">Siguiente ejercicio el 19</button>
+            `;
+        }
 
 //dado dos números, muestra cuál es mayor utilizando el operador ternario
+        if (iEjercicio === 19) {
+            let fNumero1 = prompt("Introduzca el primer número");
+            let fNumero2 = prompt("Introduzca el segundo número");
+            let mensaje = "";
+    
+            let iNumero1 = parseFloat(fNumero1);
+            let iNumero2 = parseFloat(fNumero2);
+    
+            if (isNaN(iNumero1) || isNaN(iNumero2)) {
+                mensaje = "Por favor, introduce números válidos.";
+            } else {
+                mensaje = (iNumero1 > iNumero2) ? "El número mayor es: " + iNumero1 : (iNumero2 > iNumero1) ? "El número mayor es: " + iNumero2 : "Los números son iguales: " + iNumero1;
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(18)">Anterior ejercicio el 18</button>
+                <button onclick="comprobarEjercicioPorNumero(20)">Siguiente ejercicio el 20</button>
+            `;
+        }
 
-//clasificar una nota usando if 
+//clasificar una nota usando if
+        if (iEjercicio === 20) {
+            let fNota = prompt("Introduzca una nota del 0 al 10");
+            let mensaje = "";
+    
+            let iNota = parseFloat(fNota);
+    
+            if (isNaN(iNota) || iNota < 0 || iNota > 10) {
+                mensaje = "Por favor, introduce una nota válida entre 0 y 10.";
+            } else if (iNota >= 0 && iNota <= 4) {
+                mensaje = "Insuficiente";
+            } else if (iNota >= 5 && iNota <= 6) {
+                mensaje = "Suficiente";
+            } else if (iNota >= 7 && iNota <= 8) {
+                mensaje = "Notable";
+            } else if (iNota >= 9 && iNota <= 10) {
+                mensaje = "Sobresaliente";
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(19)">Anterior ejercicio el 19</button>
+                <button onclick="comprobarEjercicioPorNumero(21)">Siguiente ejercicio el 21</button>
+            `;
+        }
 
 /*clasifica una nota numérica del 0 al 10 en:
 0-4 → "Insuficiente"
@@ -146,16 +530,196 @@ function comprobarEjercicio() {
 7-8 → "Notable"
 9-10 → "Sobresaliente"
 */
+        if (iEjercicio === 21) {
+            let fNota = prompt("Introduzca una nota del 0 al 10");
+            let mensaje = "";
+    
+            let iNota = parseFloat(fNota);
+    
+            if (isNaN(iNota) || iNota < 0 || iNota > 10) {
+                mensaje = "Por favor, introduce una nota válida entre 0 y 10.";
+            } else {
+                switch (true) {
+                    case (iNota >= 0 && iNota <= 4):
+                        mensaje = "Insuficiente";
+                        break;
+                    case (iNota >= 5 && iNota <= 6):
+                        mensaje = "Suficiente";
+                        break;
+                    case (iNota >= 7 && iNota <= 8):
+                        mensaje = "Notable";
+                        break;
+                    case (iNota >= 9 && iNota <= 10):
+                        mensaje = "Sobresaliente";
+                        break;
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(20)">Anterior ejercicio el 20</button>
+                <button onclick="comprobarEjercicioPorNumero(22)">Siguiente ejercicio el 22</button>
+            `;
+        }
 
 //Indica si un número ingresado es positivo, negativo o cero
+        if (iEjercicio === 22) {
+            let fNumero = prompt("Introduzca un número");
+            let mensaje = "";
+    
+            let iNumero = parseFloat(fNumero);
+    
+            if (isNaN(iNumero)) {
+                mensaje = "Por favor, introduce un número válido.";
+            } else if (iNumero > 0) {
+                mensaje = "El número es positivo.";
+            } else if (iNumero < 0) {
+                mensaje = "El número es negativo.";
+            } else {
+                mensaje = "El número es cero.";
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(21)">Anterior ejercicio el 21</button>
+                <button onclick="comprobarEjercicioPorNumero(23)">Siguiente ejercicio el 23</button>
+            `;
+        }
 
 //Validar contraseña Verifica si una contraseña ingresada es igual a "admin123" y muestra un mensaje de acceso concedido o denegado
+        if (iEjercicio === 23) {
+            let contraseña = prompt("Introduzca la contraseña");
+            let mensaje = "";
+    
+            if (!contraseña) {
+                mensaje = "No has introducido ninguna contraseña.";
+            } else if (contraseña === "admin123") {
+                mensaje = "Acceso concedido.";
+            } else {
+                mensaje = "Acceso denegado.";
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(22)">Anterior ejercicio el 22</button>
+                <button onclick="comprobarEjercicioPorNumero(24)">Siguiente ejercicio el 24</button>
+            `;
+        }
 
 //¿Muestra el nombre del  Día de la semana  correspondiente a un número del 1 al 7 usando switch
+        if (iEjercicio === 24) {
+            let fNumeroDia = prompt("Introduzca un número del 1 al 7");
+            let mensaje = "";
+    
+            let iNumeroDia = parseInt(fNumeroDia);
+    
+            if (isNaN(iNumeroDia) || iNumeroDia < 1 || iNumeroDia > 7) {
+                mensaje = "Por favor, introduce un número válido entre 1 y 7.";
+            } else {
+                switch (iNumeroDia) {
+                    case 1:
+                        mensaje = "Lunes";
+                        break;
+                    case 2:
+                        mensaje = "Martes";
+                        break;
+                    case 3:
+                        mensaje = "Miércoles";
+                        break;
+                    case 4:
+                        mensaje = "Jueves";
+                        break;
+                    case 5:
+                        mensaje = "Viernes";
+                        break;
+                    case 6:
+                        mensaje = "Sábado";
+                        break;
+                    case 7:
+                        mensaje = "Domingo";
+                        break;
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(23)">Anterior ejercicio el 23</button>
+                <button onclick="comprobarEjercicioPorNumero(25)">Siguiente ejercicio el 25</button>
+            `;
+        }
 
 //crea una Calculadora básica Dado dos números y una operación (+, -, *, /), muestra el resultado usando switch
+        if (iEjercicio === 25) {
+            let fNumero1 = prompt("Introduzca el primer número");
+            let fNumero2 = prompt("Introduzca el segundo número");
+            let operacion = prompt("Introduzca la operación (+, -, *, /)");
+            let mensaje = "";
+    
+            let iNumero1 = parseFloat(fNumero1);
+            let iNumero2 = parseFloat(fNumero2);
+    
+            if (isNaN(iNumero1) || isNaN(iNumero2)) {
+                mensaje = "Por favor, introduce números válidos.";
+            } else {
+                switch (operacion) {
+                    case '+':
+                        mensaje = `El resultado de ${iNumero1} + ${iNumero2} es ${iNumero1 + iNumero2}`;
+                        break;
+                    case '-':
+                        mensaje = `El resultado de ${iNumero1} - ${iNumero2} es ${iNumero1 - iNumero2}`;
+                        break;
+                    case '*':
+                        mensaje = `El resultado de ${iNumero1} * ${iNumero2} es ${iNumero1 * iNumero2}`;
+                        break;
+                    case '/':
+                        if (iNumero2 === 0) {
+                            mensaje = "No se puede dividir por cero.";
+                        } else {
+                            mensaje = `El resultado de ${iNumero1} / ${iNumero2} es ${iNumero1 / iNumero2}`;
+                        }
+                        break;
+                    default:
+                        mensaje = "Operación no válida. Por favor, usa +, -, * o /.";
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(24)">Anterior ejercicio el 24</button>
+                <button onclick="comprobarEjercicioPorNumero(26)">Siguiente ejercicio el 26</button>
+            `;
+        }
 
 //crea un Semáforo Dado un color (rojo, amarillo, verde), muestra la acción correspondiente: "Detente", "Precaución" o "Avanza".
+        if (iEjercicio === 26) {
+            let color = prompt("Introduzca un color (rojo, amarillo, verde)");
+            let mensaje = "";
+    
+            if (!color) {
+                mensaje = "No has introducido ningún color.";
+            } else {
+                let colorLower = color.toLowerCase();
+    
+                switch (colorLower) {
+                    case 'rojo':
+                        mensaje = "Detente";
+                        break;
+                    case 'amarillo':
+                        mensaje = "Precaución";
+                        break;
+                    case 'verde':
+                        mensaje = "Avanza";
+                        break;
+                    default:
+                        mensaje = "Color no válido. Por favor, usa rojo, amarillo o verde.";
+                }
+            }
+    
+            resultado.innerHTML = `
+                <h1>${mensaje}</h1>
+                <button onclick="comprobarEjercicioPorNumero(25)">Anterior ejercicio el 25</button>
+            `;
+        }
     
 
 }
@@ -163,7 +727,7 @@ function comprobarEjercicio() {
 // Función auxiliar para navegar entre ejercicios con botones
 function comprobarEjercicioPorNumero(num) {
     document.getElementById("numInput").value = num;
-    comprobarEjercicio();
+    comprobarEjercicio(num);
 }
 
 
