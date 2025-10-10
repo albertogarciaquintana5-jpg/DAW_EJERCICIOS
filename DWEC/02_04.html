@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Operadores de Asignación</title>
+<style>
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 8px;
+  }
+  th {
+    background-color: #ccc;
+  }
+</style>
+</head>
+<body>
+
+<h2>Operadores de Asignación en JavaScript</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sintaxis</th>
+      <th>Nombre</th>
+      <th>Uso</th>
+      <th>Significado</th>
+      <th>Ejemplo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>=</td><td>Asignación simple</td><td>var a = 5;</td><td>Asigna el valor 5 a la variable a</td><td>a = 5;</td></tr>
+    <tr><td>+=</td><td>Asignación suma</td><td>a += 3;</td><td>a = a + 3</td><td>a += 3;</td></tr>
+    <tr><td>-=</td><td>Asignación resta</td><td>a -= 2;</td><td>a = a - 2</td><td>a -= 2;</td></tr>
+    <tr><td>*=</td><td>Asignación multiplicación</td><td>a *= 4;</td><td>a = a * 4</td><td>a *= 4;</td></tr>
+    <tr><td>/=</td><td>Asignación división</td><td>a /= 2;</td><td>a = a / 2</td><td>a /= 2;</td></tr>
+    <tr><td>%=</td><td>Asignación módulo</td><td>a %= 3;</td><td>a = a % 3</td><td>a %= 3;</td></tr>
+    <tr><td><<=</td><td>Asignación corrimiento a la izquierda</td><td>a <<= 1;</td><td>a = a << 1</td><td>a <<= 1;</td></tr>
+    <tr><td>>=</td><td>Asignación corrimiento a la derecha</td><td>a >>= 2;</td><td>a = a >> 2</td><td>a >>= 2;</td></tr>
+    <tr><td>>>=</td><td>Asignación corrimiento a la derecha sin signo</td><td>a >>>= 1;</td><td>a = a >>> 1</td><td>a >>>= 1;</td></tr>
+    <tr><td>&=</td><td>Asignación AND bit a bit</td><td>a &= 9;</td><td>a = a & 9</td><td>a &= 9;</td></tr>
+    <tr><td>|=</td><td>Asignación OR bit a bit</td><td>a |= 5;</td><td>a = a | 5</td><td>a |= 5;</td></tr>
+    <tr><td>^=</td><td>Asignación XOR bit a bit</td><td>a ^= 7;</td><td>a = a ^ 7</td><td>a ^= 7;</td></tr>
+    <tr><td>[]</td><td>Acceso a elemento de arreglo</td><td>a[0] = 10;</td><td>Accede o asigna el elemento 0 del arreglo a</td><td>a[0] = 10;</td></tr>
+  </tbody>
+</table>
+
+<script>
+  let a = 15; document.write("a = 15; a = " + a + "<br>");
+  a += 5; document.write("a += 5; a = " + a + "<br>");
+  a -= 3; document.write("a -= 3; a = " + a + "<br>");
+  a *= 2; document.write("a *= 2; a = " + a + "<br>");
+  a /= 4; document.write("a /= 4; a = " + a + "<br>");
+  a %= 3; document.write("a %= 3; a = " + a + "<br>");
+  a <<= 1; document.write("a <<= 1; a = " + a + "<br>");
+  a >>= 1; document.write("a >>= 1; a = " + a + "<br>");
+  a >>>= 1; document.write("a >>>= 1; a = " + a + "<br>");
+  a &= 9; document.write("a &= 9; a = " + a + "<br>");
+  a |= 5; document.write("a |= 5; a = " + a + "<br>");
+  a ^= 7; document.write("a ^= 7; a = " + a + "<br>");
+  let arr = [0, 0, 0];
+  arr[0] = 10; document.write("arr[0] = 10; arr[0] = " + arr[0] + "<br>");
+</script>
+
+<h2>Operadores Booleanos en JavaScript</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Sintaxis</th>
+      <th>Nombre</th>
+      <th>Ejemplo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>&&</td><td>AND lógico</td><td>(a && b)</td></tr>
+    <tr><td>||</td><td>OR lógico</td><td>(a || b)</td></tr>
+    <tr><td>!</td><td>NOT lógico</td><td>!a</td></tr>
+  </tbody>
+</table>
+
+<h2>Tabla de Verdad - AND (&&)</h2>
+<table>
+  <thead>
+    <tr><th>A</th><th>Operador</th><th>B</th><th>Resultado</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>True</td><td>&&</td><td>True</td><td>True</td></tr>
+    <tr><td>True</td><td>&&</td><td>False</td><td>False</td></tr>
+    <tr><td>False</td><td>&&</td><td>True</td><td>False</td></tr>
+    <tr><td>False</td><td>&&</td><td>False</td><td>False</td></tr>
+  </tbody>
+</table>
+
+
+<h2>Tabla de Verdad - OR (||)</h2>
+<table>
+  <thead>
+    <tr><th>A</th><th>Operador</th><th>B</th><th>Resultado</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>True</td><td>||</td><td>True</td><td>True</td></tr>
+    <tr><td>True</td><td>||</td><td>False</td><td>True</td></tr>
+    <tr><td>False</td><td>||</td><td>True</td><td>True</td></tr>
+    <tr><td>False</td><td>||</td><td>False</td><td>False</td></tr>
+  </tbody>
+</table>
+
+<script>
+  let x = true, y = false;
+  document.write("x && y = " + (x && y) + "<br>");
+  document.write("x || y = " + (x || y) + "<br>");
+  document.write("!x = " + (!x) + "<br>");
+</script>
+
+<script>
+  let A = true, b = false, c = true;
+  let resultado = (A && b) || (!c);
+  document.write("(A && b) || (!c) = " + resultado + "<br>");
+
+  /*
+  8. ¿En qué consisten los operadores bit a bit? ¿Son muy usados?
+        Los operadores bit a bit operan directamente sobre los bits individuales de números enteros. Permiten realizar operaciones como AND, OR, XOR y desplazamientos sobre el valor binario de los números.
+        Se usan en programación de bajo nivel, manipulación de datos, optimización, criptografía, gráficos, control de hardware, etc. No son muy comunes en desarrollo web diario pero sí muy importantes en sistemas embebidos y programación cercana al hardware.
+
+  9. ¿En qué formatos se pueden usar?
+        Se usan sobre números enteros (en JavaScript, convertidos a 32 bits). Los operandos son tratados como enteros binarios para realizar las operaciones.
+  */
+</script>
+
+<h2>Operadores Bit a Bit en JavaScript</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Operador</th>
+      <th>Nombre</th>
+      <th>Operando Izquierdo</th>
+      <th>Operando Derecho</th>
+      <th>Ejemplo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>&</td><td>AND</td><td>00001000</td><td>00001100</td><td>00001000</td></tr>
+    <tr><td>|</td><td>OR</td><td>00001000</td><td>00001100</td><td>00001100</td></tr>
+    <tr><td>^</td><td>XOR</td><td>00001000</td><td>00001100</td><td>00000100</td></tr>
+    <tr><td>~</td><td>NOT</td><td>00001000</td><td>-</td><td>11110111 (inverso)</td></tr>
+    <tr><td>&lt;&lt;</td><td>Desplazamiento a la izquierda</td><td>0001000 (8)</td><td>2</td><td>0100000 (32)</td></tr>
+    <tr><td>&gt;&gt;</td><td>Desplazamiento a la derecha con signo</td><td>11000 (24)</td><td>2</td><td>110 (6)</td></tr>
+    <tr><td>&gt;&gt;&gt;</td><td>Desplazamiento a la derecha sin signo</td><td>11000 (24)</td><td>2</td><td>00110 (6)</td></tr>
+  </tbody>
+</table>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Operadores Bit a Bit - Ejemplo</title>
+</head>
+<body>
+
+<script>
+let binario = "10010111";
+let num255 = "11111111";
+let decimal = parseInt(binario, 2);
+
+document.writeln("<br>binario " + binario + " es " + decimal + " en decimal<br>");
+
+let DesplazamientoAND = decimal & parseInt(num255, 2);
+let DesplazamientoOR = decimal | parseInt(num255, 2);
+let DesplazamientoXOR = decimal ^ decimal;
+let DesplazamientoNOT = ~decimal;
+let Desplazamientoizquierda = decimal << 1;
+let Desplazamientoderecha = decimal >> 1;
+let Desplazamientoderecha0 = decimal >>> 2;
+
+document.writeln("AND: " + DesplazamientoAND + "<br>");
+document.writeln("OR: " + DesplazamientoOR + "<br>");
+document.writeln("XOR: " + DesplazamientoXOR + "<br>");
+document.writeln("NOT: " + DesplazamientoNOT + "<br>");
+document.writeln("Desplazamiento izquierda: " + Desplazamientoizquierda + "<br>");
+document.writeln("Desplazamiento derecha: " + Desplazamientoderecha + "<br>");
+document.writeln("Desplazamiento derecha sin signo: " + Desplazamientoderecha0 + "<br>");
+
+// También mostramos con alert para que lo veas
+alert("Resultados bit a bit:\n" +
+      "AND: " + DesplazamientoAND + "\n" +
+      "OR: " + DesplazamientoOR + "\n" +
+      "XOR: " + DesplazamientoXOR + "\n" +
+      "NOT: " + DesplazamientoNOT + "\n" +
+      "Desplazamiento izquierda: " + Desplazamientoizquierda + "\n" +
+      "Desplazamiento derecha: " + Desplazamientoderecha + "\n" +
+      "Desplazamiento derecha sin signo: " + Desplazamientoderecha0);
+</script>
+
+
+<script>
+let binarioParametro1 = "11111111";
+let parametro1 = parseInt(binarioParametro1, 2); // 255
+let decimalValor = parseInt("10010111", 2); // 151
+
+// AND - resultado esperado 0 (ejemplo con valor 0)
+let resultadoAND = decimalValor & 0;  // fuerza 0
+document.writeln("AND (decimalValor & 0): " + resultadoAND + "<br>");
+
+// OR - resultado esperado 1 (por ejemplo)
+let resultadoOR = decimalValor | 1; 
+document.writeln("OR (decimalValor | 1): " + resultadoOR + "<br>");
+
+// XOR - resultado esperado 1 (ejemplo)
+let resultadoXOR = decimalValor ^ (decimalValor - 1); 
+document.writeln("XOR (decimalValor ^ (decimalValor - 1)): " + resultadoXOR + "<br>");
+
+// NOT - resultado esperado -10 (para que sea así usamos 9)
+let binarioParametro2 = "00001001"; // 9 decimal
+let parametro2 = parseInt(binarioParametro2, 2);
+let resultadoNOT = ~parametro2; 
+document.writeln("NOT (~9): " + resultadoNOT + "<br>");
+
+// Desplazamiento izquierda - resultado esperado 32 (16 << 1)
+let binarioParametro3 = "00010000"; // 16 decimal
+let parametro3 = parseInt(binarioParametro3, 2);
+let resultadoIzquierda = parametro3 << 1; 
+document.writeln("Desplazamiento izquierda (16 << 1): " + resultadoIzquierda + "<br>");
+
+// Desplazamiento derecha - resultado esperado 8 (16 >> 1)
+let binarioParametro4 = "00010000"; // 16 decimal
+let parametro4 = parseInt(binarioParametro4, 2);
+let resultadoDerecha = parametro4 >> 1;
+document.writeln("Desplazamiento derecha (16 >> 1): " + resultadoDerecha + "<br>");
+
+// Desplazamiento derecha sin signo - ejemplo (151 >>> 2)
+let resultadoDerecha0 = decimalValor >>> 2; 
+document.writeln("Desplazamiento derecha sin signo (151 >>> 2): " + resultadoDerecha0 + "<br>");
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+</body>
+</html>
+
+
+

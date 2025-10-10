@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_08</title>
+</head>
+<body>
+    <ul style="color: green;">
+    <script>
+        let array = ["Malaga", "Sevilla", "Cordoba", "Huelva", "Almeria", "Granada", "Cadiz"];
+
+        array.forEach(element => {
+            document.write("<li> <p style=\" color: green;\"\ >" + element + "</p></li>");
+            
+        });
+        document.write("<br>");
+
+        let greenValue = 0;
+        array.forEach(element => {
+            let hexGreen = greenValue.toString(16).padStart(2, '0');
+            document.write("<li> <p style=\" color: #00" + hexGreen + "00;\"\ >" + element + "</p></li>");
+            greenValue += Math.floor(255 / (array.length - 1));
+        });
+
+    </script>
+    </ul>
+    <script>
+        var Mis_notas = { mates: 9, Lengua: 6, Efisica: 5, Quimica: 9, fisica: 5, ingles: 5 };
+        for (var asignatura in Mis_notas) {
+            document.write("En " + asignatura + " tienes un " + Mis_notas[asignatura] + "<br>");
+        }
+    </script>
+</body>
+</html>
+

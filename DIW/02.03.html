@@ -19,30 +19,64 @@ Asturias
 Ávila 
 Badajoz 
 Barcelona 
+-->
+<list>
+    <ul style="list-style-type:circle">
+        <li>Almería</li>
+        <li>Asturias</li>
+        <li>Ávila</li>
+        <li>Badajoz</li>
+        <li>Barcelona</li>
+    </ul>
 
 
-b) con cuadraditos
+
+<!--b) con cuadraditos
 Castellón 
 Ciudad Real 
 Córdoba 
 La Coruña 
 Cuenca 
 Gerona 
+-->
+    <ul style="list-style-type:square">
+        <li>Castellón</li>
+        <li>Ciudad Real</li>
+        <li>Córdoba</li>
+        <li>La Coruña</li>
+        <li>Cuenca</li>
+        <li>Gerona</li>
+    </ul>
 
-c) con discos
+<!-- c) con discos
 Burgos 
 Cáceres 
 Cádiz 
 Cantabria 
+-->
+    <ul style="list-style-type:disc">
+        <li>Burgos</li>
+        <li>Cáceres</li>
+        <li>Cádiz</li>
+        <li>Cantabria</li>
+    </ul>
 
-d) Mezclado
+<!-- d) Mezclado
     Torremolinos
     Churriana 
  Guadalmar
     Granada
     Torrox
 -->
+    <ul>
+        <li style="list-style-type:circle">Torremolinos</li>
+        <li style="list-style-type:square">Churriana</li>
+        <li style="list-style-type:disc">Guadalmar</li>
+        <li style="list-style-type:square">Granada</li>
+        <li style="list-style-type:circle">Torrox</li>
+    </ul>
 
+</list>
 <!-- 3. Crea las siguientes listas Ordenadas
 
 a) con letras empezando por la h
@@ -67,6 +101,30 @@ Santa Cruz
 Teruel
 
 -->
+<list>
+    <ol type="a" start="8">
+        <li>Madrid</li>
+        <li>Málaga</li>
+        <li>Murcia</li>
+        <li>Navarra</li>
+    </ol>
+
+    <ol type="1" start="3">
+        <li>Las Palmas</li>
+        <li>Pontevedra</li>
+        <li>La Rioja</li>
+        <li>Salamanca</li>
+    </ol>
+
+    <ol type="I" start="1102">
+        <li>Segovia</li>
+        <li>Sevilla</li>
+        <li>Soria</li>
+        <li>Tarragona</li>
+        <li>Santa Cruz</li>
+        <li>Teruel</li>
+    </ol>
+</list>
 
 <!-- 4. Crea las siguientes listas de definición con dd y dl
 
@@ -86,7 +144,30 @@ La Rioja
 Logroño 
 
 -->
+<list>
+    <dl>
+        <dt>Álava</dt>
+        <dd>Vitoria</dd>
 
+        <dt>Asturias</dt>
+        <dd>Oviedo</dd>
+
+        <dt>Guipúzcoa</dt>
+        <dd>San Sebastián</dd>
+
+        <dt>Islas Baleares</dt>
+        <dd>Palma de Mallorca</dd>
+
+        <dt>Navarra</dt>
+        <dd>Pamplona</dd>
+
+        <dt>Las Palmas</dt>
+        <dd>Las Palmas de Gran Canaria</dd>
+
+        <dt>La Rioja</dt>
+        <dd>Logroño</dd>
+    </dl>
+</list>
 <!--    5. Crea las siguientes listas anidadas
 
 Málaga 
@@ -112,65 +193,124 @@ Granada
 Arbolote
 Almuñecar
 -->
+<list>
+    <ul>
+        <li>Málaga
+            <ul>
+                <li>Estepona</li>
+                <li>San Pedro de Alcantar</li>
+                <li>Marbella</li>
+                <li>Alhaurín de la Torre</li>
+                <li>Alhaurín el Grande</li>
+            </ul>
+        </li>
+
+        <li>Sevilla
+            <ul>
+                <li>Ecija</li>
+                <li>Dos Hermanas</li>
+                <li>San juan de aznalfarache</li>
+            </ul>
+        </li>
+
+        <li>Cordoba
+            <ul>
+                <li>Lucena</li>
+                <li>PozoBlanco</li>
+                <li>Rute</li>
+            </ul>
+        </li>
+
+        <li>Granada
+            <ul>
+                <li>Arbolote</li>
+                <li>Almuñecar</li>
+            </ul>
+        </li>
+    </ul>
 
 
 <!--6. Crea un ejemplo con details que te muestre varias imagenes y al pulsar en el te las describra -->
+    <details>
+        <summary>PATATA</summary>
+        <img src="https://img.agriexpo.online/it/images_ag/photo-mg/170280-12827572.jpg" alt="Imagen 1">
+        <p>Es una patata</p>
+    </details>
+
+    <details>
+        <summary>PATA MINECRAFT</summary>
+        <img src="https://minecraft.wiki/images/Potato_JE3_BE2.png?27685" alt="Imagen 2">
+        <p>Es una patata del juego minecraft</p>
+    </details>
+
+    <details>
+        <summary>Patata Plantas vs zombies</summary>
+        <img src="https://cpng.pikpng.com/pngl/s/141-1411322_zombies-heroes-discussion-plants-vs-zombies-2-papa.png" alt="Imagen 3">
+        <p>Una patata del juego Plantas vs zombies</p>
+    </details>
 
 <!-- 7. Crea un ejemplo con dialog que te muestre varias preguntas modales usa el ejemplo de la practica -->
+    <dialog id="miDialogo">
+        <form method="dialog">
+            <p>¿Quieres continuar?</p>
+            <menu>
+                <button value="cancel">Cancelar</button>
+                <button value="default">Aceptar</button>
+            </menu>
+        </form>
+    </dialog>
+
+    <button onclick="document.getElementById('miDialogo').showModal();">Abrir diálogo</button>
 
 <!-- 8. Usa este css para hacer un ejemplo parecido al de la imagen de abajo que al pulsar en abrir centro de ayuda 
 
 
-<style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        dialog {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            width: 350px;
-        }
-
-        summary {
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button {
-            margin-top: 15px;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
-
-
-
 Cada pregunta deben abrir un summary
 -->
+    
+    <dialog id="ayudaDialogo" style="border: none; border-radius: 10px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); padding: 20px; width: 350px;" >
+            <p>Centro de Ayuda</p>
+            <details>
+                <summary style="cursor: pointer; font-weight: bold;">¿Cómo crear una cuenta?</summary>
+                <p>Para crear una cuenta, haz clic en el botón "Registrarse" y sigue las instrucciones.</p>
+            </details>
+            <details>
+                <summary style="cursor: pointer; font-weight: bold;">¿Olvidé mi contraseña, qué hago?</summary>
+                <p>Haz clic en "Olvidé mi contraseña" y sigue los pasos para restablecerla.</p>
+            </details>
+            <details>
+                <summary style="cursor: pointer; font-weight: bold;">¿Cómo contactar con soporte?</summary>
+                <p>Puedes contactar con soporte a través del formulario de contacto en nuestra página web.</p>
+            </details>
+            <menu>
+                <button style="margin-top: 15px; border: none; background-color: #d9534f; color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer;" onclick="document.getElementById('ayudaDialogo').close();">Cerrar</button>
+            </menu>
+        </form>
+    </dialog>
+
+    <button style="background-color: #45a049;" onclick="document.getElementById('ayudaDialogo').showModal();">Abrir Centro de Ayuda</button>
+
 
 
 
 <!-- 9. Usa este css para hacer una galeria parecido al de la imagen de abajo cuando se pulsa en una de las imagenes se debe abrir un cuadro explicativo
-
-
- <style>
+-->
+  <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       background-color: #f0f0f0;
+    }
+    ul {
+        align-content: center;
+    }
+    
+    li {
+        text-align: left;
+    }
+
+    ol {
+        align-content: center;
     }
 
     h1 {
@@ -194,6 +334,14 @@ Cada pregunta deben abrir un summary
 
     .galeria img:hover {
       transform: scale(1.1);
+    }
+
+    dd {
+        text-align: left;
+    }
+
+    dt {
+      text-align: left;
     }
 
     dialog {
@@ -231,4 +379,50 @@ Cada pregunta deben abrir un summary
       background-color: #c9302c;
     }
   </style>
--->
+
+  <h1>Galería de Imágenes</h1>
+  <div class="galeria">
+    <img id="img1" src="https://img.agriexpo.online/it/images_ag/photo-mg/170280-12827572.jpg" alt="Imagen 1">
+    <img id="img2" src="https://minecraft.wiki/images/Potato_JE3_BE2.png?27685" alt="Imagen 2">
+    <img id="img3" src="https://cpng.pikpng.com/pngl/s/141-1411322_zombies-heroes-discussion-plants-vs-zombies-2-papa.png" alt="Imagen 3">
+  </div>
+  <dialog id="Midialogo">
+    <form method="dialog">
+      <img id="imagenGrande" src="" alt="Imagen Grande">
+      <p id="descripcion"></p>
+      <button class="cerrar" value="close">Cerrar</button>
+    </form>
+  </dialog>
+
+  
+  <script>
+    let imagen = document.querySelectorAll('img1');
+    let imagenGrande = document.querySelectorAll('imagenGrande');
+    let descripcionImagen = document.querySelectorAll('descripcion');
+    let dialogo = document.querySelectorAll('Midialogo');
+    let botoncierre = document.querySelectorAll('cerrardialogo');
+    botoncierre.addEventListener('click', () => {
+        dialogo.close();
+    });
+
+
+    let imagenSmall = document.getElementById('img1');
+    imagenSmall.addEventListener('click', () => {
+         imagenGrande.src="https://minecraft.wiki/images/Potato_JE3_BE2.png?27685";
+         descripcionImagen.textContent="Esta es la imagen A";
+         dialogo.showModal();
+    });
+    let imagenSmall2 = document.getElementById('img2');
+    imagenSmall2.addEventListener('click', () => {
+          imagenGrande.src="https://img.agriexpo.online/it/images_ag/photo-mg/170280-12827572.jpg";
+          descripcionImagen.textContent="Esta es la imagen B";
+          dialogo.showModal();
+      });
+    let imagenSmall3 = document.getElementById('img3');
+    imagenSmall3.addEventListener('click', () => {
+          imagenGrande.src="https://cpng.pikpng.com/pngl/s/141-1411322_zombies-heroes-discussion-plants-vs-zombies-2-papa.png";
+          descripcionImagen.textContent="Esta es la imagen C";
+          dialogo.showModal();
+      });
+
+  </script>
