@@ -1,36 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>02_08</title>
+<meta charset="UTF-8" />
+<title>Ejercicios combinados</title>
 </head>
 <body>
-    <ul style="color: green;">
-    <script>
-        let array = ["Malaga", "Sevilla", "Cordoba", "Huelva", "Almeria", "Granada", "Cadiz"];
 
-        array.forEach(element => {
-            document.write("<li> <p style=\" color: green;\"\ >" + element + "</p></li>");
-            
-        });
-        document.write("<br>");
+<div id="listaVerde"></div>
+<div id="listaDegradado"></div>
+<div id="notas"></div>
+<div id="tablaCombinada"></div>
+<div id="formBotones"></div>
+<div id="textoPequeno"></div>
+<div id="figura3x3"></div>
+<div id="figura6x6"></div>
+<div id="figura6x8"></div>
 
-        let greenValue = 0;
-        array.forEach(element => {
-            let hexGreen = greenValue.toString(16).padStart(2, '0');
-            document.write("<li> <p style=\" color: #00" + hexGreen + "00;\"\ >" + element + "</p></li>");
-            greenValue += Math.floor(255 / (array.length - 1));
-        });
+<form name="selectForm">
+  <p>
+    <label for="musicTypes">Elija algunos tipos de música, luego haga clic en el botón de abajo:</label>
+    <select id="musicTypes" name="musicTypes" multiple="multiple">
+      <option selected="selected">R&B</option>
+      <option>Jazz</option>
+      <option>Blues</option>
+      <option>New Age</option>
+      <option>Classical</option>
+      <option>Opera</option>
+    </select>
+  </p>
+  <p><input id="btn" type="button" value="¿Cuántos están seleccionados?" /></p>
+</form>
 
-    </script>
-    </ul>
-    <script>
-        var Mis_notas = { mates: 9, Lengua: 6, Efisica: 5, Quimica: 9, fisica: 5, ingles: 5 };
-        for (var asignatura in Mis_notas) {
-            document.write("En " + asignatura + " tienes un " + Mis_notas[asignatura] + "<br>");
-        }
-    </script>
+<script>
+const arr1 = ["Malaga", "Sevilla", "Cordoba", "Huelva", "Cadiz", "Almeria", "Granada"];
+const arr2 = ["bonita", "Guapa", " Bella", "Pintoresca", "Hermosa"];
+var Mis_notas = { mates: 9, Lengua: 6, Efisica: 5, Quimica: 9, fisica: 5, ingles: 5 };
+
+let listaVerde = "<ul>";
+for (const ciudad of arr1) {
+  listaVerde += `<li style="color: green;">${ciudad}</li>`;
+}
+listaVerde += "</ul>";
+document.getElementById("listaVerde").innerHTML = listaVerde;
+
+let listaDegradado = "<ul>";
+for (let i = 0; i < arr1.length; i++) {
+  let ratio = i / (arr1.length - 1);
+  let r = 0;
+  let g = Math.floor(255 * ratio);
+  let b = 0;
+  let color = `rgb(${r},${g},${b})`;
+  listaDegradado += `<li style="color: ${color};">${arr1[i]}</li>`;
+}
+listaDegradado += "</ul>";
+document.getElementById("listaDegradado").innerHTML = listaDegradado;
+
+let notasHTML = "<ul>";
+for (let asignatura in Mis_notas) {
+  notasHTML += `<li>${asignatura}: ${Mis_notas[asignatura]}</li>`;
+}
+notasHTML += "</ul>";
+document.getElementById("notas").innerHTML = notasHTML;
+
+let tablaHTML = "<table border='1' cellpadding='5' cellspacing='0'><tbody>";
+for (const c of arr1) {
+  tablaHTML += "<tr>";
+  for (const d of arr2) {
+    tablaHTML += `<td>${c} ${d}</td>`;
+  }
+  tablaHTML += "</tr>";
+}
+tablaHTML += "</tbody></table>";
+document.getElementById("tablaCombinada").innerHTML = tablaHTML;
+
+let formHTML = "<form>";
+for (const ciudad of arr1) {
+  formHTML += `<input type="button" onclick='alert("La ciudad mas bonita es Malaga")' value="${ciudad}"> `;
+}
+formHTML += "</form>";
+document.getElementById("formBotones").innerHTML = formHTML;
+
+let texto = "";
+for (let i = 10; i > 0; i--) {
+  texto += `<p style="font-size:${i*2}px">hola que tal</p>`;
+}
+document.getElementById("textoPequeno").innerHTML = texto;
+
+let i = 10;
+let textoWhile = "";
+while (i > 0) {
+  textoWhile += `<p style="font-size:${i*2}px">hola que tal</p>`;
+  i--;
+}
+document.getElementById("textoPequeno").innerHTML += textoWhile;
+
+let j = 10;
+let textoDo = "";
+do {
+  textoDo += `<p style="font-size:${j*2}px">hola que tal</p>`;
+  j--;
+} while (j > 0);
+document.getElementById("textoPequeno").innerHTML += textoDo;
+
+function howMany(selectObject) {
+  let numberSelected = 0;
+  for (let i = 0; i < selectObject.options.length; i++) {
+    if (selectObject.options[i].selected) {
+      numberSelected++;
+    }
+  }
+  return numberSelected;
+}
+
+document.getElementById("btn").addEventListener("click", function () {
+  alert("Número de opciones seleccionadas: " + howMany(document.selectForm.musicTypes));
+});
+
+let pista3x3 = [
+  ["#f00", "#0f0", "#00f"],
+  ["#0f0", "#00f", "#f00"],
+  ["#00f", "#f00", "#0f0"],
+];
+let tabla3x3 = "<table width='150px' height='150px' border='0' cellpadding='0' cellspacing='0'>";
+for (let fila = 0; fila < 3; fila++) {
+  tabla3x3 += "<tr>";
+  for (let col = 0; col < 3; col++) {
+    tabla3x3 += `<td style="background-color:${pista3x3[fila][col]};width:50px;height:50px"></td>`;
+  }
+  tabla3x3 += "</tr>";
+}
+tabla3x3 += "</table>";
+document.getElementById("figura3x3").innerHTML = tabla3x3;
+
+let pista6x6 = [
+  ["#f0f", "#f0f", "#f0f", "#f0f", "#f0f", "#f0f"],
+  ["#ff0", "#ff0", "#f0f", "#f0f", "#ff0", "#ff0"],
+  ["#ff0", "#0ff", "#0ff", "#0ff", "#0ff", "#ff0"],
+  ["#ff0", "#ff0", "#f0f", "#f0f", "#ff0", "#ff0"],
+  ["#ff0", "#ff0", "#f0f", "#f0f", "#ff0", "#ff0"],
+  ["#f0f", "#f0f", "#f0f", "#f0f", "#f0f", "#f0f"],
+];
+let tabla6x6 = "<table width='300px' height='300px' border='0' cellpadding='0' cellspacing='0'>";
+for (let f = 0; f < 6; f++) {
+  tabla6x6 += "<tr>";
+  for (let c = 0; c < 6; c++) {
+    tabla6x6 += `<td style="background-color:${pista6x6[f][c]};width:50px;height:50px"></td>`;
+  }
+  tabla6x6 += "</tr>";
+}
+tabla6x6 += "</table>";
+document.getElementById("figura6x6").innerHTML = tabla6x6;
+document.write("<br>");
+
+let pista6x8 = [
+  ["#ff0", "#ff0", "#ff0", "#f0f", "#f0f", "#ff0", "#ff0", "#ff0"],
+  ["#ff0", "#ff0", "#ff0", "#f0f", "#f0f", "#ff0", "#ff0", "#ff0"],
+  ["#f0f", "#f0f", "#f0f", "#f0f", "#f0f", "#f0f", "#f0f", "#f0f"],
+  ["#ff0", "#ff0", "#ff0", "#f0f", "#f0f", "#ff0", "#ff0", "#ff0"],
+  ["#ff0", "#ff0", "#ff0", "#f0f", "#f0f", "#ff0", "#ff0", "#ff0"],
+  ["#ff0", "#ff0", "#f0f", "#ff0", "#ff0", "#f0f", "#ff0", "#ff0"],
+];
+let tabla6x8 = "<table width='400px' height='300px' border='0' cellpadding='0' cellspacing='0'>";
+for (let f = 0; f < 6; f++) {
+  tabla6x8 += "<tr>";
+  for (let c = 0; c < 8; c++) {
+    tabla6x8 += `<td style="background-color:${pista6x8[f][c]};width:50px;height:50px"></td>`;
+  }
+  tabla6x8 += "</tr>";
+}
+tabla6x8 += "</table>";
+document.getElementById("figura6x8").innerHTML = tabla6x8;
+
+</script>
+
 </body>
 </html>
+
 

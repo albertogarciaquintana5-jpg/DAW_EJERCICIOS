@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Ejercicios DAW</title>
+</head>
+<body>
+
+<script>
+let entrada1 = prompt("1. Escribe un texto:");
+alert("Longitud: " + entrada1.length);
+
+let mitad = Math.floor(entrada1.length / 2);
+alert("Caracter mitad: " + entrada1.charAt(mitad) + " Unicode: " + entrada1.charCodeAt(mitad));
+
+alert("Primera letra: " + entrada1.charAt(0) + " Unicode: " + entrada1.charCodeAt(0));
+
+let entrada2 = prompt("5. Escribe otro texto:");
+alert("Texto unido: " + entrada1 + entrada2);
+
+let num = prompt("6. Escribe un número:");
+num = Number(num);
+if (isNaN(num)) alert("No es un número");
+else alert("Carácter Unicode: " + String.fromCharCode(num));
+
+let busqueda = prompt("7 y 8. Escribe el texto a buscar:");
+let textoBuscado = prompt("7 y 8. Escribe el texto donde buscar:");
+alert("IndexOf: " + textoBuscado.indexOf(busqueda));
+
+alert("LastIndexOf: " + textoBuscado.lastIndexOf(busqueda));
+
+let cadena = "<br>Los temas son tema 1, tema 3, tema 5 y tema 6";
+let expresion = /(tema \d+)/i;
+let hallado = cadena.match(expresion);
+document.write(cadena + "<br> Expresión en: " + (hallado ? hallado[1] : "no encontrado") + "<br><br>");
+
+let reemplazar = prompt("11. Texto a reemplazar:");
+let textoReemplazar = prompt("11. Texto donde reemplazar:");
+alert(textoReemplazar.replace(reemplazar, "REEMPLAZADO"));
+
+let busqueda2 = prompt("12. Busca una subcadena:");
+alert("Posición encontrada: " + textoReemplazar.search(busqueda2));
+
+let entrada3 = prompt("13. Escribe un texto para cortar la mitad:");
+let mitad3 = Math.floor(entrada3.length / 2);
+alert("Mitad extraída: " + entrada3.slice(0, mitad3));
+
+let entrada4 = prompt("14. Escribe un texto para dividir por palabras:");
+alert(entrada4.split(" "));
+
+let entrada5 = prompt("15. Escribe un texto para substr:");
+let pos = Number(prompt("Posición de inicio:"));
+let longitud = Number(prompt("Número de caracteres:"));
+alert(entrada5.substr(pos, longitud));
+
+let inicio = Number(prompt("16. Índice inicio:"));
+let fin = Number(prompt("16. Índice fin:"));
+alert(entrada5.substring(inicio, fin));
+
+let entrada6 = prompt("17. Escribe un texto para minúsculas y mayúsculas:");
+alert("Minusculas: " + entrada6.toLowerCase() + "\nMayúsculas: " + entrada6.toUpperCase());
+
+let buscado = prompt("18. Caracter a poner en negrita:");
+let cadena18 = prompt("18. Texto donde buscar:");
+let partes = cadena18.split(buscado);
+let resultado = partes.join("-" + buscado + "-");
+alert(resultado);
+</script>
+
+</body>
+</html>
