@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+        <h1>ALberto Garcia Quintana 23/10/2025</h1>
+<script>
+
+// EJERCICIO 1 - Tarjeta de usuario
+
+const nombre1 = "Laura García";
+const edad = 29;
+const ciudad = "Madrid";
+const intereses = ["fotografía", "viajes", "tecnología"];
+
+const tarjetaUsuario = `
+  <div class="tarjeta">
+    <h2>${nombre1}</h2>
+    <p>Edad: ${edad}</p>
+    <p>Ciudad: ${ciudad}</p>
+    <h4>Intereses:</h4>
+    <ul>
+      ${intereses.map(interes => `<li>${interes}</li>`).join("")}
+    </ul>
+  </div>
+`;
+
+document.writeln("<h3>Ejercicio 1:</h3>");
+document.writeln(tarjetaUsuario);
+
+
+// EJERCICIO 2 - Descripción de producto con formato
+
+const producto = "auriculares inalámbricos";
+const precio = 59.99;
+const marca = "SoundMax";
+
+let descripcion = `Los ${producto} de la marca ${marca} cuestan ${precio}€.`;
+
+// Capitalizar palabras
+descripcion = descripcion
+  .split(" ")
+  .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+  .join(" ");
+
+// Reemplazar símbolo
+descripcion = descripcion.replace("€", " euros");
+
+document.writeln("<h3>Ejercicio 2:</h3>");
+document.writeln(`<p>${descripcion}</p>`);
+
+
+
+// EJERCICIO 3 - Plantilla de correo
+
+let nombre2 = " juan pérez ";
+const productoPedido = "Teclado mecánico RGB";
+const fecha = "09/10/2025";
+
+nombre2 = nombre2.trim();
+nombre2 = nombre2
+  .split(" ")
+  .map(p => p.charAt(0).toUpperCase() + p.slice(1))
+  .join(" ");
+
+let correo = `Hola ${nombre2}, tu pedido del producto ${productoPedido} se enviará el ${fecha}.`;
+correo = correo.toUpperCase();
+
+document.writeln("<h3>Ejercicio 3:</h3>");
+document.writeln(`<p>${correo}</p>`);
+
+
+// EJERCICIO 4 - Lista de usuarios formateados
+
+const usuarios = [" ana ", "PEDRO", "maria "];
+
+const nombresLimpios = usuarios.map(nombre => {
+  nombre = nombre.trim().toLowerCase();
+  return nombre.charAt(0).toUpperCase() + nombre.slice(1);
+});
+
+const listaHTML = `
+  <ul>
+    ${nombresLimpios.map(nombre => `<li>${nombre}</li>`).join("")}
+  </ul>
+`;
+
+document.writeln("<h3>Ejercicio 4:</h3>");
+document.writeln(listaHTML);
+
+console.log("Ejercicio 4 - Consola (alineados):");
+nombresLimpios.forEach(nombre => console.log(nombre.padEnd(10, " ")));
+
+
+
+// EJERCICIO 5 - Análisis de texto dinámico
+
+const nombre3 = "Lucía";
+const hobby = "leer libros de ciencia ficción";
+
+let mensaje = `A ${nombre3} le encanta ${hobby}.`;
+
+console.log("Ejercicio 5:");
+console.log("Mensaje original:", mensaje);
+console.log("Número de letras:", mensaje.length);
+console.log("¿Incluye 'ficción'?", mensaje.includes("ficción"));
+
+let mensajeReemplazado = mensaje.replace("ficción", "aventuras");
+
+console.log
+
+</script>
+</body>
+</html>

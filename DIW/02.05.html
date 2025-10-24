@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Práctica: Formatos de Imagen</title>
+</head>
+<body>
+        <h1>ALberto García Quintana </h1>
+
+<!-- 
+1. ¿Cuál es la diferencia principal entre los formatos de imagen rasterizados y los vectoriales?
+    Los formatos rasterizados (como JPEG, PNG) se basan en píxeles, mientras que los vectoriales (como SVG) usan fórmulas matemáticas para representar imágenes.
+-->
+
+<!-- 
+2. ¿Por qué el formato JPEG es el más utilizado para fotografías digitales, y cuáles son las consecuencias de su compresión con pérdida?
+    JPEG es ideal para fotografías por su buena compresión. Sin embargo, pierde calidad con cada guardado debido a la compresión con pérdida.
+-->
+
+<!-- 
+3. Explica en qué situaciones sería más conveniente usar una imagen PNG en lugar de una JPEG.
+    PNG es mejor para gráficos con transparencia o líneas definidas, como logotipos o iconos.
+-->
+
+<!-- 
+4. El formato GIF tiene limitaciones en su paleta de colores. ¿Cómo afecta esto a la calidad visual de las imágenes y qué ventajas mantiene frente a otros formatos?
+    Solo permite 256 colores, lo que limita la calidad visual, pero soporta animaciones y es ampliamente compatible.
+-->
+
+<!-- 
+5. ¿Qué características hacen del formato SVG una buena opción para logotipos y gráficos escalables en la web?
+    SVG permite escalabilidad sin pérdida de calidad, edición con CSS/JS y peso liviano en gráficos simples.
+-->
+
+<!-- 
+6. Compara el formato WEBP con PNG y JPEG. ¿Qué ventajas ofrece en términos de compresión, transparencia y animación?
+    WEBP ofrece mejor compresión que JPEG y PNG, soporta transparencia y animaciones, con menor tamaño de archivo.
+-->
+
+<!-- 
+7. ¿Por qué el formato BMP no se utiliza comúnmente en entornos web, y en qué casos aún puede ser útil?
+    BMP no se usa en la web por su gran tamaño. Aún puede usarse en software o impresión por su calidad sin compresión.
+-->
+
+<!-- 
+8. Explica las ventajas del formato PSD en el proceso de edición de imágenes profesionales. ¿Qué lo diferencia de los demás formatos?
+    PSD es el formato nativo de Photoshop y guarda capas, efectos, vectores, lo que permite edición no destructiva.
+-->
+
+<!-- 
+9. Si un diseñador necesita una imagen con transparencia, buena calidad y tamaño de archivo razonable para una página web moderna, ¿qué formato debería elegir y por qué?
+    WEBP o PNG, dependiendo del soporte y necesidad de compresión, ya que ambos permiten transparencia y buena calidad.
+-->
+
+<!-- 
+10. Describe las diferencias entre la compresión con pérdida y sin pérdida, indicando qué formatos utilizan cada tipo y en qué casos es preferible uno sobre el otro.
+    Con pérdida (JPEG, WEBP) reduce calidad pero también tamaño. Sin pérdida (PNG, BMP) mantiene calidad, útil en gráficos detallados o edición.
+-->
+
+<h1>Ejercicio 1: Imágenes desde Internet</h1>
+
+<!-- Ejercicio 1: Imágenes de distintos formatos -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" alt="Foto JPEG" width="300">
+<img src="https://img.icons8.com/ios/500/delete-key.png" alt="Gráfico PNG" width="300">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif" alt="Animación GIF" width="300">
+
+<h1>Ejercicio 2: Reducción de imágenes</h1>
+
+<!-- Imagen original -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" alt="Original" width="300">
+
+<!-- Reducida proporcionalmente al 30% del ancho -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" alt="30% Ancho" width="90">
+
+<!-- Reducida 50% verticalmente -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" alt="50% Alto" width="300" height="150">
+
+<h1>Ejercicio 3: Imagen en bloque <code>&lt;figure&gt;</code></h1>
+
+<figure>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" width="300" alt="Foto JPEG con figura" title="Imagen JPEG" longdesc="descripcion1.html">
+  <figcaption>Imagen JPEG</figcaption>
+</figure>
+
+<figure>
+  <img src="https://img.icons8.com/ios/500/delete-key.png" width="300" alt="Gráfico PNG con figura" title="Imagen PNG" longdesc="descripcion2.html">
+  <figcaption>Imagen PNG</figcaption>
+</figure>
+
+<figure>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif" width="300" alt="GIF animado con figura" title="Imagen GIF" longdesc="descripcion3.html">
+  <figcaption>Imagen GIF</figcaption>
+</figure>
+
+<h1>Ejercicio 4: Atributo loading</h1>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg" alt="Carga perezosa" width="300" loading="lazy">
+<img src="https://img.icons8.com/ios/500/delete-key.png" alt="Carga inmediata" width="300" loading="eager">
+
+<h1>Ejercicio 5: ISMAP (coordenadas)</h1>
+
+<!-- La imagen envía coordenadas al hacer clic -->
+<a href="ismap.php">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg" ismap alt="Haz clic para ver coordenadas" width="400">
+</a>
+
+<h1>Ejercicio 6: Imagen responsive con srcset</h1>
+
+<img 
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg/800px-Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" 
+  srcset="
+    https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg/200px-Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg 200w,
+    https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg/400px-Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg 400w,
+    https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg/600px-Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg 600w,
+    https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg/800px-Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg 800w
+  "
+  sizes="(max-width: 600px) 100vw, 800px"
+  alt="Imagen con srcset"
+  width="100%"
+>
+
+</body>
+</html>

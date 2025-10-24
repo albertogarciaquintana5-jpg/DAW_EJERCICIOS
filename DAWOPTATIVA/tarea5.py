@@ -26,6 +26,7 @@ if (iNumEjer == 3):
 # ---------------------------------------------------------------------
 if (iNumEjer == 4):
      sTexto2 = input("introduzca una cadena de texto")
+     
 
 # 5. Definir la función
 # rango : (List[int]) -> List[int]
