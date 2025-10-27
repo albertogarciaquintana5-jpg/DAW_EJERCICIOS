@@ -54,12 +54,6 @@
 
         var sSexo = prompt("Introduce tu sexo (Pon M o F): ");
 
-
-
-        // Creamos el objeto Date con la fecha introducida
-        var fechaNac = new Date(fechaNacimiento);
-
-
         // Mostramos las fechas en español
         var fechaHoy = hoy.toLocaleDateString("es-ES");
         var fechaNacTexto = fechaNac.toLocaleDateString("es-ES");
@@ -76,6 +70,7 @@
         document.write("Has vivido aproximadamente " + diasVividos + " días.");
 
         //calculas cuantos años te faltan para llegar a la edad media de tu pais dependiendo de tu genero
+        
 
         var iAñoNacimiento = dFechaNacimiento.getFullYear
         document.write(iAñoNacimiento)
