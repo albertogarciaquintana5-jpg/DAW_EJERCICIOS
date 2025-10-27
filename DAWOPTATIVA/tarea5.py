@@ -2,125 +2,201 @@ iNumEjer = int(input("introduce el ejercicio que quiera revisar: "))
 
 
 # 1. Definir una función que, al recibir una cadena de texto, cuente cuántas vocales hay y devuelva dicho valor.
-if (iNumEjer == 1):
-    sTexto = input("introduzca una cadena de texto: ")
-    iTotalVocales = sTexto.count("a")+sTexto.count("e")+sTexto.count("i")+sTexto.count("o")+sTexto.count("u")
+def cuenta_vocales(s: str) -> int:
+     s = s.lower()
+     return sum(s.count(v) for v in "aeiou")
 
-    print(sTexto," tiene un total de ",iTotalVocales," vocales")
+if (iNumEjer == 1):
+     sTexto = input("introduzca una cadena de texto: ")
+     print(f"{sTexto} tiene un total de {cuenta_vocales(sTexto)} vocales")
+
 
 # 2. Definir una función que, al recibir una cadena de texto, cuente cuántas palabras hay y devuelva dicho valor.
+def cuenta_palabras(s: str) -> int:
+     words = s.split()
+     return len(words)
+
 if (iNumEjer == 2):
-    sTexto2 = input("introduzca una cadena de texto: ")
-    print(sTexto2.split(" "))
+     sTexto2 = input("introduzca una cadena de texto: ")
+     print("Tu frase tiene", cuenta_palabras(sTexto2), "palabras")
+    
 
 # 3. Definir una función que devuelva la suma dos números. Utilizar esa función para sumar tres números.
+def suma_dos(a: float, b: float) -> float:
+     return a + b
+
 if (iNumEjer == 3):
-     sTexto2 = input("introduzca una cadena de texto")
+     a = float(input("introduce el primer número: "))
+     b = float(input("introduce el segundo número: "))
+     c = float(input("introduce el tercer número: "))
+     s = suma_dos(suma_dos(a, b), c)
+     print(f"La suma de {a}, {b} y {c} es {s}")
 
-# 4. Definir la función rota : (int, List[A]) -> List[A]
-# tal que rota(n, xs) es la lista obtenida poniendo los n primeros
-# elementos de xs al final de la lista. Por ejemplo,
-# rota(1, [3, 2, 5, 7]) == [2, 5, 7, 3]
-# rota(2, [3, 2, 5, 7]) == [5, 7, 3, 2]
-# rota(3, [3, 2, 5, 7]) == [7, 3, 2, 5]
-# ---------------------------------------------------------------------
+
+# 4. rota : (int, List[A]) -> List[A]
+def rota(n: int, xs: list) -> list:
+     if not xs:
+          return []
+     n = n % len(xs)
+     return xs[n:] + xs[:n]
+
 if (iNumEjer == 4):
-     sTexto2 = input("introduzca una cadena de texto")
-     
+     raw = input("introduce una lista de elementos separados por espacios: ")
+     xs = raw.split()
+     n = int(input("introduce n (número de posiciones a rotar): "))
+     print(rota(n, xs))
 
-# 5. Definir la función
-# rango : (List[int]) -> List[int]
-# tal que rango(xs) es la lista formada por el menor y mayor elemento
-# de xs.
-# rango([3, 2, 7, 5]) == [2, 7]
-# ---------------------------------------------------------------------
+
+# 5. rango : (List[int]) -> List[int]
+def rango(xs: list) -> list:
+     if not xs:
+          return []
+     return [min(xs), max(xs)]
+
 if (iNumEjer == 5):
-     sTexto2 = input("introduzca una cadena de texto")
+     raw = input("introduce una lista de números separados por espacios: ")
+     xs = [int(x) for x in raw.split() if x]
+     print(rango(xs))
 
-# 6. Definir la función
-# interior : (list[A]) -> list[A]
-# tal que interior(xs) es la lista obtenida eliminando los extremos de
-# la lista xs. Por ejemplo,
-# interior([2, 5, 3, 7, 3]) == [5, 3, 7]
-# ---------------------------------------------------------------------
+
+# 6. interior : (list[A]) -> list[A]
+def interior(xs: list) -> list:
+     if len(xs) <= 2:
+          return []
+     return xs[1:-1]
+
 if (iNumEjer == 6):
-     sTexto2 = input("introduzca una cadena de texto")
+     raw = input("introduce una lista de elementos separados por espacios: ")
+     xs = raw.split()
+     print(interior(xs))
 
-# 7. Definir la función
-# finales : (int, list[A]) -> list[A]
-# tal que finales(n, xs) es la lista formada por los n finales
-# elementos de xs. Por ejemplo,
-# finales(3, [2, 5, 4, 7, 9, 6]) == [7, 9, 6]
-# ---------------------------------------------------------------------
+
+# 7. finales : (int, list[A]) -> list[A]
+def finales(n: int, xs: list) -> list:
+     if n <= 0:
+          return []
+     return xs[-n:] if n <= len(xs) else xs[:]
+
 if (iNumEjer == 7):
-     sTexto2 = input("introduzca una cadena de texto")
+     raw = input("introduce una lista de elementos separados por espacios: ")
+     xs = raw.split()
+     n = int(input("introduce n (número de elementos finales): "))
+     print(finales(n, xs))
 
-# 8. Ejercicio 13. Definir la función
-# segmento : (int, int, list[A]) -> list[A]
-# tal que segmento(m, n, xs) es la lista de los elementos de xs
-# comprendidos entre las posiciones m y n. Por ejemplo,
-# segmento(3, 4, [3, 4, 1, 2, 7, 9, 0]) == [1, 2]
-# segmento(3, 5, [3, 4, 1, 2, 7, 9, 0]) == [1, 2, 7]
-# segmento(5, 3, [3, 4, 1, 2, 7, 9, 0]) == []
-# ---------------------------------------------------------------------
+
+# 8. segmento : (int, int, list[A]) -> list[A]
+def segmento(m: int, n: int, xs: list) -> list:
+     # posiciones m..n inclusive, índices 1-based
+     if m > n:
+          return []
+     # convert to 0-based
+     start = max(0, m-1)
+     end = min(len(xs), n)
+     return xs[start:end]
+
 if (iNumEjer == 8):
-     sTexto2 = input("introduzca una cadena de texto")
+     raw = input("introduce una lista de elementos separados por espacios: ")
+     xs = raw.split()
+     m = int(input("introduce m (inicio, 1-based): "))
+     n = int(input("introduce n (fin, 1-based): "))
+     print(segmento(m, n, xs))
 
-# 9. Definir la función
-# extremos : (int, list[A]) -> list[A]
-# tal que extremos(n, xs) es la lista formada por los n primeros
-# elementos de xs y los n finales elementos de xs. Por ejemplo,
-# extremos(3, [2, 6, 7, 1, 2, 4, 5, 8, 9, 2, 3]) == [2, 6, 7, 9, 2, 3]
+
+# 9. extremos : (int, list[A]) -> list[A]
+def extremos(n: int, xs: list) -> list:
+     if n <= 0:
+          return []
+     first = xs[:n]
+     last = xs[-n:] if n <= len(xs) else xs[:]
+     return first + last
+
 if (iNumEjer == 9):
-     sTexto2 = input("introduzca una cadena de texto")
+     raw = input("introduce una lista de elementos separados por espacios: ")
+     xs = raw.split()
+     n = int(input("introduce n: "))
+     print(extremos(n, xs))
 
-# 10. Las dimensiones de los rectángulos puede representarse
-# por pares; por ejemplo, (5,3) representa a un rectángulo de base 5 y
-# altura 3.
-#
-# Definir la función
-# mayorRectangulo : (tuple[float, float], tuple[float, float])
-# -> tuple[float, float]
-# tal que mayorRectangulo(r1, r2) es el rectángulo de mayor área entre
-# r1 y r2. Por ejemplo,
-# mayorRectangulo((4, 6), (3, 7)) == (4, 6)
-# mayorRectangulo((4, 6), (3, 8)) == (4, 6)
-# mayorRectangulo((4, 6), (3, 9)) == (3, 9)
-# ---------------------------------------------------------------------
+
+# 10. mayorRectangulo : (tuple[float, float], tuple[float, float]) -> tuple[float, float]
+def mayorRectangulo(r1: tuple, r2: tuple) -> tuple:
+     a1 = r1[0] * r1[1]
+     a2 = r2[0] * r2[1]
+     return r1 if a1 >= a2 else r2
+
 if (iNumEjer == 10):
-     sTexto2 = input("introduzca una cadena de texto")
+     b1 = float(input("rect1 base: "))
+     h1 = float(input("rect1 altura: "))
+     b2 = float(input("rect2 base: "))
+     h2 = float(input("rect2 altura: "))
+     print(mayorRectangulo((b1, h1), (b2, h2)))
 
-# 11. Definir la función
-# intercambia : (tuple[A, B]) -> tuple[B, A]
-# tal que intercambia(p) es el punto obtenido intercambiando las
-# coordenadas del punto p. Por ejemplo,
-# intercambia((2,5)) == (5,2)
-# intercambia((5,2)) == (2,5)
+
+# 11. intercambia : (tuple[A, B]) -> tuple[B, A]
+def intercambia(p: tuple) -> tuple:
+     if len(p) != 2:
+          raise ValueError("El punto debe tener dos coordenadas")
+     return (p[1], p[0])
+
 if (iNumEjer == 11):
-     sTexto2 = input("introduzca una cadena de texto")
+     x = input("introduce dos valores separados por espacio (x y y): ").split()
+     if len(x) < 2:
+          print("Introduce dos valores")
+     else:
+          p = (x[0], x[1])
+          print(intercambia(p))
 
 
-iNumEjer2 = int(input("introduce el ejercicio que quiera revisar del segundo pdf de ejercicios"))
+# ----------------- Segundo PDF de ejercicios -----------------
+iNumEjer2 = int(input("introduce el ejercicio que quiera revisar del segundo pdf de ejercicios: "))
 
-#1. Escribe un programa que recoja números de teclado hasta que se introduce un cero Luegodebemostrar la secuencia de números de tres modos:
-#a. En el orden en que se introdujeron.
-#b. En orden creciente.
-#c. En orden decreciente.
+# 1. leer números hasta cero y mostrar en 3 modos
 if (iNumEjer2 == 1):
-     sTexto2 = input("introduzca una cadena de texto")
-#Ejemplo: si se introduce 4 3 5 2 0, debe mostrarse:
-#- 4 3 5 2
-#- 2 3 4 5
-#- 5 4 3 2
+     nums = []
+     while True:
+          v = int(input("introduce un entero (0 para terminar): "))
+          if v == 0:
+               break
+          nums.append(v)
+     print("En el orden introducido:", nums)
+     print("En orden creciente:", sorted(nums))
+     print("En orden decreciente:", sorted(nums, reverse=True))
 
 
-#2. Repite el ejercicio anterior, pero ahora lo que se leen son textos. La condiciónde finalización será la cadena vacía.
+# 2. repetir pero con textos hasta cadena vacía
 if (iNumEjer2 == 2):
-     sTexto2 = input("introduzca una cadena de texto")
-#3. Escribe un programa lea un texto y determine si es un palíndromo. Procura crear una función palindromo(s) -> Bool.
-# NOTA: una cadena es palíndromo si se lee igual de izquierda a derecha que de derecha a izquierda. Por ejemplo, la palabra OSO es un palíndromo.
+     texts = []
+     while True:
+          s = input("introduce un texto (enter solo para terminar): ")
+          if s == "":
+               break
+          texts.append(s)
+     print("En el orden introducido:", texts)
+     print("En orden creciente:", sorted(texts))
+     print("En orden decreciente:", sorted(texts, reverse=True))
+
+
+# 3. palíndromo
+def es_palindromo(s: str) -> bool:
+     import re
+     s_clean = re.sub(r"[^A-Za-z0-9]", "", s).lower()
+     return s_clean == s_clean[::-1]
+
 if (iNumEjer2 == 3):
-     sTexto2 = input("introduzca una cadena de texto")
-#4. Escribe un programa que lea dos textos y compruebe si una es palíndromo de la otra. El programa debe preguntar si se desea comprobar teniendo en cuenta mayúsculas/minúsculas o no.
+     s = input("introduce un texto para comprobar si es palíndromo: ")
+     print(es_palindromo(s))
+
+
+# 4. comprobar si una es palíndromo de la otra (preguntar caso)
 if (iNumEjer2 == 4):
-     sTexto2 = input("introduzca una cadena de texto")     
+     a = input("introduce la primera cadena: ")
+     b = input("introduce la segunda cadena: ")
+     opcion = input("¿Ignorar mayúsculas/minúsculas? (s/n): ")
+     if opcion.lower().startswith('s'):
+          a2 = a.lower()
+          b2 = b.lower()
+     else:
+          a2 = a
+          b2 = b
+     # b es palíndromo de a si b == reverse(a)
+     print(b2 == a2[::-1])
+
