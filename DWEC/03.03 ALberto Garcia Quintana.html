@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../Librerias/libreria.minima.datejs/datejs/core.js"></script>
+    <script src="../Librerias/libreria.minima.datejs/datejs/date.js"></script>
+    <script src="../Librerias/libreria.minima.datejs/datejs/time.js"></script>
+    <script src="../Librerias/libreria.minima.datejs/datejs/parser.js"></script>
+    <script src="../Librerias/libreria.minima.datejs/datejs/extras.js"></script>
+    <script src="../Librerias/libreria.minima.datejs/date-es-ES.js"></script>
+</head>
+<body>
+    <h1>ALberto Garcia Quintana 23/10/2025</h1>
+    <script>
+        let dXFecha = new Date("11/06/2023");
+        const iTiempoTranscurrido = Date.now();
+    	const dHoy = new Date(iTiempoTranscurrido);
+
+        var dFechaNacimiento = new Date(prompt("Introduce tu fecha de nacimiento (formato: AAAA-MM-DD): "));
+        var sPais = prompt("Introduce tu pais de origen: ");
+
+        if (sPais == "japon") {
+            let fEdadMedia = 84.3
+            let fEdadM = 81.5
+            let fEdadF = 86.9
+
+        } if (sPais == "Suiza") {
+            let fEdadMedia = 83.4
+            let fEdadM = 81.8
+            let fEdadF = 85.1
+
+        } if (sPais == "España") {
+            let fEdadMedia = 83.2
+            let fEdadM = 80.7
+            let fEdadF = 85.7
+            
+        } if (sPais == "Italia") {
+            let fEdadMedia = 83.0
+            let fEdadM = 80.9
+            let fEdadF = 84.9
+
+        } if (sPais == "Irak") {
+            let fEdadMedia = 72.4
+            let fEdadM = 69.9
+            let fEdadF = 75.0
+
+        } if (sPais == "Guinea Ecuatorial") {
+            let fEdadMedia = 62.2
+            let fEdadM = 60.9
+            let fEdadF = 63.6
+
+        } if (sPais == "Somalia") {
+            let fEdadMedia = 56.5
+            let fEdadM = 54.0
+            let fEdadF = 59.2
+
+        }
+
+    var sSexo = prompt("Introduce tu sexo (Pon M o F): ");
+
+    // Mostramos las fechas en español
+    var sFechaHoy = dHoy.toLocaleDateString("es-ES");
+    var sFechaNacTexto = dFechaNacimiento.toLocaleDateString("es-ES");
+
+    document.write("Fecha de nacimiento: " + sFechaNacTexto + "<br>");
+    document.write("Fecha actual: " + sFechaHoy + "<br>");
+
+    // Calculamos la diferencia en milisegundos
+    var iDiferenciaMs = dHoy.getTime() - dFechaNacimiento.getTime();
+
+    // Convertimos la diferencia a días
+    var iDiasVividos = Math.floor(iDiferenciaMs / (1000 * 60 * 60 * 24));
+
+    document.write("Has vivido aproximadamente " + iDiasVividos + " días.<br>");
+
+        // calculas cuantos años te faltan para llegar a la edad media de tu pais dependiendo de tu genero
+
+    // Normalizamos el nombre del país y el sexo
+    var sPaisKey = (sPais || "").trim().toLowerCase();
+    var sSexoKey = (sSexo || "").trim().toUpperCase();
+
+        // Mapa de esperanzas de vida
+        var esperanzas = {
+            "japon": { media: 84.3, m: 81.5, f: 86.9 },
+            "suiza": { media: 83.4, m: 81.8, f: 85.1 },
+            "españa": { media: 83.2, m: 80.7, f: 85.7 },
+            "italia": { media: 83.0, m: 80.9, f: 84.9 },
+            "irak": { media: 72.4, m: 69.9, f: 75.0 },
+            "guinea ecuatorial": { media: 62.2, m: 60.9, f: 63.6 },
+            "somalia": { media: 56.5, m: 54.0, f: 59.2 }
+        };
+
+        // Función para calcular la edad en años completos
+        function calcularEdad(fechaNacimiento, referencia) {
+            var edad = referencia.getFullYear() - fechaNacimiento.getFullYear();
+            var m = referencia.getMonth() - fechaNacimiento.getMonth();
+            if (m < 0 || (m === 0 && referencia.getDate() < fechaNacimiento.getDate())) {
+                edad--;
+            }
+            return edad;
+        }
+
+        var fObjetivo = null;
+        var sFuente = "";
+        if (esperanzas.hasOwnProperty(sPaisKey)) {
+            var oDatos = esperanzas[sPaisKey];
+            if (sSexoKey === "M") {
+                fObjetivo = oDatos.m;
+                sFuente = "esperanza hombres (" + sPais + ")";
+            } else if (sSexoKey === "F") {
+                fObjetivo = oDatos.f;
+                sFuente = "esperanza mujeres (" + sPais + ")";
+            } else {
+                fObjetivo = oDatos.media;
+                sFuente = "esperanza media (sexo no especificado) (" + sPais + ")";
+            }
+        }
+
+        if (fObjetivo === null) {
+            document.write("No disponemos de datos para el país '" + sPais + "'.<br>");
+        } else {
+            var iEdadActual = calcularEdad(dFechaNacimiento, dHoy);
+            var fAniosRestantes = fObjetivo - iEdadActual;
+            var fDiasPorAño = 365.2425; // media considerando años bisiestos
+            var iDiasRestantes = Math.round(fAniosRestantes * fDiasPorAño);
+
+            document.write("Fuente usada: " + sFuente + " (objetivo ≈ " + fObjetivo + " años).<br>");
+            if (fAniosRestantes > 0) {
+                document.write("Te faltan aproximadamente " + fAniosRestantes.toFixed(2) + " años (≈ " + iDiasRestantes + " días) para alcanzar esa esperanza de vida.<br>");
+            } else {
+                document.write("Has alcanzado o superado esa esperanza de vida (objetivo " + fObjetivo + " años).<br>");
+            }
+        }
+
+        // Mostrar el año de nacimiento correctamente
+        var iAñoNacimiento = dFechaNacimiento.getFullYear();
+        document.write(iAñoNacimiento)
+
+
+
+
+
+    </script>
+    <script>
+        var dHoy_ej7 = Date.today ? Date.today() : new Date();
+
+        document.write('<h2>Ejercicio 7 - fechas con datejs</h2>');
+        document.write('<ul>');
+
+        // 1. hoy
+        var sHoy_ej7 = dHoy_ej7.toString('dd/MM/yyyy');
+        document.write('<li>1. Hoy: ' + sHoy_ej7 + '</li>');
+
+        // 2. la fecha del próximo lunes
+        var dProxLunes_ej7 = null;
+        if (Date.prototype.next && Date.prototype.monday) {
+            try { dProxLunes_ej7 = Date.today().next().monday(); } catch(e) { dProxLunes_ej7 = null; }
+        }
+        if (!dProxLunes_ej7) {
+            // fallback: buscar el siguiente lunes a partir de hoy
+            dProxLunes_ej7 = new Date(dHoy_ej7.getTime());
+            var iOffset = (8 - dProxLunes_ej7.getDay()) % 7;
+            if (iOffset === 0) iOffset = 7; // si hoy es lunes, el próximo lunes es dentro de 7 días
+            dProxLunes_ej7.setDate(dProxLunes_ej7.getDate() + iOffset);
+        }
+        document.write('<li>2. Próximo lunes: ' + dProxLunes_ej7.toString('dd/MM/yyyy') + '</li>');
+
+        // 3. hoy a las 23:00
+        // Si datejs tiene Date.today().set, usarlo; si no, construir con Date
+        var dHoy2300_ej7;
+        if (Date.today && typeof Date.today().set === 'function') {
+            dHoy2300_ej7 = Date.today().set({ hour: 23, minute: 0, second: 0 });
+        } else {
+            dHoy2300_ej7 = new Date(dHoy_ej7.getFullYear(), dHoy_ej7.getMonth(), dHoy_ej7.getDate(), 23, 0, 0);
+        }
+        document.write('<li>3. Hoy a las 23:00: ' + dHoy2300_ej7.toString('dd/MM/yyyy HH:mm') + '</li>');
+
+        // 4. hoy dentro de un año
+        var dHoyMas1Ano_ej7 = (Date.today && typeof Date.today().addYears === 'function') ? Date.today().addYears(1) : new Date(dHoy_ej7.getFullYear() + 1, dHoy_ej7.getMonth(), dHoy_ej7.getDate());
+        document.write('<li>4. Hoy dentro de un año: ' + dHoyMas1Ano_ej7.toString('dd/MM/yyyy') + '</li>');
+
+        // 5. Tu cumpleaños este año (usamos dFechaNacimiento si está definida)
+        var dCumpleEsteAnio_ej7 = null;
+        if (typeof dFechaNacimiento !== 'undefined' && dFechaNacimiento instanceof Date && !isNaN(dFechaNacimiento.getTime())) {
+            dCumpleEsteAnio_ej7 = new Date(dHoy_ej7.getFullYear(), dFechaNacimiento.getMonth(), dFechaNacimiento.getDate());
+            document.write('<li>5. Tu cumpleaños este año: ' + dCumpleEsteAnio_ej7.toString('dd/MM/yyyy') + '</li>');
+        } else {
+            // pedir fecha si no se tiene
+            var sCumple_ej7 = prompt('Introduce tu cumpleaños (DD/MM):');
+            if (sCumple_ej7) {
+                var a_p = sCumple_ej7.split('/');
+                if (a_p.length === 2) {
+                    var iDiaCum_ej7 = parseInt(a_p[0],10);
+                    var iMesCum_ej7 = parseInt(a_p[1],10) - 1;
+                    dCumpleEsteAnio_ej7 = new Date(dHoy_ej7.getFullYear(), iMesCum_ej7, iDiaCum_ej7);
+                    if (!isNaN(dCumpleEsteAnio_ej7.getTime())) {
+                        document.write('<li>5. Tu cumpleaños este año: ' + dCumpleEsteAnio_ej7.toString('dd/MM/yyyy') + '</li>');
+                    } else {
+                        document.write('<li>5. Cumpleaños: formato no válido.</li>');
+                    }
+                } else {
+                    document.write('<li>5. Cumpleaños: formato no válido.</li>');
+                }
+            } else {
+                document.write('<li>5. Cumpleaños: no proporcionado.</li>');
+            }
+        }
+
+        // 6. El primer lunes de mes que viene
+        var dPrimerDiaMesSig_ej7 = (Date.today && typeof Date.today().addMonths === 'function') ? Date.today().addMonths(1).moveToFirstDayOfMonth() : (function(){ var d=new Date(dHoy_ej7.getFullYear(), dHoy_ej7.getMonth()+1,1); return d; })();
+        var dPrimerLunesMesSig_ej7 = new Date(dPrimerDiaMesSig_ej7.getTime());
+        while (dPrimerLunesMesSig_ej7.getDay() !== 1) { dPrimerLunesMesSig_ej7.setDate(dPrimerLunesMesSig_ej7.getDate()+1); }
+        document.write('<li>6. Primer lunes del mes que viene: ' + dPrimerLunesMesSig_ej7.toString('dd/MM/yyyy') + '</li>');
+
+        // 7. Preguntar si hoy es viernes
+        var bHoyEsViernes_ej7 = (dHoy_ej7.getDay() === 5);
+        document.write('<li>7. ¿Hoy es viernes?: ' + (bHoyEsViernes_ej7 ? 'Sí' : 'No') + '</li>');
+
+        // 8. Preguntar si hace un mes fue septiembre
+        var dHaceUnMes_ej7 = (Date.today && typeof Date.today().addMonths === 'function') ? Date.today().addMonths(-1) : new Date(dHoy_ej7.getFullYear(), dHoy_ej7.getMonth()-1, dHoy_ej7.getDate());
+        var bHaceUnMesFueSeptiembre_ej7 = (dHaceUnMes_ej7.getMonth() === 8);
+        document.write('<li>8. ¿Hace un mes fue septiembre?: ' + (bHaceUnMesFueSeptiembre_ej7 ? 'Sí' : 'No') + ' (mes: ' + (dHaceUnMes_ej7.getMonth()+1) + ')</li>');
+
+        document.write('</ul>');
+    </script>
+
+</body>
+</html>
