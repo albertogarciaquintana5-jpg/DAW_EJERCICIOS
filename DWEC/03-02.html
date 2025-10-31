@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-02</title>
+</head>
+<body>
+    <h1>ALberto Garcia Quintana DWEC</h1>
+    <button onclick="Cerrarventana()"> Cerrar ventana abierta</button>
+    <script>
+        var iTamaño1 = prompt("Introduce el height de la pagina")
+        var iTamaño2 = prompt("Introduce el width de la pagina")
+        var xSubVentana=window.open("nueva.html","nueva","height="+iTamaño1+",width="+iTamaño2);
+
+        let url = prompt("Introduce una URL (por ejemplo, https://www.google.com):");
+
+        let nuevaVentana = window.open(url, "ventanaNueva", "width=800,height=600");
+
+        setTimeout(function() {
+            if (nuevaVentana) {
+                alert(
+                    "Propiedades de la nueva ventana:\n\n" +
+                    "defaultStatus: " + nuevaVentana.defaultStatus + "\n" +
+                    "length: " + nuevaVentana.length + "\n" +
+                    "location: " + nuevaVentana.location + "\n" +
+                    "name: " + nuevaVentana.name
+                );
+            } else {
+                alert("No se pudo abrir la nueva ventana. Verifica que el navegador no bloquea los pop-ups.");
+            }
+        }, 1000);
+
+        function Cerrarventana() {
+           if (xSubVentana && !xSubVentana.closed) {
+                xSubVentana.close(); 
+            } else {
+                alert("No hay ninguna ventana abierta o ya está cerrada.");
+            }
+        }
+
+        alert("⚠️ ALERTA: Te están robando el banco!");
+
+    let respuesta = confirm("¿Estás de acuerdo?");
+    if (respuesta) {
+        document.write("<h3>De acuerdo</h3>");
+    } else {
+        document.write("<h3>No de acuerdo</h3>");
+    }
+
+    function mostrarHora() {
+        const date = new Date();
+        document.write("<br>Hora actual: " + date.toLocaleTimeString());
+    }
+
+    let reloj = setInterval(mostrarHora, 1000);
+
+    setTimeout(function() {
+        clearInterval(reloj);
+        document.write("<br><br><b>⏹ Cronómetro detenido con clearInterval()</b>");
+    }, 10000);
+
+    </script>
+    
+</body>
+</html>

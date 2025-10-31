@@ -1,3 +1,45 @@
+
+<?php
+// Procesamiento de la calculadora (antes de cualquier salida HTML)
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+$error = '';
+$resultado = null;
+
+$num1 = filter_input(INPUT_GET, 'num1', FILTER_VALIDATE_FLOAT);
+$num2 = filter_input(INPUT_GET, 'num2', FILTER_VALIDATE_FLOAT);
+$operador = filter_input(INPUT_GET, 'operador', FILTER_UNSAFE_RAW);
+
+if ($num1 !== null && $num2 !== null && $operador !== null) {
+    // Validación de división por cero
+    if (($operador === '/' || $operador === '%') && $num2 == 0) {
+        $error = 'Error: División por cero.';
+    } else {
+        switch ($operador) {
+            case '+':
+                $resultado = $num1 + $num2;
+                break;
+            case '-':
+                $resultado = $num1 - $num2;
+                break;
+            case '*':
+                $resultado = $num1 * $num2;
+                break;
+            case '/':
+                $resultado = $num1 / $num2;
+                break;
+            case '%':
+                $resultado = $num1 % $num2;
+                break;
+            default:
+                $error = 'Operador no válido.';
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
