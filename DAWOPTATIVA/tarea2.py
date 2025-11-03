@@ -158,4 +158,84 @@ if (iNum_ejer == 9):
     #g. Plaquetas: más de 150.000 cc
     #h. Proteínas totales: más de 6 gr/dl.
 if (iNum_ejer == 10):
-    sAyuna = input("Esta usted")
+    # Recogida de datos
+    sAyuna = input("¿Está en ayunas? (s/n): ").strip().lower()
+    razones = []
+
+    # Edad
+    try:
+        iEdad = int(input("Introduzca su edad: "))
+        if not (18 <= iEdad <= 65):
+            razones.append("Edad fuera del rango 18-65")
+    except Exception:
+        razones.append("Edad no válida")
+
+    # Peso
+    try:
+        fPeso = float(input("Introduzca su peso en kg: "))
+        if not (fPeso > 50):
+            razones.append("Peso insuficiente (<= 50 kg)")
+    except Exception:
+        razones.append("Peso no válido")
+
+    # Tensión arterial: sistólica (alta) y diastólica (baja)
+    try:
+        iSistolica = int(input("Tensión sistólica (mm Hg) - valor alto: "))
+        iDiastolica = int(input("Tensión diastólica (mm Hg) - valor bajo: "))
+        if not (90 <= iSistolica <= 180):
+            razones.append("Tensión sistólica fuera de 90-180 mm Hg")
+        if not (50 <= iDiastolica <= 100):
+            razones.append("Tensión diastólica fuera de 50-100 mm Hg")
+    except Exception:
+        razones.append("Valores de tensión no válidos")
+
+    # Pulso
+    try:
+        iPulso = int(input("Pulso (pulsaciones por minuto): "))
+        if not (50 <= iPulso <= 110):
+            razones.append("Pulso fuera de 50-110 pulsaciones")
+    except Exception:
+        razones.append("Pulso no válido")
+
+    # Sexo y hemoglobina
+    sSexo = input("Sexo (H para hombre / M para mujer): ").strip().upper()
+    try:
+        fHemo = float(input("Valor de hemoglobina (g/L): "))
+        if sSexo == 'H':
+            if not (fHemo > 13.5):
+                razones.append("Hemoglobina insuficiente para hombre (<= 13.5 g/L)")
+        elif sSexo == 'M':
+            if not (fHemo > 12.5):
+                razones.append("Hemoglobina insuficiente para mujer (<= 12.5 g/L)")
+        else:
+            razones.append("Sexo no válido")
+    except Exception:
+        razones.append("Valor de hemoglobina no válido")
+
+    # Plaquetas
+    try:
+        iPlaquetas = int(input("Plaquetas (por cc): "))
+        if not (iPlaquetas > 150000):
+            razones.append("Plaquetas insuficientes (<= 150000 cc)")
+    except Exception:
+        razones.append("Valor de plaquetas no válido")
+
+    # Proteínas totales
+    try:
+        fProteinas = float(input("Proteínas totales (gr/dl): "))
+        if not (fProteinas > 6.0):
+            razones.append("Proteínas totales insuficientes (<= 6.0 gr/dl)")
+    except Exception:
+        razones.append("Valor de proteínas no válido")
+
+    # Ayunas
+    if sAyuna in ('s', 'si'):
+        razones.insert(0, "No debe donar en ayunas")
+
+    # Resultado
+    if len(razones) == 0:
+        print("Puede donar sangre. Todos los parámetros cumplen los requisitos.")
+    else:
+        print("No puede donar sangre por las siguientes razones:")
+        for r in razones:
+            print(" - ", r)

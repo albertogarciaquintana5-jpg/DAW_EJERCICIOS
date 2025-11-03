@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 4-1</title>
+</head>
+<body>
+    <h1>ALberto Garcia Quintana 31/10/2025 DWEC</h1>
+    <script>
+        //Elercicio 1
+        let aNumeros = [];
+        for (let index = 0; index < 50; index++) {
+            let iRandomNum = Math.floor(Math.random() * 1000);
+            aNumeros.push(iRandomNum)
+        }
+
+        let iMayor = Math.max(...aNumeros)
+        let iMenor = Math.min(...aNumeros)
+
+        let iSuma = 0;
+        for (let i = 0; i < aNumeros.length; i++) {
+            iSuma += aNumeros[i];
+        }
+        let iMedia = iSuma / aNumeros.length;
+
+        // Mostrar resultados
+        document.write("Array de números: ", aNumeros, "<br>");
+        document.write("Número mayor: ", iMayor, "<br>");
+        document.write("Número menor: ", iMenor, "<br>");
+        document.write("Media: ", Math.floor(iMedia), "<br>");
+    </script>
+    <br><br><br><br><br>
+    <script>
+        //Ejercicio 2
+        let aNumeros2 = [];
+        let iSuma2 = 0;
+
+        for (let index = 0; index < 50; index++) {
+            let iRandomNum2 = Math.floor(Math.random() * 10);
+            aNumeros2.push(iRandomNum2);
+        }
+        for (let i = 0; i < aNumeros2.length; i++) {
+            iSuma2 += aNumeros2[i]
+            
+        }
+        let iMedia2 = iSuma2 / aNumeros2.length;
+
+        // Calcular moda
+        let conteo = {};
+        let iModa = null;
+        let maxRepeticiones = 0;
+
+        for (let iNum of aNumeros2) {
+            conteo[iNum] = (conteo[iNum] || 0) + 1;
+            if (conteo[iNum] > maxRepeticiones) {
+                maxRepeticiones = conteo[iNum];
+                iModa = iNum;
+            }
+        }
+
+        aNumeros2.sort((a, b) => a -b);
+        document.write("50 Numeros de 0 a 10 de mayor a menor: ",aNumeros2, "<br>");
+        document.write("Media: ", Math.floor(iMedia2), "<br>");
+        document.write("Moda: ", iModa, "<br>");
+    </script>
+
+    <input type="text" id="dato">
+    <button onclick="agregarDato()">Agregar</button>
+
+    <p>Array actual:</p>
+    <ul id="listaDatos"></ul>
+
+    <script>
+    let arrayDatos = [];
+
+    function agregarDato() {
+        let valor = document.getElementById('dato').value;
+        if(valor !== "") {
+            arrayDatos.push(valor);
+            mostrarDatos();
+            document.getElementById('dato').value = "";
+        }
+    }
+
+    function mostrarDatos() {
+        let lista = document.getElementById('listaDatos');
+        lista.innerHTML = "";
+        arrayDatos.forEach((dato) => {
+            let li = document.createElement("li");
+            li.textContent = dato;
+            lista.appendChild(li);
+        });
+    }
+</script>
+
+
+
+</body>
+</html>
