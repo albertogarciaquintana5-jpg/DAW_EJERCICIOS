@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Navigator, Geolocation y Google Maps (Ejercicios 8-11)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>body{padding:16px} .map-wrap{display:flex;gap:12px;align-items:flex-start}</style>
+</head>
+<body>
+
+    <body>
+    <h1>ALberto Garcia Quintana 05/11/2025 DWEC</h1>
+<div id="elementoaCambiar"> </div>
+<script >
+document.getElementById("elementoaCambiar").innerHTML="texto nuevo";
+</script>
+<!-- El getElementById("elementoaCambiar").innerHTML Manda un string o lo que sea a la etiqueta html con ese id -->
+
+  <button onclick="Propiedadesloc()">Mostrar propiedades del objeto Location</button>
+
+  <p id="resultado"></p>
+  <br>
+  <p id="resultado2"></p>
+  <br>
+  <p id="resultado3"></p>
+  <br>
+  <p id="resultado4"></p>
+  <br>
+  <p id="resultado5"></p>
+  <br>
+  <p id="resultado6"></p>
+  <br>
+  <p id="resultado7"></p>
+  <br>
+  <p id="resultado8"></p>
+
+  <script>
+    function Propiedadesloc() {
+      // Muestra la URL completa de la página
+      document.getElementById("resultado").textContent =  "La URL completa es: " + location.href;
+      document.getElementById("resultado2").textContent =  "La hash (si tiene un # seguido de algo) completa es: " + location.hash;
+      document.getElementById("resultado3").textContent =  "El host es: " + location.host;
+      document.getElementById("resultado4").textContent =  "El hostname es: " + location.hostname;
+      document.getElementById("resultado5").textContent =  "El pathname es: " + location.pathname;
+      document.getElementById("resultado6").textContent =  "El puerto es: " + location.port;
+      document.getElementById("resultado7").textContent =  "El protocolo es: " + location.protocol;
+      document.getElementById("resultado8").textContent =  "El buscador es: " + location.search;
+      
+    }
+  </script>
+    <h2>The assign Property of Location Object</h2>
+    <button onclick="myFunction()">Load new document</button>
+    <script>
+    function myFunction() {
+        location.assign("https://www.iesplayamar.es");
+    }
+    </script>
+    
+    <h2>Introduce una url propia</h2>
+    <input type="text" id="URL">
+    <button onclick="myFunction()">Enviar</button>
+    <script>
+    function myFunction() {
+        let stexto = document.getElementById("URL").value;
+        location.assign(stexto);
+    }
+    </script>
+    <button onclick="Recargar()">Recargar pagina</button>
+    <script>
+    function Recargar() {
+        window.reload()
+    }
+    </script>
+    <button onclick="redirigirReplace()">Enviar con replace()</button>
+    <script>
+    function redirigirReplace() {
+        const url = document.getElementById("URL").value;
+        if (url) {
+            // Redirige y **no** permite volver atrás con el botón "Atrás"
+            window.location.replace(url);
+        } else {
+            alert("Por favor, ingresa una URL válida.");
+        }
+    }
+    </script>
+
+  <div>
+    <h1>Navigator, Geolocation y Google Maps</h1>
+
+    <section>
+      <h4>8. Propiedades del objeto <code>navigator</code></h4>
+      <ul id="navProps"></ul>
+      <button id="btnShowNav">Mostrar propiedades de navigator</button>
+    </section>
+
+    <section>
+      <h4>9. Geolocalización y propiedades de <code>location</code></h4>
+      <p id="locProps"></p>
+      <p id="geoResult"></p>
+      <div>
+        <button id="btnGeo">Obtener mi ubicación</button>
+        <button id="btnShowLoc">Mostrar propiedades de location</button>
+      </div>
+    </section>
+
+    <section>
+      <h4>10 / 11. Cargar Google Maps en iframe y controlar zoom</h4>
+      <div >
+        <div style="flex:1;min-width:300px">
+          <label class="form-label">Mapa (iframe)</label>
+          <div class="ratio ratio-16x9">
+            <iframe id="mapFrame" src="" title="mapa" style="border:1px solid #ccc" allowfullscreen></iframe>
+          </div>
+          <div class="mt-2 d-flex gap-2">
+            <button id="zoomOut">- Zoom</button>
+            <button id="zoomIn">+ Zoom</button>
+            <button id="resetMap">Reset</button>
+          </div>
+        </div>
+        <div style="width:260px">
+          <label class="form-label">Coordenadas / Zoom</label>
+          <div class="mb-2">
+            <input id="lat"placeholder="lat" />
+            <input id="lng"placeholder="lng" />
+            <input id="zoom"placeholder="zoom (ej. 15)" />
+          </div>
+          <div class="d-grid">
+            <button id="loadMap">Cargar mapa</button>
+          </div>
+        </div>
+      </div>
+      <p>Nota: para embeber en iframe se añade <code>&amp;output=embed</code> a la URL.</p>
+    </section>
+  </div>
+
+  <script>
+    const navList = document.getElementById('navProps');
+    document.getElementById('btnShowNav').addEventListener('click', () => {
+      const props = {
+        appCodeName: navigator.appCodeName,
+        appName: navigator.appName,
+        appVersion: navigator.appVersion,
+        cookieEnabled: navigator.cookieEnabled,
+        platform: navigator.platform,
+        userAgent: navigator.userAgent
+      };
+      navList.innerHTML = '';
+      for (const k in props) {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = `${k}: ${props[k]}`;
+        navList.appendChild(li);
+      }
+    });
+
+    const geoResult = document.getElementById('geoResult');
+    const locProps = document.getElementById('locProps');
+    document.getElementById('btnShowLoc').addEventListener('click', () => {
+      const L = location; 
+      locProps.textContent = `href: ${L.href} | protocol: ${L.protocol} | host: ${L.host} | pathname: ${L.pathname} | search: ${L.search} | hash: ${L.hash}`;
+    });
+
+    function showPosition(position) {
+      const { latitude, longitude } = position.coords;
+      geoResult.textContent = `Latitude: ${latitude} , Longitude: ${longitude}`;
+      document.getElementById('lat').value = latitude;
+      document.getElementById('lng').value = longitude;
+      if (!document.getElementById('zoom').value) document.getElementById('zoom').value = 15;
+      loadMapFromInputs();
+    }
+
+    function geoError(err) {
+      geoResult.textContent = 'Error geolocalización: ' + (err && err.message ? err.message : err);
+    }
+
+    document.getElementById('btnGeo').addEventListener('click', () => {
+      if (!('geolocation' in navigator)) { geoResult.textContent = 'Geolocation no soportado por este navegador.'; return; }
+      navigator.geolocation.getCurrentPosition(showPosition, geoError, { enableHighAccuracy: true });
+    });
+
+    const mapFrame = document.getElementById('mapFrame');
+    let currentLat = 36.643675, currentLng = -4.4902875, currentZoom = 15;
+
+    function buildMapsUrl(lat, lng, zoom) {
+      return `https://www.google.es/maps/@${lat},${lng},${zoom}z&output=embed`;
+    }
+
+    function safeAssignIframe(url) {
+      try {
+        if (mapFrame.contentWindow && mapFrame.contentWindow.location) {
+          mapFrame.contentWindow.location.assign(url);
+          return;
+        }
+      } catch (e) {
+      }
+      mapFrame.src = url;
+    }
+
+    function loadMapWith(lat, lng, zoom) {
+      currentLat = lat; currentLng = lng; currentZoom = zoom;
+      const url = buildMapsUrl(lat, lng, zoom);
+      safeAssignIframe(url);
+    }
+
+    function loadMapFromInputs() {
+      const lat = parseFloat(document.getElementById('lat').value) || currentLat;
+      const lng = parseFloat(document.getElementById('lng').value) || currentLng;
+      let zoom = parseInt(document.getElementById('zoom').value, 10);
+      if (isNaN(zoom) || zoom < 0) zoom = currentZoom;
+      loadMapWith(lat, lng, zoom);
+    }
+
+    document.getElementById('loadMap').addEventListener('click', loadMapFromInputs);
+    document.getElementById('zoomIn').addEventListener('click', () => {
+      currentZoom = Math.min(21, (currentZoom || 15) + 1);
+      document.getElementById('zoom').value = currentZoom;
+      loadMapWith(currentLat, currentLng, currentZoom);
+    });
+    document.getElementById('zoomOut').addEventListener('click', () => {
+      currentZoom = Math.max(0, (currentZoom || 15) - 1);
+      document.getElementById('zoom').value = currentZoom;
+      loadMapWith(currentLat, currentLng, currentZoom);
+    });
+    document.getElementById('resetMap').addEventListener('click', () => {
+      currentLat = 36.643675; currentLng = -4.4902875; currentZoom = 15;
+      document.getElementById('lat').value = currentLat;
+      document.getElementById('lng').value = currentLng;
+      document.getElementById('zoom').value = currentZoom;
+      loadMapWith(currentLat, currentLng, currentZoom);
+    });
+
+    document.getElementById('lat').value = currentLat;
+    document.getElementById('lng').value = currentLng;
+    document.getElementById('zoom').value = currentZoom;
+    loadMapWith(currentLat, currentLng, currentZoom);
+  </script>
+</body>
+</html>

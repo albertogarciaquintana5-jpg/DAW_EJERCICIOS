@@ -53,13 +53,16 @@ def Ecuacion2º():
     iNumc = int(input("ponga el numero que sustituye la 'c': "))
 
     if iNuma == 0 or iNumb == 0 or iNumc == 0:
-        print("!NO PUEDES PONER SOLO 0¡")
+        print("!NO PUEDES PONER SOLO EL NUMERO 0¡")
         Ecuacion2º()
             
     iCalcElevado = iNumb ** 2 - 4 * iNuma * iNumc
     iFormula2º = 2 * iNuma / (iNumb - math.sqrt(iCalcElevado))
 
     print ("Resultado de la operacion de 2 grado: ", iFormula2º)
+
+def TablaNumero():
+
 
 
 match sEjercicio:
@@ -74,7 +77,7 @@ match sEjercicio:
         Ecuacion2º()
 
     case "d": 
-        print ("")   
+        TablaNumero()   
     case "e":
         print ("")
     case "f":
