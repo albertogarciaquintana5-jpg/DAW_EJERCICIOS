@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicios Ventanas - 1 a 7</title>
+  <style>
+    body{font-family: Arial, sans-serif; padding:20px}
+    button{margin:6px 0; display:block}
+    pre{background:#f5f5f5;padding:10px}
+  </style>
+</head>
+<body>
+  <h1>ALberto Garcia Quintana</h1>
+
+  <p>Usa los botones para ejecutar cada ejercicio. Las variables siguen la convención del autor (s/i/f/d).</p>
+
+  <button id="btnEj1">Ejercicio 1 - Abrir ventana con tamaño (leer ancho/alto)</button>
+  <button id="btnEj2">Ejercicio 2 - Cerrar la ventana abierta</button>
+  <button id="btnEj3">Ejercicio 3 - Comprobar si la ventana está abierta/cerrada</button>
+  <button id="btnEj4">Ejercicio 4 - Abrir URL y mostrar propiedades</button>
+  <button id="btnEj5">Ejercicio 5 - Alertas y confirm</button>
+  <button id="btnEj6">Ejercicio 6 - setInterval (escribir cada X ms)</button>
+  <button id="btnEj6_stop">Detener intervalo (clearInterval)</button>
+  <button id="btnEj7">Ejercicio 7 - Mostrar hora cada segundo</button>
+  <button id="btnEj7_stop">Detener mostrar hora</button>
+
+  <h2>Salida</h2>
+  <div id="salida"></div>
+
+  <script>
+    // Variables globales para controlar la ventana y los intervalos
+    var subVentana = null; // ventana abierta por window.open
+    var iCrono = null;     // id de setInterval para ejercicio 6
+    var iHora = null;      // id de setInterval para ejercicio 7
+
+    // Helper para mostrar salida
+    function mostrar(sTexto) {
+      var el = document.getElementById('salida');
+      var p = document.createElement('pre');
+      p.textContent = sTexto;
+      el.insertBefore(p, el.firstChild);
+    }
+
+    // Ejercicio 1: Leer dos números (ancho, alto) y abrir nueva ventana con tamaño indicado.
+    document.getElementById('btnEj1').addEventListener('click', function(){
+      var sAncho = prompt('Introduce el ancho de la ventana (px):', '600');
+      var sAlto = prompt('Introduce la altura de la ventana (px):', '800');
+      var iAncho = parseInt(sAncho, 10) || 600;
+      var iAlto = parseInt(sAlto, 10) || 800;
+      // Debe usarse exactamente la variable indicada por el enunciado
+      subVentana = window.open('nueva.html', 'nueva', 'height=' + iAlto + ',width=' + iAncho);
+      mostrar('Ej1: ventana abierta con width=' + iAncho + ' height=' + iAlto);
+    });
+
+    // Ejercicio 2: Cerrar la ventana creada
+    document.getElementById('btnEj2').addEventListener('click', function(){
+      if (subVentana && !subVentana.closed) {
+        subVentana.close();
+        mostrar('Ej2: ventana cerrada.');
+      } else {
+        mostrar('Ej2: no hay ventana abierta para cerrar.');
+      }
+    });
+
+    // Ejercicio 3: Comprobar si está abierta o cerrada
+    document.getElementById('btnEj3').addEventListener('click', function(){
+      var sEstado;
+      if (subVentana === null) sEstado = 'Nunca se ha abierto (subVentana === null)';
+      else if (subVentana.closed) sEstado = 'La ventana está cerrada (subVentana.closed === true)';
+      else sEstado = 'La ventana está abierta';
+      mostrar('Ej3: ' + sEstado);
+    });
+
+    // Ejercicio 4: Leer una URL, abrirla y mostrar propiedades
+    document.getElementById('btnEj4').addEventListener('click', function(){
+      var sUrl = prompt('Introduce la URL a abrir (incluye https://):', 'https://example.com');
+      if (!sUrl) { mostrar('Ej4: URL no proporcionada'); return; }
+      var w = window.open(sUrl, '_blank');
+      // Intentamos leer propiedades; si la URL es cross-origin algunas no se podrán leer
+      setTimeout(function(){
+        try {
+          var sDefaultStatus = w.defaultStatus;
+          var iLength = w.length;
+          var sLocation = w.location ? w.location.href : 'no accesible';
+          var sName = w.name;
+          mostrar('Ej4:\n defaultStatus: ' + sDefaultStatus + '\n length: ' + iLength + '\n location: ' + sLocation + '\n name: ' + sName);
+        } catch(e) {
+          mostrar('Ej4: No es posible leer todas las propiedades (cross-origin).\nIntento parcial: name=' + (w && w.name) );
+        }
+      }, 500);
+    });
+
+    // Ejercicio 5: alert y confirm
+    document.getElementById('btnEj5').addEventListener('click', function(){
+      alert('ALERTA Te estan Robando el banco');
+      var bRespuesta = confirm('Estas de acuerdo?');
+      if (bRespuesta) mostrar('Ej5: De acuerdo'); else mostrar('Ej5: No de acuerdo');
+    });
+
+    // Ejercicio 6: ejemplo de setInterval y clearInterval
+    document.getElementById('btnEj6').addEventListener('click', function(){
+      if (iCrono !== null) { mostrar('Ej6: Cronómetro ya en marcha (usa Detener intervalo)'); return; }
+      // Imprime 'Hello' cada 500ms (como el ejemplo) y muestra contador
+      var iCont = 0;
+      iCrono = setInterval(function(){
+        iCont++;
+        mostrar('Ej6: Hello (contador=' + iCont + ')');
+      }, 500);
+      mostrar('Ej6: Interval iniciado (500 ms)');
+    });
+
+    document.getElementById('btnEj6_stop').addEventListener('click', function(){
+      if (iCrono !== null) {
+        clearInterval(iCrono);
+        iCrono = null;
+        mostrar('Ej6: Interval detenido (clearInterval)');
+      } else mostrar('Ej6: No hay interval activo');
+    });
+
+    // Ejercicio 7: mostrar la hora cada segundo
+    document.getElementById('btnEj7').addEventListener('click', function(){
+      if (iHora !== null) { mostrar('Ej7: Ya se muestra la hora'); return; }
+      iHora = setInterval(function(){
+        var dDate = new Date();
+        mostrar('Ej7: Hora actual -> ' + dDate.toLocaleTimeString());
+      }, 1000);
+      mostrar('Ej7: Interval iniciado para mostrar hora cada segundo');
+    });
+
+    document.getElementById('btnEj7_stop').addEventListener('click', function(){
+      if (iHora !== null) {
+        clearInterval(iHora);
+        iHora = null;
+        mostrar('Ej7: Parado');
+      } else mostrar('Ej7: No estaba mostrando la hora');
+    });
+
+  </script>
+</body>
+</html>
