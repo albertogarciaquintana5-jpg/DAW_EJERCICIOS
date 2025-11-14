@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa de Imágenes - Cuadrados</title>
+</head>
+<body>
+    <h2>Ejercicio 1 - 4 Cuadrados en una imagen</h2>
+    
+    <img src="imagemap_cuadrado.jpg" 
+         alt="Imagen con 4 cuadrados" 
+         usemap="#mapCuadrados" 
+         style="border: 1px solid #ccc;">
+    
+    <map name="mapCuadrados">
+        <!-- Ajusta estas coordenadas según tu imagen real -->
+        <area shape="rect" coords="50,50,200,200" 
+              href="#cuadrado1" 
+              alt="Cuadrado 1" 
+              title="Cuadrado 1">
+        
+        <area shape="rect" coords="250,50,400,200" 
+              href="#cuadrado2" 
+              alt="Cuadrado 2" 
+              title="Cuadrado 2">
+        
+        <area shape="rect" coords="50,250,200,400" 
+              href="#cuadrado3" 
+              alt="Cuadrado 3" 
+              title="Cuadrado 3">
+        
+        <area shape="rect" coords="250,250,400,400" 
+              href="#cuadrado4" 
+              alt="Cuadrado 4" 
+              title="Cuadrado 4">
+    </map>
+
+    <h2>Ejercicio 2 - 4 Círculos en una imagen</h2>
+    
+    <img src="imagen_con_4_circulos.jpg" 
+         alt="Imagen con 4 círculos" 
+         usemap="#mapCirculos" 
+         style="border: 1px solid #ccc;">
+    
+    <map name="mapCirculos">
+        <!-- Ajusta estas coordenadas según tu imagen real -->
+        <area shape="circle" coords="100,100,40" 
+              href="#circulo1" 
+              alt="Círculo 1" 
+              title="Círculo 1">
+        
+        <area shape="circle" coords="300,100,40" 
+              href="#circulo2" 
+              alt="Círculo 2" 
+              title="Círculo 2">
+        
+        <area shape="circle" coords="100,300,40" 
+              href="#circulo3" 
+              alt="Círculo 3" 
+              title="Círculo 3">
+        
+        <area shape="circle" coords="300,300,40" 
+              href="#circulo4" 
+              alt="Círculo 4" 
+              title="Círculo 4">
+    </map>
+
+     <h2>Ejercicio 3 - Mapa de comarcas de Málaga</h2>
+    
+    <img src="mapa_completo_malaga.jpg" 
+         alt="Mapa completo de comarcas de Málaga" 
+         usemap="#mapMalaga" 
+         style="border: 1px solid #ccc;">
+    
+    <map name="mapMalaga">
+        <!-- Todas las regiones en el mismo mapa -->
+        <area shape="poly" 
+              coords="x1,y1,x2,y2,x3,y3,..." 
+              href="https://es.wikipedia.org/wiki/Antequera" 
+              alt="Antequera" 
+              title="Antequera">
+        
+        <area shape="poly" 
+              coords="x1,y1,x2,y2,x3,y3,..." 
+              href="https://es.wikipedia.org/wiki/Axarqu%C3%ADa" 
+              alt="La Axarquía" 
+              title="La Axarquía">
+        
+        <area shape="poly" 
+              coords="x1,y1,x2,y2,x3,y3,..." 
+              href="https://es.wikipedia.org/wiki/M%C3%A1laga" 
+              alt="Málaga" 
+              title="Málaga">
+        
+        <area shape="poly" 
+              coords="x1,y1,x2,y2,x3,y3,..." 
+              href="https://es.wikipedia.org/wiki/Valle_del_Guadalhorce" 
+              alt="Valle del Guadalhorce" 
+              title="Valle del Guadalhorce">
+        
+        <area shape="poly" 
+              coords="x1,y1,x2,y2,x3,y3,..." 
+              href="https://es.wikipedia.org/wiki/Costa_del_Sol_Occidental" 
+              alt="Costa Occidental" 
+              title="Costa Occidental">
+        
+        <area shape="poly" 
+              coords="x1,y1,x2,y2,x3,y3,..." 
+              href="https://es.wikipedia.org/wiki/Ronda" 
+              alt="Ronda" 
+              title="Ronda">
+    </map>
+    
+    <p><em>Nota: Usa la herramienta https://image-map.weebly.com para generar las coordenadas exactas de cada polígono</em></p>
+
+
+    <title>Todos los Mapas Responsivos</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-rwdImageMaps/1.6/jquery.rwdImageMaps.min.js"></script>
+    <style>
+        .ejercicio {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .map-container img {
+            width: 100%;
+            height: auto;
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicios de Mapas de Imágenes</h1>
+
+    <!-- EJERCICIO 1 -->
+    <div class="ejercicio">
+        <h2>Ejercicio 1 - 4 Cuadrados en una imagen</h2>
+        <div class="map-container">
+            <img src="imagen_con_4_cuadrados.jpg" 
+                 alt="4 cuadrados" 
+                 usemap="#mapCuadrados">
+        </div>
+        <map name="mapCuadrados">
+            <area shape="rect" coords="50,50,200,200" href="#cuadrado1" alt="Cuadrado 1">
+            <area shape="rect" coords="250,50,400,200" href="#cuadrado2" alt="Cuadrado 2">
+            <area shape="rect" coords="50,250,200,400" href="#cuadrado3" alt="Cuadrado 3">
+            <area shape="rect" coords="250,250,400,400" href="#cuadrado4" alt="Cuadrado 4">
+        </map>
+    </div>
+
+    <!-- EJERCICIO 2 -->
+    <div class="ejercicio">
+        <h2>Ejercicio 2 - 4 Círculos en una imagen</h2>
+        <div class="map-container">
+            <img src="imagen_con_4_circulos.jpg" 
+                 alt="4 círculos" 
+                 usemap="#mapCirculos">
+        </div>
+        <map name="mapCirculos">
+            <area shape="circle" coords="100,100,40" href="#circulo1" alt="Círculo 1">
+            <area shape="circle" coords="300,100,40" href="#circulo2" alt="Círculo 2">
+            <area shape="circle" coords="100,300,40" href="#circulo3" alt="Círculo 3">
+            <area shape="circle" coords="300,300,40" href="#circulo4" alt="Círculo 4">
+        </map>
+    </div>
+
+    <!-- EJERCICIO 3 -->
+    <div class="ejercicio">
+        <h2>Ejercicio 3 - Mapa de Málaga (6 regiones en una imagen)</h2>
+        <div class="map-container">
+            <img src="mapa_completo_malaga.jpg" 
+                 alt="Mapa de Málaga" 
+                 usemap="#mapMalaga">
+        </div>
+        <map name="mapMalaga">
+            <area shape="poly" coords="..." href="https://es.wikipedia.org/wiki/Antequera" alt="Antequera">
+            <area shape="poly" coords="..." href="https://es.wikipedia.org/wiki/Axarqu%C3%ADa" alt="La Axarquía">
+            <area shape="poly" coords="..." href="https://es.wikipedia.org/wiki/M%C3%A1laga" alt="Málaga">
+            <area shape="poly" coords="..." href="https://es.wikipedia.org/wiki/Valle_del_Guadalhorce" alt="Valle del Guadalhorce">
+            <area shape="poly" coords="..." href="https://es.wikipedia.org/wiki/Costa_del_Sol_Occidental" alt="Costa Occidental">
+            <area shape="poly" coords="..." href="https://es.wikipedia.org/wiki/Ronda" alt="Ronda">
+        </map>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Hacer todos los mapas responsivos
+            $('img[usemap]').rwdImageMaps();
+        });
+    </script>
+
+</body>
+</html>

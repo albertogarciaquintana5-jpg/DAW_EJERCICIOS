@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios HTML</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin: 8px 0 4px;
+            font-weight: bold;
+        }
+        input, select, textarea, button {
+            margin: 5px 0;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-table {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border: red 1px solid;
+        }
+        .form-table td {
+            border: 1px solid;
+            text-align: center;
+            padding: 10px;
+        }
+        .blue-border {
+            border-color: blue !important;
+        }
+        .red-border {
+            border-color: red !important;
+        }
+        dl {
+            margin: 15px 0;
+        }
+        dt {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #2c3e50;
+        }
+        dd {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- SECCIÓN 1: Funcionamiento de los formularios -->
+<section>
+    <h1>Formularios</h1>
+    <p>Los formularios HTML son herramientas que permiten a los usuarios introducir datos que pueden ser enviados a un servidor para su procesamiento. Consisten en diferentes tipos de controles como campos de texto, botones, casillas de verificación, listas desplegables, etc.</p>
+    
+    <p><strong>Funcionamiento básico:</strong></p>
+    <ul>
+        <li>El usuario completa los campos del formulario</li>
+        <li>Al enviar el formulario, los datos se recopilan</li>
+        <li>Los datos se envían al servidor mediante HTTP (GET o POST)</li>
+        <li>El servidor procesa la información y puede devolver una respuesta</li>
+        <li>Los formularios son esenciales para interactuar con aplicaciones web</li>
+    </ul>
+</section>
+
+<!-- SECCIÓN 2: GET/POST -->
+<section>
+    <h1>GET/POST</h1>
+    
+    <h2>Método GET</h2>
+    <p>Envía los datos del formulario a través de la URL como parámetros de consulta.</p>
+    <p><strong>Ventajas:</strong></p>
+    <ul>
+        <li>Los datos son visibles en la URL</li>
+        <li>Puede ser marcado como favorito</li>
+        <li>Útil para búsquedas y filtros</li>
+        <li>Más rápido para datos pequeños</li>
+    </ul>
+    
+    <h2>Método POST</h2>
+    <p>Envía los datos en el cuerpo de la petición HTTP, no en la URL.</p>
+    <p><strong>Ventajas:</strong></p>
+    <ul>
+        <li>Los datos no son visibles en la URL</li>
+        <li>Puede enviar grandes cantidades de datos</li>
+        <li>Más seguro para información sensible</li>
+        <li>Puede enviar archivos</li>
+    </ul>
+</section>
+
+<!-- SECCIÓN 3: Atributos del formulario -->
+<section>
+    <h1>Atributos</h1>
+    
+    <dl>
+        <dt>accept-charset</dt>
+        <dd>Especifica los caracteres que el servidor puede procesar para los datos del formulario.</dd>
+        
+        <dt>autocomplete</dt>
+        <dd>Indica si el navegador puede completar automáticamente los valores del formulario.</dd>
+        
+        <dt>enctype</dt>
+        <dd>Especifica cómo se codifican los datos del formulario al enviarlos al servidor.</dd>
+        
+        <dt>novalidate</dt>
+        <dd>Indica que el formulario no debe ser validado al enviarse.</dd>
+        
+        <dt>target</dt>
+        <dd>Especifica dónde mostrar la respuesta recibida después de enviar el formulario.</dd>
+    </dl>
+</section>
+
+<!-- SECCIÓN 4: Atributos del input text -->
+<section>
+    <h1>Atributos text</h1>
+    
+    <table>
+        <tr>
+            <th>Atributo</th>
+            <th>Descripción (3-4 palabras)</th>
+        </tr>
+        <tr>
+            <td>type</td>
+            <td>Tipo de campo entrada</td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td>Nombre identificativo campo</td>
+        </tr>
+        <tr>
+            <td>formnovalidate</td>
+            <td>Sin validación formulario</td>
+        </tr>
+        <tr>
+            <td>size</td>
+            <td>Ancho visible campo</td>
+        </tr>
+        <tr>
+            <td>maxlength</td>
+            <td>Máximo número caracteres</td>
+        </tr>
+        <tr>
+            <td>value</td>
+            <td>Valor inicial campo</td>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>Identificador único elemento</td>
+        </tr>
+        <tr>
+            <td>disabled</td>
+            <td>Campo deshabilitado interacción</td>
+        </tr>
+        <tr>
+            <td>readonly</td>
+            <td>Solo lectura no editable</td>
+        </tr>
+        <tr>
+            <td>autocomplete</td>
+            <td>Autocompletar valores sugeridos</td>
+        </tr>
+        <tr>
+            <td>required</td>
+            <td>Campo obligatorio rellenar</td>
+        </tr>
+        <tr>
+            <td>autofocus</td>
+            <td>Enfocar automáticamente campo</td>
+        </tr>
+        <tr>
+            <td>pattern</td>
+            <td>Patrón validación datos</td>
+        </tr>
+        <tr>
+            <td>placeholder</td>
+            <td>Texto guía ejemplo</td>
+        </tr>
+    </table>
+</section>
+
+<!-- SECCIÓN 5: Formulario básico -->
+<section>
+    <h1>Formulario</h1>
+    
+    <form method="get">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" pattern="[A-Za-z]+" required autofocus>
+        
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" pattern="[A-Za-z\s]+" required>
+        
+        <label for="edad">Edad:</label>
+        <input type="text" id="edad" name="edad" pattern="[0-9]+" required>
+        
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" size="5">
+        
+        <input type="hidden" name="tipo" value="edad">
+        
+        <br><br>
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Limpiar">
+        <button type="button">Botón Normal</button>
+        <input type="image" src="#" alt="Enviar Imagen" style="width: 50px; height: 30px; background-color: #ccc;">
+    </form>
+</section>
+
+<!-- SECCIÓN 6: Atributos del button -->
+<section>
+    <h1>Atributos button</h1>
+    
+    <ol>
+        <li><strong>Formaction</strong> - Especifica dónde enviar los datos del formulario</li>
+        <li><strong>formmethod</strong> - Define el método HTTP para enviar datos</li>
+        <li><strong>formenctype</strong> - Especifica cómo codificar los datos del formulario</li>
+        <li><strong>formnovalidate</strong> - Indica que no se valide el formulario al enviar</li>
+        <li><strong>formtarget</strong> - Especifica dónde mostrar la respuesta del formulario</li>
+    </ol>
+</section>
+
+<!-- SECCIÓN 7: Formulario con varios componentes -->
+<section>
+    <h1>Formulario con Múltiples Componentes</h1>
+    
+    <form method="get">
+        <label for="texto">Input Text:</label>
+        <input type="text" id="texto" name="texto">
+        
+        <br><br>
+        <label>Botones de Radio:</label><br>
+        <input type="radio" id="opcion1" name="opciones" value="1">
+        <label for="opcion1">Opción 1</label><br>
+        
+        <input type="radio" id="opcion2" name="opciones" value="2">
+        <label for="opcion2">Opción 2</label><br>
+        
+        <input type="radio" id="opcion3" name="opciones" value="3">
+        <label for="opcion3">Opción 3</label><br>
+        
+        <input type="radio" id="opcion4" name="opciones" value="4">
+        <label for="opcion4">Opción 4</label>
+        
+        <br><br>
+        <label>Casillas de Verificación:</label><br>
+        <input type="checkbox" id="check1" name="check1" value="si">
+        <label for="check1">Casilla 1</label><br>
+        
+        <input type="checkbox" id="check2" name="check2" value="si">
+        <label for="check2">Casilla 2</label>
+        
+        <br><br>
+        <label for="archivo">Selección de Archivo:</label>
+        <input type="file" id="archivo" name="archivo">
+        
+        <br><br>
+        <input type="submit" value="Enviar">
+    </form>
+</section>
+
+<!-- SECCIÓN 8: Formulario en tabla con estilo específico -->
+<section>
+    <h1>Formulario en Tabla</h1>
+    
+    <table class="form-table">
+        <tr>
+            <td style="border: blue 1px solid; text-align: center;">
+                <form method="get">
+                    <h3>Formulario de Registro</h3>
+                    
+                    <label for="nombre2">Escriba su nombre:</label>
+                    <input type="text" id="nombre2" name="nombre2"><br><br>
+                    
+                    <label for="apellidos2">Escriba sus apellidos:</label>
+                    <input type="text" id="apellidos2" name="apellidos2"><br><br>
+                    
+                    <label>Escriba su sexo:</label><br>
+                    <input type="radio" id="hombre" name="sexo" value="hombre">
+                    <label for="hombre">Hombre</label>
+                    
+                    <input type="radio" id="mujer" name="sexo" value="mujer" checked>
+                    <label for="mujer">Mujer</label><br><br>
+                    
+                    <input type="submit" value="Enviar">
+                </form>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<!-- SECCIÓN 9: Formulario de reserva -->
+<section>
+    <h1>Formulario de Reserva</h1>
+    
+    <form method="get">
+        <label for="datosPersona">Datos de la persona:</label>
+        <input type="text" id="datosPersona" name="datosPersona" required>
+        
+        <label for="numeroPersonas">Número de personas:</label>
+        <input type="number" id="numeroPersonas" name="numeroPersonas" min="1" max="20">
+        
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" pattern="[0-9]{9}">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha">
+        
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" name="hora">
+        
+        <br><br>
+        <input type="submit" value="Reservar">
+    </form>
+</section>
+
+<!-- SECCIÓN 10: Ajuste de color -->
+<section>
+    <h1>Ajuste de Color</h1>
+    
+    <form method="get">
+        <label for="tematica">Temática del formulario:</label>
+        <input type="text" id="tematica" name="tematica">
+        
+        <label for="color">Selecciona color:</label>
+        <input type="color" id="color" name="color" value="#3498db">
+        
+        <label for="contraste">Contraste:</label>
+        <input type="range" id="contraste" name="contraste" min="0" max="100" value="50">
+        
+        <label for="brillo">Brillo:</label>
+        <input type="range" id="brillo" name="brillo" min="0" max="100" value="50">
+        
+        <br><br>
+        <input type="submit" value="Aplicar Ajustes">
+    </form>
+</section>
+
+<!-- SECCIÓN 11: Submisión web (POST) -->
+<section>
+    <h1>Submisión de Web</h1>
+    
+    <table class="form-table">
+        <tr>
+            <td style="border: red 1px solid; text-align: center;">
+                <form method="post">
+                    <h3>Envío a Servicio de Búsqueda</h3>
+                    
+                    <label for="tematicaWeb">Temática del formulario:</label>
+                    <input type="text" id="tematicaWeb" name="tematicaWeb"><br><br>
+                    
+                    <label for="urlWeb">Dirección web:</label>
+                    <input type="url" id="urlWeb" name="urlWeb" placeholder="https://ejemplo.com"><br><br>
+                    
+                    <label for="busqueda">Búsqueda:</label>
+                    <input type="search" id="busqueda" name="busqueda" placeholder="Buscar..."><br><br>
+                    
+                    <label for="archivoWeb">Subir fichero:</label>
+                    <input type="file" id="archivoWeb" name="archivoWeb"><br><br>
+                    
+                    <input type="submit" value="Enviar a Búsqueda">
+                </form>
+            </td>
+        </tr>
+    </table>
+</section>
+
+</body>
+</html>

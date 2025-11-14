@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02.06</title>
+</head>
+<body>
+    <h1>ALberto Garcia Quintana DIW</h1>
+
+    <h1>Agrupacion de filas</h1>
+    <table border=”1” rules=”groups”>
+<caption>Ventas por secciones</caption>
+<thead>
+<tr>
+<td>&nbsp;</td>
+<td>Hardware</td>
+<td>Software</td>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<th>Total</th>
+<th>25000</th>
+<th>22000</th>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<th>Enero</th>
+<td>12000</td>
+<td>15000</td>
+</tr>
+<tr>
+<th>Febrero</th>
+<td>13000</td>
+<td>9000</td>
+</tr>
+</tbody>
+</table>
+    <h1>Agrupacion de columnas</h1>
+    <table>
+<colgroup>
+<col style="background-color: gray">
+<col span=”2” style="background-color:yellow;">
+</colgroup>
+<thead>
+<tr style="background-color: black; color:white">
+<th>País</th>
+<th>Capital</th>
+<th>Otras ciudades</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<th>España</th>
+<td>Madrid</td>
+<td>Barcelona, Zaragoza, Sevilla, Valencia,
+Bilbao</td>
+</tr>
+<tr>
+<th>Francia</th>
+<td>París</td>
+<td>Lyon, Marsella, Nantes, Toulouse</td>
+</tr>
+<tr>
+<th>Portugal</th>
+
+<td>Lisboa</td>
+<td>Oporto, Coimbra</td>
+</tr>
+</tbody>
+</table>
+    <h1>Ejercicio 1,2 y 3</h1>
+    <table border="1">
+    <tbody>
+        <tr>
+            <td style="width: 100px;" colspan="2">Esta celda tiene un colspan="2"</td>
+        </tr>
+        <tr>
+            <td>celda normal</td>
+            <td>Otra celda</td>
+        </tr>
+    </tbody>
+    </table>
+
+    <table border="1">
+             <br><br><br><br>
+        <tbody>
+        <tr>
+            <td style="width: 200px;" rowspan="2">Esta celda tiene rowspan="2", por eso tiene fusionada la celda de abajo.</td>
+            <td style="width: 200px;">Celda Normal</td>
+        </tr>
+        <tr>
+            <td style="width: 200px;">Otra celda Normal</td>
+        </tr>
+    </tbody>
+
+    </table>
+
+    <table border="1">
+             <br><br><br><br>
+        <tbody>
+        <tr style="background-color: cadetblue">
+            <th style="width: 200px; text-align: center;" colspan="2">Linea 1 y 2</th>        
+        </tr>
+        <tr style="background-color: cadetblue">
+            <td style="width: 200px;">línea 3</td>
+            <td style="width: 200px;">línea 4</td>
+        </tr>
+        <tr style="background-color: cadetblue">
+            <td style="width: 200px;">linea 5</td>
+            <td style="width: 200px;" rowspan="2">línea 6 y 8</td>
+        </tr>
+        <tr style="background-color: cadetblue">
+            <td style="width: 200px;">línea 7</td>
+        </tr>
+    </tbody>
+
+    </table>
+
+      </table>
+
+    <table border="1">
+             <br><br><br><br>
+             
+        <tr>
+            <td style="width: 200px; height: 100px;text-align: center;background-color: aquamarine;" >Linea 1</td>
+            <td style="width: 200px; height: 100px;text-align: center;background-color: yellow;" >Linea 2</td>
+        </tr>
+        <tr>
+            <td style="width: 200px; height: 100px;text-align: center; background-color: green;" >Linea 3</td>
+            <td style="width: 200px; height: 100px;text-align: center; background-color: greenyellow;" rowspan="2">Linea 4 <br> línea 6</td>
+        </tr>
+        <tr>
+            <td style="width: 200px; height: 100px; text-align: center; background-color: gray;" rowspan="2">línea 5 <br> línea 7</td>
+            
+        </tr>
+        <tr>
+            <td style="width: 200px; height: 100px;text-align: center;background-color: burlywood;" >línea 8</td>
+        </tr>
+
+    </table>
+
+    <table border="1">
+             <br><br><br><br>
+        <tbody>
+        <tr>
+            <th style="text-align: center;">A</th>
+            <th style="text-align: center;">B</th>
+            <th style="text-align: center;" rowspan="3">C</th>
+            <td style="text-align: center;">D</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;" rowspan="2">E</td>
+            <td style="text-align: center;">F</td>
+            <td style="text-align: center;">H</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">J</td>
+            <td style="text-align: center;">L</td>
+        </tr>
+    </tbody>
+
+    <table border="1">
+             <br><br>
+        <tbody>
+        <tr>
+            <th style="text-align: center;" colspan="2">A</th>
+            <th style="text-align: center;">C</th>
+            <td style="text-align: center;">D</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;" colspan="3">E</td>
+            <td style="text-align: center;">H</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">I</td>
+            <td style="text-align: center;">J</td>
+            <td style="text-align: center;">k</td>
+            <td style="text-align: center;">L</td>
+        </tr>
+    </tbody>
+
+    <table style="width: 80%; border-collapse: collapse;">
+        <br><br><br><br>
+    <tr style="background-color:lightskyblue;">
+        <th  style="width: 100px; padding: 10px; border: 1px solid #ddd;text-align: left;" colspan="2"> <img src="data:image/jpeg;base64,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" style="width: 50px; height: 50px;">Cabecera</th>
+    </tr>
+    <tr style="background-color:rgb(203, 198, 198);">
+        <td style="width: 100px; padding: 10px; border: 1px solid #ddd; vertical-align: top;">
+          <h3>Contenido</h3>
+        </td>
+        <td style="width: 400px; padding: 10px; border: 1px solid #ddd;">
+            <h1>Contenido</h1> <br>
+          <p>Lorena ipsum dolor sit amet, consectetur adipiscing elit. Donec velitieindra sem at lectus rutrum varius. Donec egestas a euius nostrud erat. Vivamus fugiat odio a nisi mattutin. Istenis. Cru egestas urna qui durem pretium. Sed eget justo posuere, diam tortor felis, ennuis tico. Nulla acces nec ut ligula lobortis pulvinar. Suscugulate quis euius nulla. Duis non eratis eget ienens suscipitum perse. Merci interdum ipsum sed faucibus interdum. Vestibulum gravida omam interdum. Nulla rhoncus tempore venuntis. Sed tempore, ante un elementum molestie, lectus sin omam sequer, quis eccercidio misericursi ori sarti ferem. Moscenas risus ante, malesuada nec tellus, in pederat aliquam felis. Cruellum lorem tellus libero, eu egestas ex officiare.</p>
+
+          <p>Integer pelicans consequat uomiti, ex lacuna ori lobortis. A Dris diligente sednisque tempor. Mauris gravida tempor nisi, id incidunt lacun esedtatoribus quis. Duis a mi ac infis aliquet insuport vol quis locus. Nulla ossque tellus ut nec malesuada, fusellus dignissim lectus dicidunt. Prois quis rhoncus lectus. Frasc etiamod ligula lectus, en filtrum odio incidunt eget. Prois in ex ac magna dictum plumsdique. Cas sed plums incis, mette omae verdujent libero, quis rhoncus in omam in. Frasc pulvinar consectetur nisl facilis. Pensant malesuada vestibulum ex at tempore. Cru vol placerus et, vel maespiturilla. Aliquam erat voluptate. Vestibulum maximus sed tortor id voluptat. Aliquam quis euius, dignissim sed lacun ut, simpatrum lectus dic. Prois ac ex arligula pederatesque neroam. Mauris circulant imperdiet nisl en condensate. Vestibulum separat naus, sed biondus a portum ea, depinus irlandi. Nulla ei launcher massa. Aliquam portume junto vol vaccatur estrusquid. Aliquam portume viviena lacun non fringuta. Nullam varius nisi quis tellus cenulmentum voluptate. Pellentesque incidunt placerus libero quis tempore.</p>
+
+          <p>Lorena ipsum dolor sit amet, consectetur adipiscing elit. Suponibus lectus nec turpis ante egestas. Cus nunc nibh totot elit portibus estrem. Sed finibus, leo in lacun eleifend, sem nisi blandit necee, at enunc adio ante eu ipsum. Mauris at massa accrescus, convallis ante sit amet, ultricies ante laa sed eget. Insect turpis cenulmentum voluptat. Pellentesque lauslucrit non ei leo maximum blandit. Sed porttitor ospira eget odio ancere, quis surpres ante vestibulum. Vestibulum at frappit urma, id retiopsi sem. Mauris at duplica locus. Pensant facilis convallis ultrascooper. Vivamus viviena is est eu fraguit. Pensant facilis vol juoso in necessissa.</p>
+        </td>
+    </tr>
+    <tr style="background-color: orangered;">
+        <td colspan="2" style="padding: 10px; border: 1px solid #ddd; text-align: left;">
+          <strong>Pies</strong>
+        </td>
+    </tr>
+    </table>
+    <table style="width: 50%; border: 2px solid #000; background-color: #f9f9f9;">
+  <tr>
+    <td colspan="2" style="text-align: center; padding: 10px; background-color: #e6f7ff;">
+      <h2>Climas de América del Sur</h2>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding: 10px; vertical-align: top;">
+      <!-- Primera tabla anidada - Parte de arriba -->
+      <table style="width: 100%; border: 1px solid #333; float: left; background-color: #fff2cc;">
+        <tr>
+          <th colspan="2" style="background-color: #ffe699;">Parte de arriba de América del Sur. Países</th>
+        </tr>
+        <tr>
+          <td style="padding: 5px;">Venezuela</td>
+        </tr>
+        <tr>
+          <td style="padding: 5px;">Colombia</td>
+        </tr>
+        <tr>
+          <td style="padding: 5px;">Ecuador</td>
+        </tr>
+        <tr>
+          <td style="padding: 5px;">Perú</td>
+        </tr>
+      </table>
+    </td>
+    <td style="padding: 10px; vertical-align: top;">
+      <!-- Segunda tabla anidada - Parte de abajo -->
+      <table style="width: 100%; border: 1px solid #333; float: left; background-color: #d4edda;">
+        <tr>
+          <th colspan="2" style="background-color: #c3e6cb;">Parte de abajo de América del Sur. Países como:</th>
+        </tr>
+        <tr>
+          <td style="padding: 5px;">Argentina</td>
+        </tr>
+        <tr>
+          <td style="padding: 5px;">Chile</td>
+        </tr>
+        <tr>
+          <td style="padding: 5px;">Uruguay</td>
+        </tr>
+        <tr>
+          <td style="padding: 5px;">Paraguay</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 10px;">
+      <!-- Tercera tabla anidada - Climas -->
+      <table style="width: 100%; border: 1px solid #333; background-color: #e2e3e5;">
+        <tr>
+          <td style="padding: 8px;">
+            <ul style="margin: 0; padding-left: 20px;">
+              <li><strong>Bosque tropical,</strong></li>
+              <li>clima de sabana,</li>
+              <li>clima marítimo con inviernos secos.</li>
+            </ul>
+          </td>
+          <td style="padding: 8px;">
+            <ul style="margin: 0; padding-left: 20px;">
+              <li><strong>Climas marítimos con veranos secos,</strong></li>
+              <li>climas fríos,</li>
+              <li>clima de estepa,</li>
+              <li>clima desértico.</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: center; padding: 10px; background-color: #f8f9fa; font-size: 12px;">
+      Activar Windows<br>
+      Ve a Configuración por <a href="http://www.activa.com">www.activa.com</a>
+    </td>
+  </tr>
+</table>
+
+    
+</body>
+</html>
