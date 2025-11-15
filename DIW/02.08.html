@@ -1,11 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
+    <title>Tarea02.08</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+        }
+        img[usemap] {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rwdImageMaps/1.6/jquery.rwdImageMaps.min.js"></script>
 </head>
+
 <body>
-    
+
+    <h1>ALberto Garcia Quintana DIW</h1>
+
+    <h2>Ejercicio 1</h2>
+    <img src="Mapas/imagemap_cuadrado.jpg" class="responsive" usemap="#mapaCuadros" alt="Mapa de cuadros" style="max-width:100%;height:auto;">
+
+    <map name="mapaCuadros">
+        <area shape="RECT" coords="8,8,335,135" href="Mapas/imagemap_cuadrado.jpg" alt="cuadro1">
+        <area shape="RECT" coords="363,8,688,139" href="Mapas/imagemap_cuadrado.jpg" alt="cuadro2">
+        <area shape="RECT" coords="8,158,334,288" href="Mapas/imagemap_cuadrado.jpg" alt="cuadro3">
+        <area shape="RECT" coords="363,160,688,288" href="Mapas/imagemap_cuadrado.jpg" alt="cuadro4">
+        <area shape="RECT" coords="8,309,334,440" href="Mapas/imagemap_cuadrado.jpg" alt="cuadro5">
+        <area shape="RECT" coords="363,310,688,440" href="Mapas/imagemap_cuadrado.jpg" alt="cuadro16">
+    </map>
+
+    <h2>Ejercicio 2</h2>
+    <img src="Mapas/boton.png" width="600" height="400" usemap="#mapaCirculos" alt="Mapa de círculos">
+
+    <map name="mapaCirculos">
+        <area shape="CIRCLE" coords="178,128,26" href="Mapas/botones.png" alt="circulo1">
+        <area shape="CIRCLE" coords="282,128,26" href="Mapas/botones.png" alt="circulo2">
+        <area shape="CIRCLE" coords="387,128,26" href="Mapas/botones.png" alt="circulo3">
+        <area shape="CIRCLE" coords="489,128,26" href="Mapas/botones.png" alt="circulo4">
+    </map>
+
+    <h2>Ejercicio 3</h2>
+    <img src="Mapas/MapaPoly.png" usemap="#mapaMalaga" alt="Mapa de comarcas de Málaga">
+
+    <map name="mapaMalaga">
+    <!-- Antequera -->
+    <area shape="poly" 
+            coords="191,124,460,17,498,129,458,171,318,170,310,192,273,200,208,168,195,128" 
+            href="https://turismo.antequera.es/" 
+            alt="Antequera" 
+            title="Comarca de Antequera">
+
+    <!-- La Axarquía -->
+    <area shape="poly" 
+            coords="509,132,671,222,672,244,487,261,507,211,466,176" 
+            href="https://turismoaxarquiacostadelsol.com/" 
+            alt="La Axarquía" 
+            title="Comarca de La Axarquía">
+
+    <!-- Málaga -->
+    <area shape="poly" 
+            coords="373,185,459,178,489,213,478,261,441,264,422,290,370,302,369,279,394,265" 
+            href="https://visita.malaga.eu/es/" 
+            alt="Málaga" 
+            title="Comarca de Málaga">
+
+    <!-- Valle del Guadalhorce -->
+    <area shape="poly" 
+            coords="324,174,368,183,367,224,383,265,362,273,361,305,275,309,266,291,228,281,242,257,278,237,278,206,315,200" 
+            href="https://guadalhorceturismo.com/" 
+            alt="Valle del Guadalhorce" 
+            title="Comarca del Valle del Guadalhorce">
+
+    <!-- Costa Occidental -->
+    <area shape="poly" 
+            coords="106,387,187,344,229,292,273,320,406,307,377,325,363,353,263,352,164,392,139,423,122,425" 
+            href="https://www.visitacostadelsol.com/" 
+            alt="Costa Occidental" 
+            title="Comarca de la Costa Occidental">
+
+    <!-- Ronda -->
+    <area shape="poly" 
+            coords="59,330,123,268,134,228,118,209,137,187,174,215,208,182,265,198,271,234,236,251,182,338,103,377,82,339" 
+            href="https://www.turismoderonda.es/" 
+            alt="Ronda" 
+            title="Comarca de Ronda">
+    </map>
+
+    <h2>Ejercicio 4</h2>
+    <img src="Mapas/Europa.png" width="600" height="400" usemap="#mapaMundo" alt="Mapa del Mundo">
+
+    <map name="mapaMundo">
+        <area target="" alt="Islandia" title="Islandia" href="Mapas/Mundo.png" coords="110,34,136,45,134,60,107,57,105,41" shape="poly">
+        <area target="" alt="Irlanda" title="Irlanda" href="Mapas/Mundo.png" coords="116,183,133,186,127,201,110,199" shape="poly">
+        <area target="" alt="Reino Unido" title="Reino Unido" href="Mapas/Mundo.png" coords="153,160,169,157,160,171,173,217,165,229,136,227,144,204,156,193,151,177" shape="poly">
+        <area target="" alt="Noruega" title="Noruega" href="Mapas/Mundo.png" coords="226,120,259,98,283,57,322,34,313,46,291,53,275,77,265,100,256,109,249,148,225,160" shape="poly">
+        <area target="" alt="Suecia" title="Suecia" href="Mapas/Mundo.png" coords="299,59,307,81,297,102,280,115,281,154,271,187,255,191,254,156,263,111,290,62" shape="poly">
+        <area target="" alt="Finlandia" title="Finlandia" href="Mapas/Mundo.png" coords="308,54,322,49,346,110,337,138,312,143,305,114,319,94" shape="poly">
+        <area target="" alt="Estonia" title="Estonia" href="Mapas/Mundo.png" coords="315,157,339,154,336,167,319,167" shape="poly">
+        <area target="" alt="Letonia" title="Letonia" href="Mapas/Mundo.png" coords="322,174,337,177,342,190,304,183" shape="poly">
+        <area target="" alt="Lituania" title="Lituania" href="Mapas/Mundo.png" coords="302,191,331,196,321,214,304,201" shape="poly">
+        <area target="" alt="Dinamarca" title="Dinamarca" href="Mapas/Mundo.png" coords="225,181,238,175,245,197,231,198" shape="poly">
+        <area target="" alt="Rusia" title="Rusia" href="Mapas/Mundo.png" coords="550,1,344,185,487,188,364,227,524,232,421,309" shape="poly">
+        <area target="" alt="Ucrania" title="Ucrania" href="Mapas/Mundo.png" coords="323,243,379,227,427,251,418,272,385,287,373,289,351,270,317,275" shape="poly">
+        <area target="" alt="Bielorrusia" title="Bielorrusia" href="Mapas/Mundo.png" coords="350,189,366,223,325,238,325,220,338,196" shape="poly">
+        <area target="" alt="Moldavia" title="Moldavia" href="Mapas/Mundo.png" coords="348,276,360,280,359,295" shape="poly">
+        <area target="" alt="Rumanía" title="Rumanía" href="Mapas/Mundo.png" coords="316,286,342,279,356,316,322,320,305,302" shape="poly">
+        <area target="" alt="Bulgaria" title="Bulgaria" href="Mapas/Mundo.png" coords="321,331,356,325,350,338,340,348,322,350" shape="poly">
+        <area target="" alt="Grecia" title="Grecia" href="Mapas/Mundo.png" coords="339,354,306,361,300,375,315,400,319,373,321,362" shape="poly">
+        <area target="" alt="Serbia" title="Serbia" href="Mapas/Mundo.png" coords="291,308,311,321,310,333,304,341,293,334" shape="poly">
+        <area target="" alt="Hungría" title="Hungría" href="Mapas/Mundo.png" coords="276,285,309,280,298,298,282,302,274,295" shape="poly">
+        <area target="" alt="Eslovaquia" title="Eslovaquia" href="Mapas/Mundo.png" coords="279,276,296,264,307,268,299,277" shape="poly">
+        <area target="" alt="República Checa" title="República Checa" href="Mapas/Mundo.png" coords="245,254,259,248,287,263,274,269,257,266" shape="poly">
+        <area target="" alt="Eslovenia" title="Eslovenia" href="Mapas/Mundo.png" coords="251,300,269,299,253,306" shape="poly">
+        <area target="" alt="Polonia" title="Polonia" href="Mapas/Mundo.png" coords="265,214,312,215,318,249,308,265,265,243" shape="poly">
+        <area target="" alt="Austria" title="Austria" href="Mapas/Mundo.png" coords="228,284,270,273,265,290,243,293" shape="poly">
+        <area target="" alt="Suiza" title="Suiza" href="Mapas/Mundo.png" coords="201,286,219,281,221,287,205,294" shape="poly">
+        <area target="" alt="Bélgica" title="Bélgica" href="Mapas/Mundo.png" coords="186,236,199,241,195,245" shape="poly">
+        <area target="" alt="Holanda" title="Holanda" href="Mapas/Mundo.png" coords="199,219,210,216,202,231,193,231" shape="poly">
+        <area target="" alt="Alemania" title="Alemania" href="Mapas/Mundo.png" coords="222,215,254,214,255,243,242,247,242,274,216,276,209,234" shape="poly">
+        <area target="" alt="Francia" title="Francia" href="Mapas/Mundo.png" coords="132,250,180,236,210,264,192,282,196,315,163,320,139,307,146,275" shape="poly">
+        <area target="" alt="Italia" title="Italia" href="Mapas/Mundo.png" coords="202,299,242,295,234,312,273,360,262,384,262,367,228,339,222,315,204,315" shape="poly">
+        <area target="" alt="España" title="España" href="Mapas/Mundo.png" coords="85,291,161,331,141,336,126,361,107,371,79,369,71,355,92,312,79,302" shape="poly">
+        <area target="" alt="Portugal" title="Portugal" href="Mapas/Mundo.png" coords="74,306,87,312,64,355,59,350,63,329" shape="poly">
+    </map>
+
+    <script>
+        $(document).ready(function(){
+            $('img[usemap]').rwdImageMaps();
+        });
+    </script>
+
 </body>
+
 </html>
