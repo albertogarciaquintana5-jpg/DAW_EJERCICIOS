@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width: 400px; margin-left:auto ;margin-right:auto;background-color: beige;border-color:brown;border: 1px solid red ;border-radius:6px ;">
+            <h1> Formulario </h1>
+            <form>
+            <!-- Sección Datos Personales -->
+            <fieldset style="border: 1px solid #666; padding: 15px; margin-bottom: 20px;">
+              <legend style="font-weight: bold; font-size: 18px;">Datos personales</legend>
+            
+              <!-- Campo Nombre -->
+              <label for="nombre" style="display: block; margin: 10px 0 5px 0;">
+                  <strong>Nombre:</strong>
+               </label>
+               <input type="text" id="nombre" name="nombre" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+            
+               <!-- Campo Apellido -->
+                <label for="apellido" style="display: block; margin: 10px 0 5px 0;">
+                    <strong>Apellido:</strong>
+                </label>
+               <input type="text" id="apellido" name="apellido" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+            
+                <!-- Campo Edad -->
+                <label for="edad" style="display: block; margin: 10px 0 5px 0;">
+                 <strong>Edad:</strong>
+                </label>
+                <input type="number" id="edad" name="edad" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        
+            </fieldset>
+
+            <!-- Sección Satisfacción -->
+            <fieldset style="border: 1px solid #666; padding: 15px;">
+                <legend style="font-weight: bold; font-size: 18px;">
+                    Seleccione tu satisfacción con el concierto
+                </legend>
+            
+                 <div style="margin: 20px 0;">
+                    <label for="satisfaccion" style="display: block; margin-bottom: 10px;">
+                        <strong>Grado de satisfacción:</strong>
+                    </label>
+                
+                    <!-- Barra deslizante -->
+                    <input type="range" 
+                           id="satisfaccion" 
+                           name="satisfaccion" 
+                           min="0" 
+                           max="10" 
+                           value="5"
+                           style="width: 100%; height: 30px;">
+                
+                
+                </div>
+            </fieldset>
+
+            <!-- Botón de enviar -->
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+                    Enviar Formulario
+                </button>
+            </div>
+
+        </form>
+
+        <!-- Mensaje final -->
+        <div style="text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold;">
+            Gracias por tus Opiniones
+        </div>
+    </div>
+    <br> <br>
+
+    <div style="width: 400px; margin-left:auto ;margin-right:auto;background-color: beige;border-color:brown;border: 1px solid red ;border-radius:6px ;">
+        <h1> Formulario </h1>
+        <form>
+        <!-- Sección Datos Personales -->
+        <fieldset style="border: 1px solid #666; padding: 15px; margin-bottom: 20px;">
+            <legend style="font-weight: bold; font-size: 18px;">Datos personales</legend>
+            
+            <!-- Campo Nombre -->
+            <label for="nombre" style="display: block; margin: 10px 0 5px 0;">
+                <strong>Nombre:</strong>
+            </label>
+            <input type="text" id="nombre" name="nombre" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+            
+            <!-- Campo Apellido -->
+            <label for="apellido" style="display: block; margin: 10px 0 5px 0;">
+                <strong>Apellido:</strong>
+            </label>
+            <input type="text" id="apellido" name="apellido" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+            
+            <!-- Campo Edad -->
+            <label for="edad" style="display: block; margin: 10px 0 5px 0;">
+                <strong>Edad:</strong>
+            </label>
+            <input type="number" id="edad" name="edad" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        
+        </fieldset>
+
+        <!-- Sección Satisfacción -->
+        <fieldset style="border: 1px solid #666; padding: 15px;">
+            <legend style="font-weight: bold; font-size: 18px;">
+                concierto
+            </legend>
+            
+            <label for="datalist"> Concierto al que asiste:</label>
+            <input type="text" id="conciertos" list="listaConciertos" placeholder="Escribe o selecciona" style="margin: 5px 0; padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 100%; box-sizing: border-box;">
+            <datalist id="listaConciertos">
+                <option value="Melendi">
+                <option value="Alejandro Sanz">
+                <option value="RadioHead">
+            </datalist>
+            <br><br>
+
+            <label >Que te parecio el concierto: </label><br>
+            <textarea name="teto" id="teto">Escriba sus impresiones</textarea>
+
+
+        </fieldset>
+
+        <!-- Botón de enviar -->
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+                Enviar Formulario
+            </button>
+            
+
+        </div>
+
+    </form>
+
+    <!-- Mensaje final -->
+    <div style="text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold;">
+        Gracias por tus Opiniones
+    </div>
+    </div>
+
+     <br> <br>
+<!-- Ejercicio 3: Formulario con Progress -->
+<div style="width: 400px; margin-left:auto ;margin-right:auto;background-color: beige;border-color:brown;border: 1px solid red ;border-radius:6px ; margin-bottom: 30px;">
+    <h1 style="text-align: center;"> Formulario 3</h1>
+    <form>
+    
+    <fieldset style="border: 1px solid #666; padding: 15px; margin-bottom: 20px;">
+        <legend style="font-weight: bold; font-size: 18px;">Genera tu personaje para el juego</legend>
+        
+        <label for="nombre1" style="display: block; margin: 10px 0 5px 0;">
+            <strong>Nombre:</strong>
+        </label>
+        <input type="text" id="nombre1" name="nombre1" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        
+        <label style="display: block; margin: 10px 0 5px 0;">
+            <strong>Selecciona tu rol:</strong>
+        </label>
+        <div style="margin-bottom: 15px;">
+            <input type="radio" id="guerrero1" name="rol1" value="guerrero" checked style="margin-right: 5px;">
+            <label for="guerrero1" style="margin-right: 15px;">Guerrero</label>
+            
+            <input type="radio" id="mago1" name="rol1" value="mago" style="margin-right: 5px;">
+            <label for="mago1" style="margin-right: 15px;">Mago</label>
+            
+            <input type="radio" id="ladron1" name="rol1" value="ladron" style="margin-right: 5px;">
+            <label for="ladron1" style="margin-right: 15px;">Ladrón</label>
+            
+            <input type="radio" id="paladin1" name="rol1" value="paladin" style="margin-right: 5px;">
+            <label for="paladin1">Paladín</label>
+        </div>
+        
+        <label for="edad1" style="display: block; margin: 10px 0 5px 0;">
+            <strong>Edad:</strong>
+            <span id="edadValue1">25</span> años
+        </label>
+        <input type="range" id="edad1" name="edad1" min="18" max="80" value="25" style="width: 100%; margin-bottom: 10px;" oninput="document.getElementById('edadValue1').textContent = this.value;">
+    
+    </fieldset>
+
+    <fieldset style="border: 1px solid #666; padding: 15px;">
+        <legend style="font-weight: bold; font-size: 18px;">
+            Datos del personaje
+        </legend>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="fuerza1" style="display: inline-block; width: 100px;">Fuerza</label>
+            <progress id="fuerza1" value="0" max="200" style="width: 250px; height: 20px;"></progress>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="velocidad1" style="display: inline-block; width: 100px;">Velocidad</label>
+            <progress id="velocidad1" value="0" max="200" style="width: 250px; height: 20px;"></progress>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="persuasion1" style="display: inline-block; width: 100px;">Persuasión</label>
+            <progress id="persuasion1" value="0" max="200" style="width: 250px; height: 20px;"></progress>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="espionaje1" style="display: inline-block; width: 100px;">Espionaje</label>
+            <progress id="espionaje1" value="0" max="200" style="width: 250px; height: 20px;"></progress>
+        </div>
+
+    </fieldset>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button type="button" onclick="generarAleatorio1()" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+            Genera tu personaje
+        </button>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold;">
+        ¡Personaje Listo!
+    </div>
+    </form>
+</div>
+
+<!-- Ejercicio 4: Formulario con Meter -->
+<div style="width: 400px; margin-left:auto ;margin-right:auto;background-color: beige;border-color:brown;border: 1px solid red ;border-radius:6px ;">
+    <h1 style="text-align: center;"> Formulario 4</h1>
+    <form>
+    
+    <fieldset style="border: 1px solid #666; padding: 15px; margin-bottom: 20px;">
+        <legend style="font-weight: bold; font-size: 18px;">Genera tu personaje para el juego</legend>
+        
+        <label for="nombre2" style="display: block; margin: 10px 0 5px 0;">
+            <strong>Nombre:</strong>
+        </label>
+        <input type="text" id="nombre2" name="nombre2" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        
+        <label for="valoracion" style="display: block; margin: 10px 0 5px 0;">
+            <strong>Valoración:</strong>
+        </label>
+        <input type="text" id="valoracion" list="facciones" onchange="actualizarPersonaje()" placeholder="Pulse para facciones" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        <datalist id="facciones">
+            <option value="Baja">
+            <option value="Media">
+            <option value="Alta">
+            <option value="Épica">
+        </datalist>
+        
+        <label style="display: block; margin: 10px 0 5px 0;">
+            <strong>Selecciona tu rol:</strong>
+        </label>
+        <div style="margin-bottom: 15px;">
+            <input type="radio" id="guerrero2" name="rol2" value="guerrero" checked style="margin-right: 5px;">
+            <label for="guerrero2" style="margin-right: 15px;">Guerrero</label>
+            
+            <input type="radio" id="mago2" name="rol2" value="mago" style="margin-right: 5px;">
+            <label for="mago2" style="margin-right: 15px;">Mago</label>
+            
+            <input type="radio" id="ladron2" name="rol2" value="ladron" style="margin-right: 5px;">
+            <label for="ladron2" style="margin-right: 15px;">Ladrón</label>
+            
+            <input type="radio" id="paladin2" name="rol2" value="paladin" style="margin-right: 5px;">
+            <label for="paladin2">Paladín</label>
+        </div>
+        
+        <label for="edad2" style="display: block; margin: 10px 0 5px 0;">
+            <strong>Edad:</strong>
+            <span id="edadValue2">25</span> años
+        </label>
+        <input type="range" id="edad2" name="edad2" min="18" max="80" value="25" style="width: 100%; margin-bottom: 10px;" oninput="document.getElementById('edadValue2').textContent = this.value;">
+    
+    </fieldset>
+
+    <fieldset style="border: 1px solid #666; padding: 15px;">
+        <legend style="font-weight: bold; font-size: 18px;">
+            Datos del personaje
+        </legend>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="fuerza2" style="display: inline-block; width: 100px;">Fuerza</label>
+            <meter id="fuerza2" value="0" min="0" low="40" high="160" optimum="180" max="200" style="width: 250px; height: 20px;"></meter>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="velocidad2" style="display: inline-block; width: 100px;">Velocidad</label>
+            <meter id="velocidad2" value="0" min="0" low="40" high="160" optimum="180" max="200" style="width: 250px; height: 20px;"></meter>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="persuasion2" style="display: inline-block; width: 100px;">Persuasión</label>
+            <meter id="persuasion2" value="0" min="0" low="40" high="160" optimum="180" max="200" style="width: 250px; height: 20px;"></meter>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="espionaje2" style="display: inline-block; width: 100px;">Espionaje</label>
+            <meter id="espionaje2" value="0" min="0" low="40" high="160" optimum="180" max="200" style="width: 250px; height: 20px;"></meter>
+        </div>
+
+    </fieldset>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button type="button" onclick="generarAleatorio2()" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+            Genera tu personaje
+        </button>
+    </div>
+
+    <div id="tipoPersonaje" style="text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold;">
+        Tipo de personaje: No definido
+    </div>
+    </form>
+</div>
+
+<script>
+    // Ejercicio 3: Función para generar valores aleatorios en progress
+    function generarAleatorio1() {
+        document.getElementById('fuerza1').value = Math.random() * 200;
+        document.getElementById('velocidad1').value = Math.random() * 200;
+        document.getElementById('persuasion1').value = Math.random() * 200;
+        document.getElementById('espionaje1').value = Math.random() * 200;
+    }
+    
+    // Ejercicio 4: Función para generar valores aleatorios en meter
+    function generarAleatorio2() {
+        document.getElementById('fuerza2').value = Math.random() * 200;
+        document.getElementById('velocidad2').value = Math.random() * 200;
+        document.getElementById('persuasion2').value = Math.random() * 200;
+        document.getElementById('espionaje2').value = Math.random() * 200;
+        
+        // Actualizar el tipo de personaje basado en la valoración
+        actualizarPersonaje();
+    }
+    
+    // Ejercicio 4: Función para actualizar el tipo de personaje según la valoración
+    function actualizarPersonaje() {
+        const valoracion = document.getElementById('valoracion').value;
+        let tipoPersonaje = "";
+        
+        switch(valoracion) {
+            case "Baja":
+                tipoPersonaje = "Novato";
+                break;
+            case "Media":
+                tipoPersonaje = "Aventurero";
+                break;
+            case "Alta":
+                tipoPersonaje = "Experto";
+                break;
+            case "Épica":
+                tipoPersonaje = "Maestro Legendario";
+                break;
+            default:
+                tipoPersonaje = "No definido";
+        }
+        
+        // Actualizar el display del tipo de personaje
+        document.getElementById('tipoPersonaje').textContent = "Tipo de personaje: " + tipoPersonaje;
+    }
+</script>
+</body>
+</html>
