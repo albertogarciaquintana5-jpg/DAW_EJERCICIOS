@@ -61,7 +61,7 @@ def Ecuacion2º():
 
     print ("Resultado de la operacion de 2 grado: ", iFormula2º)
 
-def TablaNumero():
+#def TablaNumero():
 
 
 
@@ -69,7 +69,7 @@ match sEjercicio:
 
     case "a":
         CrearRombo()
-        
+ 
     case "b":
         AdivinarNum()
 
