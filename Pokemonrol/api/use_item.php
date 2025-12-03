@@ -151,6 +151,10 @@ try {
             }
         }
     }
+    // Remove inventory rows that reached zero to keep table clean
+    $del = $mysqli->prepare('DELETE FROM inventario WHERE user_id = ? AND item_id = ? AND cantidad <= 0');
+    if ($del) { $del->bind_param('ii', $user_id, $item_id); $del->execute(); $del->close(); }
+
     $mysqli->commit();
 } catch (Exception $e) {
     $mysqli->rollback();

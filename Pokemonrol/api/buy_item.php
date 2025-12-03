@@ -52,20 +52,12 @@ try {
   if (!$upd->execute()) throw new Exception('Error actualizando saldo');
   $upd->close();
   // Upsert inventario
-  $inv = $mysqli->prepare("SELECT cantidad FROM inventario WHERE user_id = ? AND item_id = ? FOR UPDATE");
-  $inv->bind_param('ii', $user_id, $item_id); $inv->execute(); $res3 = $inv->get_result();
-  $existing = 0;
-  if ($res3 && $res3->num_rows > 0) { $r = $res3->fetch_assoc(); $existing = (int)$r['cantidad']; }
-  $inv->close();
-
-  if ($existing > 0) {
-    $newQty = $existing + $quantity;
-    $u2 = $mysqli->prepare("UPDATE inventario SET cantidad = ? WHERE user_id = ? AND item_id = ?");
-    $u2->bind_param('iii', $newQty, $user_id, $item_id); $u2->execute(); $u2->close();
-  } else {
-    $i2 = $mysqli->prepare("INSERT INTO inventario (user_id, item_id, cantidad) VALUES (?, ?, ?)");
-    $i2->bind_param('iii', $user_id, $item_id, $quantity); $i2->execute(); $i2->close();
-  }
+  // Upsert inventario atomically to avoid race conditions that cause duplicate PK errors
+  $i2 = $mysqli->prepare("INSERT INTO inventario (user_id, item_id, cantidad) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE cantidad = cantidad + VALUES(cantidad)");
+  if (!$i2) throw new Exception('Error preparando inventario');
+  $i2->bind_param('iii', $user_id, $item_id, $quantity);
+  if (!$i2->execute()) throw new Exception('Error actualizando inventario');
+  $i2->close();
 
   // Registrar transacción
   $ins = $mysqli->prepare("INSERT INTO money_transactions (user_id, amount, type, meta) VALUES (?, ?, ?, ?)");

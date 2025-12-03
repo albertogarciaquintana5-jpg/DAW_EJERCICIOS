@@ -89,17 +89,17 @@ foreach ($team as $t) {
       <aside class="sidebar">
         <h5 class="mb-3">Menú</h5>
           <ul class="nav nav-pills flex-column" id="menuTabs" role="tablist">
-            <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#d20" type="button"> <span class="emoji">🎲</span> Tirar D20</button></li>
             <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#inventario" type="button"> <span class="emoji">👜</span> Inventario</button></li>
             <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#caja" type="button"> <span class="emoji">📦</span> Caja Pokémon</button></li>
             <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#equipo" type="button"> <span class="emoji">⚔️</span> Equipo</button></li>
             <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pokedex" type="button"> <span class="emoji">📘</span> Pokédex</button></li>
+             <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#d100" type="button"> <span class="emoji">🎲</span> Tirar D100</button></li>
           </ul>
       </aside>
         <main class="flex-fill">
           <div class="d-block d-md-none mb-3">
             <nav class="nav nav-pills justify-content-around">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#d20">🎲</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#d100">🎲</button>
               <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#inventario">👜</button>
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#caja">📦</button>
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#equipo">⚔️</button>
@@ -107,18 +107,23 @@ foreach ($team as $t) {
             </nav>
           </div>
           <div class="tab-content">
-            <!-- D20 TAB -->
-            <div class="tab-pane fade" id="d20" role="tabpanel">
+            <!-- D100 TAB -->
+            <div class="tab-pane fade" id="d100" role="tabpanel">
               <div class="card p-3 card-section">
-                <div class="section-title">Tirar D20</div>
-                <div class="small-muted mb-2">Tira un dado de 20 típico de rol. Se guarda el historial en tu navegador.</div>
+                <div class="section-title">Tirar D100</div>
+                <div class="small-muted mb-2">Tira un dado de 100 (1–100). Se guarda el historial en tu navegador.</div>
                 <div class="d-flex align-items-center gap-3">
-                  <button class="btn btn-lg btn-primary" onclick="rollD20()">🎲 Tirar D20</button>
-                  <div id="d20Result" class="fw-bold fs-3">--</div>
+                  <div class="d-flex flex-column">
+                    <div>
+                      <button class="btn btn-lg btn-primary me-2" onclick="rollD100()">🎲 Tirar D100</button>
+                    </div>
+                    <div class="mt-2"><small class="text-muted">Tirada de D100 (1-100). Se registra si estás autenticado.</small></div>
+                  </div>
+                  <div id="d100Result" class="fw-bold fs-3">--</div>
                 </div>
                 <div class="mt-3">
                   <div class="fw-bold">Historial</div>
-                  <ul id="d20History" class="list-group mt-2"></ul>
+                  <ul id="d100History" class="list-group mt-2"></ul>
                 </div>
               </div>
             </div>
@@ -222,7 +227,7 @@ foreach ($team as $t) {
             <div class="tab-pane fade" id="caja" role="tabpanel">
               <div class="card p-3 card-section">
                 <div class="section-title">Caja Pokémon</div>
-                <div class="small-muted mb-2">Pokémon guardados <b>(dime de meterte algum pokémon</b></div>
+                <div class="small-muted mb-2">Pokémon guardados <b>(dime de meterte algun pokémon)</b></div>
                 <div class="d-grid gap-2">
                   <?php if (count($box) === 0): ?>
                   <div class="small-muted">No hay pokémon en la caja.</div>
@@ -447,7 +452,8 @@ foreach ($team as $t) {
           const qtySpan = card.querySelector('.item-qty');
           if (qtySpan) qtySpan.textContent = j.remaining;
           if (j.remaining <= 0) {
-            const useBtn = card.querySelector('button'); if (useBtn) { useBtn.disabled = true; useBtn.textContent = 'Agotado'; }
+            // remove item from inventory when 0 left
+            card.remove();
           }
         }
         if (j.applied) {
@@ -609,12 +615,21 @@ try {
 
   function renderInventory(inv) {
     // inv: array of {item_id, cantidad, nombre}
-    for (const it of inv) {
-      const card = document.querySelector('.item-card[data-item-id="' + it.item_id + '"]');
-      if (!card) continue;
-      const qtySpan = card.querySelector('.item-qty'); if (qtySpan) qtySpan.textContent = it.cantidad;
-      const useBtn = card.querySelector('button'); if (useBtn) { useBtn.disabled = (it.cantidad <= 0); if (it.cantidad <= 0) useBtn.textContent = 'Agotado'; }
-    }
+    try {
+      const map = {};
+      for (const it of inv) map[parseInt(it.item_id)] = it;
+      document.querySelectorAll('.item-card').forEach(card => {
+        const id = parseInt(card.dataset.itemId || '0');
+        const it = map[id];
+        if (!it || (it.cantidad !== undefined && parseInt(it.cantidad) <= 0)) {
+          // remove from DOM if not present or count is zero
+          card.remove();
+          return;
+        }
+        const qtySpan = card.querySelector('.item-qty'); if (qtySpan) qtySpan.textContent = it.cantidad;
+        const useBtn = card.querySelector('button'); if (useBtn) { useBtn.disabled = (it.cantidad <= 0); if (it.cantidad <= 0) useBtn.textContent = 'Agotado'; else useBtn.textContent = 'Usar'; }
+      });
+    } catch(e) { console.warn('renderInventory error', e); }
   }
 
   // Toast helper
@@ -750,50 +765,77 @@ try {
 
 <script>
   // D20 roller: client-side, stores history in localStorage
-  function rollD20() {
+  async function rollD100() {
     try {
-      const val = Math.floor(Math.random() * 20) + 1;
-      const resEl = document.getElementById('d20Result');
+      const val = Math.floor(Math.random() * 100) + 1;
+      const resEl = document.getElementById('d100Result');
       if (resEl) {
         resEl.textContent = val;
         resEl.classList.remove('text-success','text-danger','text-dark');
-        if (val === 20) resEl.classList.add('text-success');
+        if (val === 100) resEl.classList.add('text-success');
         else if (val === 1) resEl.classList.add('text-danger');
         else resEl.classList.add('text-dark');
       }
-      showToast('Tirada D20: ' + val, 'success');
-      // add to history
-      const hist = document.getElementById('d20History');
+      showToast('Tirada D100: ' + val, 'success');
+
       const entry = { value: val, at: (new Date()).toISOString() };
-      if (hist) {
-        const li = document.createElement('li');
-        li.className = 'list-group-item';
-        const time = new Date(entry.at).toLocaleTimeString();
-        li.textContent = time + ' — ' + entry.value;
-        hist.insertBefore(li, hist.firstChild);
-      }
-      // persist
-      try { 
-        const prev = JSON.parse(localStorage.getItem('d20_history') || '[]');
-        prev.unshift(entry);
-        localStorage.setItem('d20_history', JSON.stringify(prev.slice(0,50)));
+
+      // try to persist on server; if it fails, fallback to localStorage
+      try {
+        const r = await fetch('api/d100_roll.php', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ value: val }) });
+        const jr = await r.json();
+        if (jr && jr.success) {
+          // insert into server-driven history list if present
+          const hist = document.getElementById('d100History');
+          if (hist) {
+            const li = document.createElement('li'); li.className = 'list-group-item';
+            const time = new Date().toLocaleTimeString(); li.textContent = time + ' — ' + val; hist.insertBefore(li, hist.firstChild);
+          }
+          return;
+        }
+      } catch (e) { /* ignore, fallback to localStorage */ }
+
+      // fallback: store locally
+      try {
+        const hist = document.getElementById('d100History');
+        if (hist) {
+          const li = document.createElement('li'); li.className = 'list-group-item';
+          const time = new Date(entry.at).toLocaleTimeString(); li.textContent = time + ' — ' + entry.value; hist.insertBefore(li, hist.firstChild);
+        }
+        const prev = JSON.parse(localStorage.getItem('d100_history') || '[]'); prev.unshift(entry); localStorage.setItem('d100_history', JSON.stringify(prev.slice(0,50)));
       } catch(e) {}
     } catch(e) { showToast('Error al tirar el dado', 'danger'); }
   }
 
-  function initD20History() {
+  async function initD100History() {
+    // Prefer server history when authenticated; otherwise use localStorage
     try {
-      const prev = JSON.parse(localStorage.getItem('d20_history') || '[]');
-      const hist = document.getElementById('d20History');
-      const resEl = document.getElementById('d20Result');
+      const hist = document.getElementById('d100History');
+      const resEl = document.getElementById('d100Result');
+      // try server
+      try {
+        const r = await fetch('api/d100_history.php?limit=50');
+        if (r.ok) {
+          const j = await r.json();
+          if (j && j.success && Array.isArray(j.rolls)) {
+            hist.innerHTML = '';
+            for (const e of j.rolls) {
+              const li = document.createElement('li'); li.className = 'list-group-item';
+              const time = new Date(e.created_at).toLocaleTimeString(); li.textContent = time + ' — ' + e.value; hist.appendChild(li);
+            }
+            if (j.rolls.length && resEl) resEl.textContent = j.rolls[0].value;
+            return;
+          }
+        }
+      } catch (e) { /* server not available or not authenticated */ }
+
+      // fallback localStorage
+      const prev = JSON.parse(localStorage.getItem('d100_history') || '[]');
       if (hist && Array.isArray(prev)) {
         hist.innerHTML = '';
         for (const e of prev.slice(0,50)) {
-          const li = document.createElement('li');
-          li.className = 'list-group-item';
-          const time = new Date(e.at).toLocaleTimeString();
-          li.textContent = time + ' — ' + e.value;
-          hist.appendChild(li);
+          const li = document.createElement('li'); li.className = 'list-group-item';
+          const time = new Date(e.at).toLocaleTimeString(); li.textContent = time + ' — ' + e.value; hist.appendChild(li);
         }
         if (prev.length && resEl) resEl.textContent = prev[0].value;
       }
@@ -801,7 +843,7 @@ try {
   }
 
   // Init on load
-  try { document.addEventListener('DOMContentLoaded', initD20History); } catch(e) { initD20History(); }
+  try { document.addEventListener('DOMContentLoaded', initD100History); } catch(e) { initD100History(); }
 </script>
 
   <!-- Equip Modal -->

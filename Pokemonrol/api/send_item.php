@@ -23,6 +23,9 @@ try {
     $upd->bind_param('ii', $user_id, $item_id); $upd->execute();
     if ($upd->affected_rows <= 0) { $mysqli->rollback(); echo json_encode(['error' => 'No hay unidades suficientes']); exit; }
     $upd->close();
+    // If sender reached zero for this item, remove the row
+    $delSender = $mysqli->prepare('DELETE FROM inventario WHERE user_id = ? AND item_id = ? AND cantidad <= 0');
+    if ($delSender) { $delSender->bind_param('ii', $user_id, $item_id); $delSender->execute(); $delSender->close(); }
     // increase recipient
     $ins = $mysqli->prepare('INSERT INTO inventario (user_id, item_id, cantidad) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE cantidad = cantidad + 1');
     $ins->bind_param('ii', $recipient_id, $item_id); $ins->execute(); $ins->close();
