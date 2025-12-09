@@ -2,7 +2,6 @@
 include 'db.php';
 session_start();
 if (!isset($_SESSION['user'])) {
-  // No está autenticado
   $_SESSION['error'] = 'Debes iniciar sesión para ver el panel.';
   header('Location: index.php'); exit;
 }
@@ -10,49 +9,41 @@ $userRaw = $_SESSION['user'];
 $user = htmlspecialchars(($userRaw['nombre'] ?? $userRaw['correo'] ?? 'Entrenador'));
 $user_id = (int)($userRaw['id'] ?? 0);
 
-// Fetch user's data from DB to render dynamic dashboard
 $inventory = [];
 $box = [];
 $team = [];
 $pokedex = [];
 $species = [];
+// caja, inventario, equipo, pokedex. inicial de prueba
 if ($user_id > 0) {
-  // inventory
   $sql = "SELECT i.cantidad, i.item_id, it.nombre, it.clave, it.icono, it.descripcion, it.effect_type, it.effect_value FROM inventario i JOIN items it ON it.id=i.item_id WHERE i.user_id = ?";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->bind_param('i', $user_id); $stmt->execute(); $res = $stmt->get_result(); while ($r = $res->fetch_assoc()) $inventory[] = $r; $stmt->close(); }
 
-  // box
   $sql = "SELECT pb.*, ps.nombre AS especie, ps.sprite AS sprite FROM pokemon_box pb JOIN pokemon_species ps ON ps.id = pb.species_id WHERE pb.user_id = ? ORDER BY pb.created_at DESC";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->bind_param('i', $user_id); $stmt->execute(); $res = $stmt->get_result(); while ($r = $res->fetch_assoc()) $box[] = $r; $stmt->close(); }
 
-  // team
   $sql = "SELECT t.slot, pb.id AS box_id, ps.nombre AS especie, ps.sprite AS sprite, pb.apodo, pb.nivel, pb.cp FROM team t LEFT JOIN pokemon_box pb ON t.pokemon_box_id = pb.id LEFT JOIN pokemon_species ps ON pb.species_id = ps.id WHERE t.user_id = ? ORDER BY t.slot ASC";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->bind_param('i', $user_id); $stmt->execute(); $res = $stmt->get_result(); while ($r = $res->fetch_assoc()) $team[] = $r; $stmt->close(); }
 
-  // pokedex entries
   $sql = "SELECT p.species_id, ps.nombre, p.visto, p.capturado, p.veces_visto, p.first_seen_at FROM pokedex p JOIN pokemon_species ps ON p.species_id = ps.id WHERE p.user_id = ?";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->bind_param('i', $user_id); $stmt->execute(); $res = $stmt->get_result(); while ($r = $res->fetch_assoc()) $pokedex[$r['species_id']] = $r; $stmt->close(); }
 
-  // all species (for showing unknowns) limited to some for demo
   $sql = "SELECT id, nombre, sprite FROM pokemon_species ORDER BY id LIMIT 200";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->execute(); $res = $stmt->get_result(); while ($r = $res->fetch_assoc()) $species[] = $r; $stmt->close(); }
 }
 
-// Shop items (items with a price)
 $shop_items = [];
 if ($user_id > 0) {
   $sql = "SELECT id, clave, nombre, descripcion, icono, price FROM items WHERE price IS NOT NULL ORDER BY id";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->execute(); $res = $stmt->get_result(); while ($r = $res->fetch_assoc()) $shop_items[] = $r; $stmt->close(); }
 }
 
-// Get user money balance
 $money = 0.00;
 if ($user_id > 0) {
   $sql = "SELECT money FROM usuarios WHERE id = ? LIMIT 1";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->bind_param('i', $user_id); $stmt->execute(); $res = $stmt->get_result(); if ($r = $res->fetch_assoc()) $money = (float)$r['money']; $stmt->close(); }
 }
 
-// Map equipped box ids to slot for quick reference
 $equippedBoxMap = [];
 foreach ($team as $t) {
   if (!empty($t['box_id'])) $equippedBoxMap[$t['box_id']] = $t['slot'];
@@ -81,7 +72,6 @@ foreach ($team as $t) {
         <a href="index.php" class="btn btn-outline-dark">Cerrar sesión</a>
       </div>
     </div>
-    <!-- Toast container -->
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 100px;">
       <div id="toastContainer" style="position: absolute; top: 0; right: 0;"></div>
     </div>
@@ -131,7 +121,7 @@ foreach ($team as $t) {
             <div class="tab-pane fade show active" id="inventario" role="tabpanel">
               <div class="card p-3 card-section">
                 <div class="section-title">Inventario</div>
-                <div class="small-muted mb-2">Objetos disponibles <b>(dime de meterte algun objeto)</b></div>
+                <div class="small-muted mb-2">Objetos disponibles</div>
                 <div class="d-grid gap-2">
                   <?php if (count($inventory) === 0): ?>
                   <div class="small-muted">No tienes items en el inventario.</div>
@@ -227,7 +217,7 @@ foreach ($team as $t) {
             <div class="tab-pane fade" id="caja" role="tabpanel">
               <div class="card p-3 card-section">
                 <div class="section-title">Caja Pokémon</div>
-                <div class="small-muted mb-2">Pokémon guardados <b>(dime de meterte algun pokémon)</b></div>
+                <div class="small-muted mb-2">Pokémon guardados</div>
                 <div class="d-grid gap-2">
                   <?php if (count($box) === 0): ?>
                   <div class="small-muted">No hay pokémon en la caja.</div>
@@ -282,7 +272,7 @@ foreach ($team as $t) {
                       <?php endif; ?>
                     </div>
                     <div>
-                      <div class="fw-bold"><?= $slot ? htmlspecialchars($slot['especie'] ?? ($slot['apodo'] ?? '')) : 'Libre' ?></div>
+                      <div class="fw-bold"><?= $slot ? htmlspecialchars($slot['apodo'] ?? ($slot['especie'] ?? '')) : 'Libre' ?></div>
                       <div class="small-muted"><?= $slot ? ('Nivel ' . (int)($slot['nivel'] ?? 0)) : 'Vacío' ?></div>
                     </div>
                     <div class="item-actions">
@@ -352,7 +342,6 @@ foreach ($team as $t) {
       </div>
     </div>
 
-  <!-- Equip Modal -->
   <div class="modal fade" id="equipModal" tabindex="-1" aria-labelledby="equipModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content">
@@ -363,7 +352,6 @@ foreach ($team as $t) {
         <div class="modal-body">
           <div id="equipModalPokemonInfo" class="mb-2"></div>
           <div class="d-grid gap-2">
-            <!-- slot buttons inserted by JS -->
           </div>
         </div>
         <div class="modal-footer">
@@ -374,7 +362,6 @@ foreach ($team as $t) {
     </div>
   </div>
 
-  <!-- Send Item Modal -->
   <div class="modal fade" id="sendItemModal" tabindex="-1" aria-labelledby="sendItemModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content">
@@ -394,7 +381,6 @@ foreach ($team as $t) {
     </div>
   </div>
 
-  <!-- Use Item Modal -->
   <div class="modal fade" id="useItemModal" tabindex="-1" aria-labelledby="useItemModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content">
@@ -418,66 +404,78 @@ foreach ($team as $t) {
 </body>
 </html>
 <script>
-  // Update active classes for sidebar and mobile top nav on tab show
   const tabLinks = document.querySelectorAll('.sidebar .nav-link, .d-block.d-md-none .nav-link');
   tabLinks.forEach(link => {
     link.addEventListener('click', function(e) {
-      // Buttons with data-bs-toggle handle tab show, but we update active classes for the UI
       tabLinks.forEach(l=>l.classList.remove('active'));
       this.classList.add('active');
+      try {
+        const target = this.dataset.bsTarget || this.getAttribute('data-bs-target');
+        if (target) localStorage.setItem('dashboard_active_tab', target);
+      } catch(e) {}
     });
   });
 
   async function useItem(itemId, btn) {
-    // Check item type (data attribute on card)
     try {
       const card = btn.closest('.item-card');
-      const itemClave = card ? (card.dataset.itemClave || '').toLowerCase() : '';
       const effectType = card ? (card.dataset.effectType || '').toLowerCase() : '';
-      // If the item has an effect that requires a target (heals, revive, clear_status), show modal to pick target
-      const needsTarget = ['heal_flat','heal_percent','revive','clear_status'].includes(effectType) || itemClave.includes('potion') || itemClave.includes('pocion');
+      const clave = card ? (card.dataset.itemClave || '').toLowerCase() : '';
+      const isPokeball = !!(clave && /ball/.test(clave));
+      const needsTarget = effectType && effectType.trim() !== '' && !isPokeball;
       if (needsTarget) {
         showUseItemModal(itemId, btn);
         return;
       }
+      let captureRoll = null;
+      if (isPokeball) {
+        // hacer una tirada local 1-100 para la captura
+        captureRoll = Math.floor(Math.random() * 100) + 1;
+        showToast('Tirada de captura: ' + captureRoll, 'success');
+        try {
+          if (card) {
+            const badge = document.createElement('div');
+            badge.className = 'badge bg-info text-dark ms-2 temp-roll-badge';
+            badge.style.position = 'absolute'; badge.style.right = '12px'; badge.style.top = '8px'; badge.style.zIndex = '50';
+            badge.textContent = captureRoll;
+            card.style.position = 'relative';
+            card.appendChild(badge);
+            setTimeout(() => badge.remove(), 3000);
+          }
+        } catch(e) {}
+      }
       const origText = btn.textContent;
       btn.disabled = true;
       btn.textContent = 'Usando...';
-      const res = await fetch('api/use_item.php', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ item_id: itemId }) });
+      const res = await fetch('api/use_item.php', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ item_id: itemId, roll: captureRoll }) });
       const j = await res.json();
       if (!j.success) showToast(j.error || 'Error al usar item', 'danger');
       else {
-        // update the remaining quantity in the UI
         if (card) {
           const qtySpan = card.querySelector('.item-qty');
           if (qtySpan) qtySpan.textContent = j.remaining;
           if (j.remaining <= 0) {
-            // remove item from inventory when 0 left
             card.remove();
           }
         }
         if (j.applied) {
-          showToast('Item aplicado: ' + (j.applied.healed ? ('+'+j.applied.healed+' HP') : 'OK'), 'success');
-          // update specific pokemon HP if present
+          const appliedMsg = j.applied.healed ? ('+'+j.applied.healed+' HP') : 'OK';
+          if (isPokeball && captureRoll !== null) showToast('Tirada: ' + captureRoll + '. Resultado: ' + appliedMsg, 'success');
+          else showToast('Item aplicado: ' + appliedMsg, 'success');
           const pcard = document.querySelector('.pokemon-card[data-box-id="' + j.applied.box_id + '"]');
           if (pcard) {
-            // optionally show HP or visual feedback
             pcard.classList.add('border-success'); setTimeout(()=>pcard.classList.remove('border-success'), 1000);
           }
         } else {
-          showToast('Item usado: ' + (j.remaining !== undefined ? ('Quedan ' + j.remaining) : ''), 'success');
+          if (isPokeball && captureRoll !== null) showToast('Tirada: ' + captureRoll + '. Item usado. ' + (j.remaining !== undefined ? ('Quedan ' + j.remaining) : ''), 'success');
+          else showToast('Item usado: ' + (j.remaining !== undefined ? ('Quedan ' + j.remaining) : ''), 'success');
         }
-        // redraw inventory if provided
         if (j.inventory) renderInventory(j.inventory);
       }
     } catch (e) { showToast('Error de red', 'danger'); }
     finally { if (btn.textContent !== 'Agotado') { btn.textContent = 'Usar'; } btn.disabled = false; }
   }
 
-  // (Modal-based equip implemented below) 
-
-
-// After defining UI helpers, if server provided initial team, apply it now
 try {
   if (window.__initial_team && typeof updateBoxEquippedState === 'function') {
     updateBoxEquippedState(window.__initial_team);
@@ -508,7 +506,6 @@ try {
     } catch (e) { showToast('Error de red', 'danger'); }
   }
 
-  // Modal-based equip — build modal content dynamically
   let equipModalBoxId = null;
   let equipModalSelectedSlot = null;
   function showEquipModal(boxId, targetSlot = null) {
@@ -520,7 +517,6 @@ try {
     const grid = equipModalEl.querySelector('.modal-body .d-grid');
     grid.innerHTML = '';
     if (!boxId && targetSlot) {
-      // show list of box pokemons to choose from
       pokInfo.textContent = 'Selecciona un Pokémon de la caja para equipar en el slot ' + targetSlot;
       document.querySelectorAll('.pokemon-card[data-box-id]').forEach(el => {
         const bId = el.dataset.boxId;
@@ -548,7 +544,6 @@ try {
         grid.appendChild(btn);
       }
     }
-    // On confirm, trigger equip
     const confirmBtn = document.getElementById('equipConfirmBtn');
     confirmBtn.onclick = async () => {
       if (!equipModalSelectedSlot) { showToast('Selecciona un slot', 'danger'); return; }
@@ -564,11 +559,9 @@ try {
     equipModal.show();
   }
 
-  // -- Dynamic UI helpers
   function renderTeam(teamData) {
     const grid = document.querySelector('.team-grid');
     if (!grid) return;
-    // Create a map slot -> data
     const map = {};
     for (let t of teamData) map[parseInt(t.slot)] = t;
     for (let s = 1; s <= 6; s++) {
@@ -580,13 +573,12 @@ try {
       const sub = slotEl.querySelector('.small-muted');
       const actions = slotEl.querySelector('.item-actions');
       if (t && t.box_id) {
-        // Update avatar with <img> or emoji
         if (t.sprite) {
           avatar.innerHTML = '<img src="img/pokemon/' + t.sprite + '" class="pokemon-img">';
         } else {
           avatar.innerHTML = '⚔️';
         }
-        title.textContent = t.especie || (t.apodo || '');
+        title.textContent = (t.apodo && t.apodo.trim() !== '') ? t.apodo : (t.especie || '');
         sub.textContent = 'Nivel ' + (t.nivel || 0);
         actions.innerHTML = '<button class="btn btn-sm btn-outline-danger" onclick="unequip(' + s + ')">Desequipar</button>';
       } else {
@@ -599,7 +591,6 @@ try {
   }
 
   function updateBoxEquippedState(teamData) {
-    // Build a map of box_id -> slot
     const map = {};
     for (let t of teamData) if (t.box_id) map[parseInt(t.box_id)] = t.slot;
     document.querySelectorAll('.pokemon-card[data-box-id]').forEach(el => {
@@ -614,7 +605,6 @@ try {
   }
 
   function renderInventory(inv) {
-    // inv: array of {item_id, cantidad, nombre}
     try {
       const map = {};
       for (const it of inv) map[parseInt(it.item_id)] = it;
@@ -622,7 +612,6 @@ try {
         const id = parseInt(card.dataset.itemId || '0');
         const it = map[id];
         if (!it || (it.cantidad !== undefined && parseInt(it.cantidad) <= 0)) {
-          // remove from DOM if not present or count is zero
           card.remove();
           return;
         }
@@ -632,7 +621,6 @@ try {
     } catch(e) { console.warn('renderInventory error', e); }
   }
 
-  // Toast helper
   function showToast(message, type='success') {
     const container = document.getElementById('toastContainer'); if (!container) return;
     const id = 'toast-' + Math.random().toString(36).substr(2,9);
@@ -643,11 +631,9 @@ try {
     toast.innerHTML = '<div class="d-flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div>';
     container.appendChild(toast);
     const bsToast = new bootstrap.Toast(toast, { delay: 3000 }); bsToast.show();
-    // remove when hidden
     toast.addEventListener('hidden.bs.toast', () => { toast.remove(); });
   }
 
-  // Show use item modal for potions
   let useModalItemId = null;
   function showUseItemModal(itemId, btn) {
     useModalItemId = itemId;
@@ -655,7 +641,6 @@ try {
     const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
     const info = document.getElementById('useItemModalInfo');
     const grid = document.getElementById('useItemModalGrid');
-    // If caller provided the button, read effect info from the card
     let effectInfo = '';
     if (btn) {
       const card = btn.closest('.item-card');
@@ -673,7 +658,6 @@ try {
       const btn2 = document.createElement('button'); btn2.type = 'button'; btn2.className = 'btn btn-outline-primary text-start';
       btn2.textContent = title + ' (ID ' + bId + ')';
       btn2.addEventListener('click', () => {
-        // call API with item_id and box_id
         useItemConfirm(useModalItemId, bId);
         modal.hide();
       });
@@ -700,7 +684,6 @@ try {
     } catch (e) { showToast('Error de red', 'danger'); }
   }
 
-  // Send item modal & handler
   let sendItemCurrentBoxId = null;
   function showSendItemModal(boxId) {
     const sendModalEl = document.getElementById('sendItemModal');
@@ -721,10 +704,8 @@ try {
     modal.show();
   }
 
-  // Store initial team data
   window.__initial_team = <?php echo json_encode(array_values($team)); ?>;
 
-  // After defining UI helpers, if server provided initial team, apply it now
   try {
     if (window.__initial_team && typeof updateBoxEquippedState === 'function') {
       updateBoxEquippedState(window.__initial_team);
@@ -740,14 +721,12 @@ try {
       const j = await res.json();
       if (!j.success) { showToast(j.error || 'Error en la compra', 'danger'); return; }
 
-      // Actualizar badge de saldo
       const badge = document.querySelector('.badge.bg-warning');
       if (badge) {
         const val = (j.raw_balance !== undefined) ? j.raw_balance : parseFloat(j.balance || 0);
         badge.textContent = 'Saldo: € ' + new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val);
       }
 
-      // Refrescar inventario desde endpoint y actualizar UI
       try {
         const r2 = await fetch('api/get_inventory.php');
         const j2 = await r2.json();
@@ -755,7 +734,6 @@ try {
           renderInventory(j2.items);
         }
       } catch (e) {
-        // no fatal: mostrar mensaje
       }
 
       showToast('Compra realizada: ' + (j.item || clave), 'success');
@@ -764,7 +742,6 @@ try {
 </script>
 
 <script>
-  // D20 roller: client-side, stores history in localStorage
   async function rollD100() {
     try {
       const val = Math.floor(Math.random() * 100) + 1;
@@ -779,13 +756,10 @@ try {
       showToast('Tirada D100: ' + val, 'success');
 
       const entry = { value: val, at: (new Date()).toISOString() };
-
-      // try to persist on server; if it fails, fallback to localStorage
       try {
         const r = await fetch('api/d100_roll.php', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ value: val }) });
         const jr = await r.json();
         if (jr && jr.success) {
-          // insert into server-driven history list if present
           const hist = document.getElementById('d100History');
           if (hist) {
             const li = document.createElement('li'); li.className = 'list-group-item';
@@ -793,9 +767,8 @@ try {
           }
           return;
         }
-      } catch (e) { /* ignore, fallback to localStorage */ }
+      } catch (e) {}
 
-      // fallback: store locally
       try {
         const hist = document.getElementById('d100History');
         if (hist) {
@@ -808,11 +781,9 @@ try {
   }
 
   async function initD100History() {
-    // Prefer server history when authenticated; otherwise use localStorage
     try {
       const hist = document.getElementById('d100History');
       const resEl = document.getElementById('d100Result');
-      // try server
       try {
         const r = await fetch('api/d100_history.php?limit=50');
         if (r.ok) {
@@ -827,9 +798,8 @@ try {
             return;
           }
         }
-      } catch (e) { /* server not available or not authenticated */ }
+      } catch (e) {}
 
-      // fallback localStorage
       const prev = JSON.parse(localStorage.getItem('d100_history') || '[]');
       if (hist && Array.isArray(prev)) {
         hist.innerHTML = '';
@@ -839,14 +809,12 @@ try {
         }
         if (prev.length && resEl) resEl.textContent = prev[0].value;
       }
-    } catch(e) { /* ignore */ }
+    } catch(e) { }
   }
 
-  // Init on load
   try { document.addEventListener('DOMContentLoaded', initD100History); } catch(e) { initD100History(); }
 </script>
 
-  <!-- Equip Modal -->
   <div class="modal fade" id="equipModal" tabindex="-1" aria-labelledby="equipModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content">
@@ -857,7 +825,6 @@ try {
         <div class="modal-body">
           <div id="equipModalPokemonInfo" class="mb-2"></div>
           <div class="d-grid gap-2">
-            <!-- slot buttons inserted by JS -->
           </div>
         </div>
         <div class="modal-footer">
@@ -868,7 +835,6 @@ try {
     </div>
   </div>
 
-  <!-- Send Item Modal -->
   <div class="modal fade" id="sendItemModal" tabindex="-1" aria-labelledby="sendItemModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content">
@@ -888,7 +854,6 @@ try {
     </div>
   </div>
 
-  <!-- Use Item Modal -->
   <div class="modal fade" id="useItemModal" tabindex="-1" aria-labelledby="useItemModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content">
@@ -908,5 +873,23 @@ try {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Restaurar pestaña activa guardada en localStorage (se ejecuta después de cargar Bootstrap)
+    (function(){
+      try {
+        const saved = localStorage.getItem('dashboard_active_tab');
+        if (!saved) return;
+        const selector = '.sidebar .nav-link[data-bs-target="' + saved + '"], .d-block.d-md-none .nav-link[data-bs-target="' + saved + '"]';
+        let btn = document.querySelector(selector);
+        if (!btn) btn = document.querySelector('button[data-bs-target="' + saved + '"]');
+        if (btn && window.bootstrap && bootstrap.Tab) {
+          const tab = bootstrap.Tab.getOrCreateInstance(btn);
+          tab.show();
+          document.querySelectorAll('.sidebar .nav-link, .d-block.d-md-none .nav-link').forEach(l=>l.classList.remove('active'));
+          btn.classList.add('active');
+        }
+      } catch(e) { console.warn('restore dashboard tab failed', e); }
+    })();
+  </script>
 </body>
 </html>

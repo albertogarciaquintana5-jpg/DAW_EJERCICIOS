@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Práctica 04-12</title>
+</head>
+<body>
+<h1>Práctica 04-12 - Alberto Garcia Quintana</h1>
+<p>F12 para ver la consola</p>
+<script>
+const inventario = ["manzana", "naranja", "plátano", "pera"];
+console.log(inventario.includes("naranja"));
+console.log(inventario.includes("mango", 2));
+
+const data = [1, 2, 3];
+if (Array.isArray(data)) {
+    data.forEach(element => console.log(element));
+} else {
+    console.log("Error: no es un array");
+}
+
+const campos = [true, true, false, true];
+console.log(campos.every(campo => campo));
+
+const permisos = [false, false, true, false];
+console.log(permisos.some(permiso => permiso));
+
+const stock = [15, 7, 25, 5];
+console.log(stock.find(cantidad => cantidad < 10));
+
+const prioridades = ["baja", "media", "alta", "baja"];
+console.log(prioridades.findLast(prioridad => prioridad === "alta"));
+
+const precios = [100, 50, 30, 150];
+console.log(precios.findIndex(precio => precio < 50));
+
+const clientes = ["regular", "VIP", "regular", "VIP"];
+console.log(clientes.findLastIndex(cliente => cliente === "VIP"));
+
+const productos = ["manzana", "naranja", "plátano"];
+console.log(productos.indexOf("plátano"));
+console.log(productos.lastIndexOf("manzana"));
+
+const roles = ["usuario", "usuario", "admin", "moderador"];
+console.log(roles.includes("admin"));
+console.log(roles.some(rol => rol === "admin"));
+</script>
+
+</body>
+</html>

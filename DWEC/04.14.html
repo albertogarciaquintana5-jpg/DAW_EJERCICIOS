@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicios Arrays</title>
+</head>
+<body>
+
+<h2>Resultados</h2>
+<pre id="out"></pre>
+
+<script>
+let out = "";
+
+const ventas = [100, 200, 300, 400];
+const totalVentas = ventas.reduce((a, v) => a + v, 0);
+out += "Ej1 total ventas: " + totalVentas + "\n";
+
+const empleados = ["Juan", "María", "Pedro", "Luis"];
+const nombresInvertidos = empleados.reduceRight((a, n) => a + " " + n);
+out += "Ej2 nombres inversos: " + nombresInvertidos + "\n";
+
+const cantidades = [5, 10, 20, 15];
+const totalProductos = cantidades.reduce((a, c) => a + c, 0);
+out += "Ej3 total productos: " + totalProductos + "\n";
+
+const palabras = ["JavaScript", "es", "increíble"];
+const oracion = palabras.join(" ");
+out += "Ej4 oración: " + oracion + "\n";
+
+const numeros1 = [1, 2, 3, 4, 5];
+const cadenaNumeros = numeros1.toString();
+out += "Ej5 cadena: " + cadenaNumeros + "\n";
+
+const precios1 = [1000, 2000, 3000];
+const preciosLocales = precios1.toLocaleString("en-US", { style: "currency", currency: "USD" });
+out += "Ej6 precios locales: " + preciosLocales + "\n";
+
+const ingresosSemanales = [500, 1000, 1500, 2000];
+const totalIngresos = ingresosSemanales.reduce((t, i) => t + i, 0);
+out += "Ej7 total ingresos: " + totalIngresos + "\n";
+
+const productos = ["Manzana", "Naranja", "Plátano"];
+const resumen = productos.reduceRight((a, p) => a + ", " + p);
+out += "Ej8 resumen inverso: " + resumen + "\n";
+
+const numeros2 = [10, 20, 30, 40];
+const cadena2 = numeros2.toString();
+out += "Ej9 cadena: " + cadena2 + "\n";
+
+const precios2 = [1000, 1500, 2000];
+const preciosEnUSD = precios2.map(p => p.toLocaleString("en-US", { style: "currency", currency: "USD" }));
+const preciosEnEUR = precios2.map(p => p.toLocaleString("de-DE", { style: "currency", currency: "EUR" }));
+out += "Ej10 USD: " + preciosEnUSD.join(", ") + "\n";
+out += "Ej10 EUR: " + preciosEnEUR.join(", ");
+
+document.getElementById("out").textContent = out;
+</script>
+
+</body>
+</html>

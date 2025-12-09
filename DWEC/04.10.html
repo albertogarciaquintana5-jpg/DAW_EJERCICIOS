@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Métodos de Arrays – Alberto García Quintana</title>
+<style>
+body { font-family: Arial; padding: 20px; line-height: 1.6; }
+h1 { color: #333; }
+button { padding: 8px 12px; margin: 6px 0; cursor: pointer; }
+code { background: #eee; padding: 6px; display: block; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+
+<h1>Métodos de Arrays — Alberto García Quintana</h1>
+
+<h2>1. Array.from()</h2>
+<p>Convierte iterables en arrays → puede aplicar función callback.</p>
+<code>
+const string = "12345";
+const array = Array.from(string, num => Number(num) * 2);
+console.log(array); // [2, 4, 6, 8, 10]
+</code>
+<button onclick="ej1()">Probar en consola</button>
+
+<h2>2. Array.of()</h2>
+<p>Crea un array a partir de argumentos.</p>
+<code>
+const array = Array.of(1,2,3,4,5);
+console.log(array);
+</code>
+<button onclick="ej2()">Probar en consola</button>
+
+<h2>3. Array.at()</h2>
+<p>Devuelve el elemento del índice (acepta índices negativos).</p>
+<code>
+const array=[10,20,30,40,50];
+console.log(array.at(2));   // 30
+console.log(array.at(-1));  // 50
+</code>
+<button onclick="ej3()">Probar en consola</button>
+
+<h2>4. Array.prototype.with()</h2>
+<p>Crea una copia reemplazando un índice.</p>
+<code>
+const array=[10,20,30,40,50];
+const newArray=array.with(2,99);
+console.log(newArray);
+</code>
+<button onclick="ej4()">Probar en consola</button>
+
+<h2>5. Array.unshift()</h2>
+<p>Añade al inicio del array.</p>
+<button onclick="ej5()">Probar en consola</button>
+
+<h2>6. Array.shift()</h2>
+<p>Elimina el primer elemento.</p>
+<button onclick="ej6()">Probar en consola</button>
+
+<h2>7. Array.push()</h2>
+<p>Añade al final del array.</p>
+<button onclick="ej7()">Probar en consola</button>
+
+<h2>8. Array.pop()</h2>
+<p>Elimina el último.</p>
+<button onclick="ej8()">Probar en consola</button>
+
+<h2>9. Array.fill()</h2>
+<p>Rellena posiciones con un valor.</p>
+<button onclick="ej9()">Probar en consola</button>
+
+<h2>10. Array.concat()</h2>
+<p>Combina arrays.</p>
+<button onclick="ej10()">Probar en consola</button>
+
+<script>
+// 1
+function ej1() {
+    console.clear();
+    const string = "12345";
+    const array = Array.from(string, num => Number(num) * 2);
+    console.log(array);
+}
+
+// 2
+function ej2() {
+    console.clear();
+    const array = Array.of(1, 2, 3, 4, 5);
+    console.log(array);
+}
+
+// 3
+function ej3() {
+    console.clear();
+    const array = [10,20,30,40,50];
+    console.log("at(2):", array.at(2));
+    console.log("at(-1):", array.at(-1));
+}
+
+// 4
+function ej4() {
+    console.clear();
+    const array=[10,20,30,40,50];
+    const newArray=array.with(2,99);
+    console.log(newArray);
+}
+
+// 5
+function ej5() {
+    console.clear();
+    const array=[3,4,5];
+    array.unshift(1,2);
+    console.log(array);
+}
+
+// 6
+function ej6() {
+    console.clear();
+    const array=[1,2,3,4,5];
+    const first=array.shift();
+    console.log("Eliminado:", first);
+    console.log("Array:", array);
+}
+
+// 7
+function ej7() {
+    console.clear();
+    const array=[1,2,3];
+    array.push(4,5);
+    console.log(array);
+}
+
+// 8
+function ej8() {
+    console.clear();
+    const array=[1,2,3,4,5];
+    const last=array.pop();
+    console.log("Eliminado:", last);
+    console.log("Array:", array);
+}
+
+// 9
+function ej9() {
+    console.clear();
+    const array=[1,2,3,4,5];
+    array.fill(0,1,4);
+    console.log(array);
+}
+
+// 10
+function ej10() {
+    console.clear();
+    const array1=[1,2,3];
+    const array2=[4,5,6];
+    const combined=array1.concat(array2);
+    console.log(combined);
+}
+</script>
+
+</body>
+</html>

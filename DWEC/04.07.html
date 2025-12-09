@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicios JS</title>
+</head>
+<body>
+
+<h2>Salida</h2>
+<div id="alumno1"></div>
+<div id="alumno2"></div>
+<div id="claseDiv"></div>
+<div id="instiDiv"></div>
+<div id="msg"></div>
+
+<script>
+const alumno = {
+    nombre: "Juan",
+    apellidos: "Pérez López",
+    id: "alumno1",
+    NombreModulos: ["DWEC", "DWES", "DAW"],
+    notasModulos: [7, 4, 9],
+
+    setNombre(n) { this.nombre = n; },
+    getNombre() { return this.nombre; },
+    setApellidos(a) { this.apellidos = a; },
+    getApellidos() { return this.apellidos; },
+    setId(i) { this.id = i; },
+    getId() { return this.id; },
+
+    MostrarModulos(id) {
+        document.getElementById(id).innerHTML = this.NombreModulos.join(", ");
+    },
+
+    nota(nombreModulo) {
+        const index = this.NombreModulos.indexOf(nombreModulo);
+        return index !== -1 ? this.notasModulos[index] : "No existe ese módulo";
+    },
+
+    media(id) {
+        const m = this.notasModulos.reduce((a, b) => a + b, 0) / this.notasModulos.length;
+        document.getElementById(id).innerHTML = `Media: ${m}`;
+    },
+
+    suspensas(id) {
+        const susp = this.notasModulos.filter(n => n < 5);
+        document.getElementById(id).innerHTML = "Suspensas: " + susp.join(", ");
+    },
+
+    aprobadas(id) {
+        const aprob = this.notasModulos.filter(n => n >= 5);
+        document.getElementById(id).innerHTML = "Aprobadas: " + aprob.join(", ");
+    }
+};
+
+const alumno2 = {
+    nombre: "Ana",
+    apellidos: "Gómez Ruiz",
+    id: "alumno2",
+    NombreModulos: ["DIW", "EIE", "DAW"],
+    notasModulos: [6, 3, 8],
+
+    setNombre: (n) => alumno2.nombre = n,
+    getNombre: () => alumno2.nombre,
+    setApellidos: (a) => alumno2.apellidos = a,
+    getApellidos: () => alumno2.apellidos,
+    setId: (i) => alumno2.id = i,
+    getId: () => alumno2.id,
+
+    MostrarModulos: (id) =>
+        document.getElementById(id).innerHTML = alumno2.NombreModulos.join(", "),
+
+    nota: (mod) => {
+        const idx = alumno2.NombreModulos.indexOf(mod);
+        return idx !== -1 ? alumno2.notasModulos[idx] : "No existe el módulo";
+    },
+
+    media: (id) => {
+        const m = alumno2.notasModulos.reduce((a, b) => a + b, 0) / alumno2.notasModulos.length;
+        document.getElementById(id).innerHTML = `Media: ${m}`;
+    },
+
+    suspensas: (id) =>
+        document.getElementById(id).innerHTML =
+            "Suspensas: " + alumno2.notasModulos.filter(n => n < 5).join(", "),
+
+    aprobadas: (id) =>
+        document.getElementById(id).innerHTML =
+            "Aprobadas: " + alumno2.notasModulos.filter(n => n >= 5).join(", ")
+};
+
+console.log(alumno.getNombre());
+console.log(alumno.getApellidos());
+console.log("Nota DWEC:", alumno.nota("DWEC"));
+console.log("Media:", alumno.notasModulos.reduce((a, b) => a + b) / alumno.notasModulos.length);
+console.log("Aprobadas:", alumno.notasModulos.filter(n => n >= 5));
+console.log("Suspensas:", alumno.notasModulos.filter(n => n < 5));
+
+const clase = {
+    alumnos: [],
+    matricular: (alumno) => clase.alumnos.push(alumno),
+    eliminar: (alumno) => clase.alumnos = clase.alumnos.filter(a => a !== alumno),
+    numero: () => clase.alumnos.length,
+    Mostrar: (id) => {
+        document.getElementById(id).innerHTML =
+            clase.alumnos.map(a => a.nombre + " " + a.apellidos).join("<br>");
+    }
+};
+
+clase.matricular(alumno);
+clase.matricular(alumno2);
+clase.Mostrar("claseDiv");
+
+const instituto = {
+    nombre: "IES Programación",
+    direccion: "Calle Código 123",
+    id: "instiDiv"
+};
+
+instituto.cambiarNombre = (nuevo) => instituto.nombre = nuevo;
+instituto.mostrar = (id) =>
+    document.getElementById(id).innerHTML =
+        `${instituto.nombre} – ${instituto.direccion}`;
+
+instituto.mostrar("instiDiv");
+
+window.age = 10;
+
+function Person1() {
+    this.age = 41;
+    setTimeout(function () {
+        document.getElementById('msg').innerHTML +=
+            "<br> funcion anonima this.age1: " + this.age;
+    }, 100);
+}
+
+function Person2() {
+    this.age = 42;
+    setTimeout(() => {
+        document.getElementById('msg').innerHTML +=
+            "<br> funcion flecha this.age2: " + this.age;
+    }, 100);
+}
+
+var p1 = new Person1();
+var p2 = new Person2();
+
+function Alumno(nombre, apellidos) {
+    this.nombre = nombre;
+    this.apellidos = apellidos;
+}
+
+Alumno.prototype.saludar = function () {
+    return `Hola, soy ${this.nombre}`;
+};
+
+Alumno.prototype.nombreCompleto = function () {
+    return `${this.nombre} ${this.apellidos}`;
+};
+
+function organizeInventory(inventory) {
+    const result = {};
+    for (const item of inventory) {
+        if (!result[item.category]) result[item.category] = {};
+        if (!result[item.category][item.name]) result[item.category][item.name] = 0;
+        result[item.category][item.name] += item.quantity;
+    }
+    return result;
+}
+
+const inventory = [
+    { name: 'doll', quantity: 5, category: 'toys' },
+    { name: 'car', quantity: 3, category: 'toys' },
+    { name: 'ball', quantity: 2, category: 'sports' },
+    { name: 'car', quantity: 2, category: 'toys' },
+    { name: 'racket', quantity: 4, category: 'sports' },
+    { name: 'racket', quantity: 7, category: 'sports' }
+];
+
+console.log("Inventario Organizado:", organizeInventory(inventory));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Freeze & Seal – Alberto Garcia Quintana</title>
+<style>
+body { font-family: Arial; padding: 20px; line-height: 1.6; }
+h1 { color: #333; }
+code { background: #eee; padding: 4px; display: block; margin: 8px 0; white-space: pre-wrap; }
+button { margin-top: 10px; padding: 10px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h1>Object.freeze() y Object.seal() — Alberto Garcia Quintana</h1>
+
+<h2>Explicación resumida</h2>
+
+<h3>1. Object.freeze()</h3>
+<p>Congela completamente un objeto, pero solo en el primer nivel.</p>
+<ul>
+    <li>No permite agregar propiedades</li>
+    <li>No permite eliminar propiedades</li>
+    <li>No permite modificar propiedades</li>
+    <li>Objetos internos siguen siendo mutables</li>
+</ul>
+
+<h3>2. Object.seal()</h3>
+<p>Sellado: el objeto puede cambiar valores, pero no crecer ni reducirse.</p>
+<ul>
+    <li>No permite agregar propiedades</li>
+    <li>No permite eliminar propiedades</li>
+    <li>Sí permite modificar valores existentes</li>
+</ul>
+
+<h3>Comparación</h3>
+<table border="1" cellspacing="0" cellpadding="6">
+<tr><th>Característica</th><th>freeze</th><th>seal</th></tr>
+<tr><td>Modificar valores</td><td>❌ No</td><td>✔ Sí</td></tr>
+<tr><td>Agregar propiedades</td><td>❌ No</td><td>❌ No</td></tr>
+<tr><td>Eliminar propiedades</td><td>❌ No</td><td>❌ No</td></tr>
+<tr><td>Inmutabilidad profunda</td><td>❌ No</td><td>❌ No</td></tr>
+</table>
+
+<h3>Deep Freeze (Congelación profunda)</h3>
+<p>Función para congelar todos los niveles:</p>
+<code>
+function deepFreeze(obj) {
+    Object.freeze(obj);
+    Object.values(obj)
+        .filter(v => typeof v === "object" && v !== null)
+        .forEach(v => deepFreeze(v));
+    return obj;
+}
+</code>
+
+<h2>Demostraciones (abre la consola)</h2>
+<button onclick="ejemploFreeze()">Ejecutar ejemplo Object.freeze()</button>
+<button onclick="ejemploSeal()">Ejecutar ejemplo Object.seal()</button>
+<button onclick="ejemploDeepFreeze()">Ejecutar ejemplo Deep Freeze</button>
+
+<script>
+// Ejemplo 1 — Object.freeze()
+function ejemploFreeze() {
+    console.clear();
+    console.log("=== Object.freeze() ===");
+
+    const user = Object.freeze({
+        name: "Ana",
+        age: 25,
+        settings: { theme: "light" }
+    });
+
+    console.log("Original:", user);
+
+    user.age = 30;
+    user.city = "Madrid";
+    delete user.name;
+
+    console.log("Tras intentos de modificación (no cambian):", user);
+
+    user.settings.theme = "dark"; // Sí cambia
+
+    console.log("Objeto interno modificado:", user.settings.theme);
+}
+
+// Ejemplo 2 — Object.seal()
+function ejemploSeal() {
+    console.clear();
+    console.log("=== Object.seal() ===");
+
+    const product = Object.seal({
+        id: 1,
+        name: "Laptop",
+        price: 1000
+    });
+
+    console.log("Original:", product);
+
+    product.price = 900;
+    product.name = "Laptop Pro";
+
+    console.log("Valores modificados:", product);
+
+    product.stock = 20; // No se agrega
+    delete product.id;  // No se elimina
+
+    console.log("Tras intentos prohibidos:", product);
+}
+
+// Ejemplo 3 — Deep Freeze
+function deepFreeze(obj) {
+    Object.freeze(obj);
+    Object.values(obj)
+        .filter(v => typeof v === "object" && v !== null)
+        .forEach(v => deepFreeze(v));
+    return obj;
+}
+
+function ejemploDeepFreeze() {
+    console.clear();
+    console.log("=== Deep Freeze ===");
+
+    const user = deepFreeze({
+        name: "Ana",
+        settings: { theme: "dark" }
+    });
+
+    console.log("Original:", user);
+
+    try {
+        user.settings.theme = "light";
+    } catch (e) {
+        console.log("Error al modificar nivel interno:", e.message);
+    }
+
+    console.log("Resultado final:", user.settings.theme);
+}
+</script>
+
+</body>
+</html>

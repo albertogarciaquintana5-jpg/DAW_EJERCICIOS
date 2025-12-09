@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicios con Set</title>
+</head>
+<body>
+
+<h1>Ejercicios de Sets - Alberto Garcia Quintana</h1>
+
+<script>
+// Ejercicio 1
+let personajesSet = new Set(["Frodo", "Gandalf", "Aragorn", "Legolas", "Gimli"]);
+
+// Ejercicio 2
+for (let p of personajesSet) console.log(p);
+
+// Ejercicio 3
+function existePersonaje(set, nombre){
+    return set.has(nombre);
+}
+
+// Ejercicio 4
+function numeroPersonajes(set){
+    return set.size;
+}
+
+// Ejercicio 5
+function agregarUnico(set, personaje){
+    if(!set.has(personaje)) set.add(personaje);
+    return set;
+}
+
+// Ejercicio 6
+function eliminarPersonaje(set, personaje){
+    if(set.has(personaje)){
+        set.delete(personaje);
+        console.log("Eliminado:", personaje);
+    } else {
+        console.log("No existe:", personaje);
+    }
+}
+
+// Ejercicio 7
+function combinarSets(set1, set2){
+    return new Set([...set1, ...set2]);
+}
+</script>
+
+</body>
+</html>

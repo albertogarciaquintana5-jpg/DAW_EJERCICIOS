@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Ejercicios de Arrays</title>
+</head>
+<body>
+    <h1>Ejercicios de Arrays - JavaScript</h1>
+    <p>Abre la consola del navegador (F12) para ver los resultados.</p>
+
+    <script>
+        console.log("=== EJERCICIO 1 ===");
+
+        let ids = [10, 20, 30, 40, 50];
+
+        ids.copyWithin(0, 2, 5); 
+        ids.reverse();
+        let primerosTres = ids.slice(0, 3);
+        console.log(primerosTres); 
+
+        console.log("\n=== EJERCICIO 2 ===");
+
+        let productos = ["manzana", "naranja", "plátano"];
+
+        for (let [indice, nombre] of productos.entries()) {
+            console.log(`Producto ${indice}: ${nombre}`);
+        }
+
+        let clavesProductos = [...productos.keys()];
+        console.log("Claves de productos:", clavesProductos);
+
+
+        console.log("\n=== EJERCICIO 3 ===");
+
+        let calificaciones = [85, 75, 95, 65, 90];
+
+        let sortedDesc = calificaciones.sort((a, b) => b - a);
+        let top3 = sortedDesc.slice(0, 3);
+
+        console.log(top3); 
+
+        console.log("\n=== EJERCICIO 4 ===");
+
+        let pedidos = [1003, 1001, 1002, 1005, 1004];
+
+        pedidos.sort();
+        pedidos.reverse();
+        let topPedidos = pedidos.slice(0, 3);
+
+        console.log(topPedidos); 
+
+        console.log("\n=== EJERCICIO 5 ===");
+
+        let empleados = [300, 200, 400, 100];
+
+        let empleadosOrdenados = empleados.toSorted();
+        let empleadosInvertidos = empleadosOrdenados.toReversed();
+        let dosPrimeros = empleadosInvertidos.slice(0, 2);
+
+        console.log(dosPrimeros); 
+
+        console.log("\n=== EJERCICIO 6 ===");
+
+        let precios = [50, 30, 20, 10, 40];
+
+        precios.copyWithin(3, 1, 3);
+        precios.sort((a, b) => a - b);
+        let baratos = precios.slice(0, 3);
+
+        console.log(baratos);
+
+        console.log("\n=== EJERCICIO 7 ===");
+
+        let configuraciones = ["pantalla completa", "sonido activado", "modo oscuro"];
+
+        for (let [clave, valor] of configuraciones.entries()) {
+            console.log(`Clave ${clave}: ${valor}`);
+        }
+
+
+        console.log("\n=== EJERCICIO 8 ===");
+
+        let comentarios = [5003, 5001, 5002, 5005, 5004];
+
+        let comentariosOrdenados = comentarios.toSorted();
+        comentariosOrdenados.reverse();
+        let ultimosDos = comentariosOrdenados.slice(0, 2);
+
+        console.log(ultimosDos);
+    </script>
+
+</body>
+</html>

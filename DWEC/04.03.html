@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Practica 04-03 Alberto Garcia Quintana</title>
+<style>
+table{border-collapse:collapse;margin-top:10px}
+td{border:1px solid black;padding:6px}
+</style>
+</head>
+<body>
+
+<h1>Practica 04-03 – Alberto Garcia Quintana</h1>
+
+<div id="ej2"></div>
+<div id="ej3"></div>
+<div id="ej8"></div>
+<div id="ej9"></div>
+
+<div>
+    <h3>Ejercicio 10</h3>
+    <p id="textoColor">Texto de prueba</p>
+    <input type="text" id="colorInput" placeholder="Introduce color">
+    <button onclick="cambiarColor('textoColor', document.getElementById('colorInput').value)">Cambiar</button>
+</div>
+
+<h3>Ejercicio 12 (factorial)</h3>
+<input type="number" id="numFactorial">
+<button onclick="mostrarFactorial()">Calcular factorial</button>
+<p id="resFactorial"></p>
+
+<script>
+function Ej1Trigonometica(angulo, tipo){
+    let r=angulo*Math.PI/180;
+    if(tipo==="cos") return Math.cos(r);
+    if(tipo==="sen") return Math.sin(r);
+    if(tipo==="tan") return Math.tan(r);
+}
+
+function listaen(valores,id){
+    let arr=valores.split(",");
+    let html="<ol>";
+    arr.forEach(v=>html+="<li>"+v.trim()+"</li>");
+    html+="</ol>";
+    document.getElementById(id).innerHTML=html;
+}
+listaen("hola,adios,bien,Hasta mañana","ej2");
+
+function listaRest(id,...vals){
+    let html="<ol>";
+    vals.forEach(v=>html+="<li>"+v+"</li>");
+    html+="</ol>";
+    document.getElementById(id).innerHTML=html;
+}
+listaRest("ej3","Hola","adios","bien","Hasta mañana","algo");
+
+let triple=function(n){return n*3};
+triple(3);
+
+let cuadrado=n=>n*n;
+cuadrado(4);
+
+(()=>{console.log("hola mundo")})();
+
+let a=["ola","adios","amalia pide muchos detalles"];
+let negrita=txt=>"<strong>"+txt+"</strong>";
+let resNegrita=a.map(negrita);
+
+function Ej8(){
+    let m=[];
+    for(let i=0;i<4;i++){
+        m[i]=[];
+        for(let j=0;j<5;j++) m[i][j]=Math.floor(Math.random()*10);
+    }
+    let h="<table>";
+    m.forEach(f=>{
+        h+="<tr>";
+        f.forEach(c=>h+="<td>"+c+"</td>");
+        h+="</tr>";
+    });
+    h+="</table>";
+    document.getElementById("ej8").innerHTML=h;
+}
+Ej8();
+
+function cuadradoMagico(i){
+    let t=[
+        [i+3,i+8,i+1],
+        [i+2,i+4,i+6],
+        [i+7,i,i+5]
+    ];
+    let h="<table>";
+    t.forEach(f=>{
+        h+="<tr>";
+        f.forEach(c=>h+="<td>"+c+"</td>");
+        h+="</tr>";
+    });
+    h+="</table>";
+    document.getElementById("ej9").innerHTML=h;
+}
+cuadradoMagico(5);
+
+function cambiarColor(id,nombreColor){
+    let obj=document.getElementById(id);
+    obj.style.color=nombreColor;
+}
+
+function factorial(n){
+    if(n<=1) return 1;
+    return n*factorial(n-1);
+}
+
+function mostrarFactorial(){
+    let n=parseInt(document.getElementById("numFactorial").value);
+    document.getElementById("resFactorial").textContent=factorial(n);
+}
+</script>
+
+</body>
+</html>
