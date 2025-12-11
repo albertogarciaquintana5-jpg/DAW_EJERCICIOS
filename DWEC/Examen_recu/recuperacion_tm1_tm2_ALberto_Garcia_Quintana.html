@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperación Tema 1 y 2 - DWEC</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        .border-left-primary {
+            border-left: 4px solid #0d6efd !important;
+        }
+        .card-header {
+            background-color: #0d6efd !important;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5 mb-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-primary mb-2">Recuperación Tema 1 y 2 - DWEC</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">1. Validación de enteros y operación matemática</h5>
+                </div>
+                <div class="card-body">
+                    <p>Pide al usuario tres números enteros con prompt, Comprueba que todos son enteros válidos y si no, muestra un error. Si son correctos, calcula el cubo del primero mas la cuarta potencia del segundo mas el tercero y muestra el resultado</p>
+                    <button class="btn btn-primary btn-sm" onclick="ejercicio1()">Ejecutar Ejercicio 1</button>
+                    <div id="resultado1" class="bg-light p-3 mt-3 rounded border"></div>
+                </div>
+            </div>
+
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">2. typeof e instanceof</h5>
+                </div>
+                <div class="card-body">
+                    <p>Muestra ejemplos en pantalla donde se pruebe typeof e instanceof usando todos los tipos</p>
+                    <button class="btn btn-primary btn-sm" onclick="ejercicio2()">Ejecutar Ejercicio 2</button>
+                    <div id="resultado2" class="bg-light p-3 mt-3 rounded border"></div>
+                </div>
+            </div>
+
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">3. Estaciones con operador ternario</h5>
+                </div>
+                <div class="card-body">
+                    <p>Lee un número de mes con prompt (1–12). Usa solo el operador ternario para decidir al grupo pertenece </p>
+                    <button class="btn btn-primary btn-sm" onclick="ejercicio3()">Ejecutar Ejercicio 3</button>
+                    <div id="resultado3" class="bg-light p-3 mt-3 rounded border"></div>
+                </div>
+            </div>
+
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">4. Operaciones bit a bit</h5>
+                </div>
+                <div class="card-body">
+                    <p>Pide dos números y una operación entre (SUMA, RESTA, AND, OR) y muestra resultados en decimal, binario y hexadecimal</p>
+                    <button class="btn btn-primary btn-sm" onclick="ejercicio4()">Ejecutar Ejercicio 4</button>
+                    <div id="resultado4" class="bg-light p-3 mt-3 rounded border"></div>
+                </div>
+            </div>
+
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">5. Condiciones sobre cadenas y números</h5>
+                </div>
+                <div class="card-body">
+                    <p>Pide un texto y muestra:</p>
+                    <button class="btn btn-primary btn-sm" onclick="ejercicio5()">Ejecutar Ejercicio 5</button>
+                    <div id="resultado5" class="bg-light p-3 mt-3 rounded border"></div>
+                </div>
+            </div>
+
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">6. Tabla con colores según índice</h5>
+                </div>
+                <div class="card-body">
+                    <p>Pide un número N y genera una tabla de N columnas y N filas, cambiando el color de cada celda según su columna.</p>
+                    <button class="btn btn-primary btn-sm" onclick="ejercicio6()">Ejecutar Ejercicio 6</button>
+                    <div id="resultado6" class="mt-3"></div>
+                </div>
+            </div>
+
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">7. Lista con 3 bucles anidados</h5>
+                </div>
+                <div class="card-body">
+                    <p>Lee un número N y genera una lista ordenada de 3 niveles donde cada elemento contiene N subelementos, y cada subelemento N subsubelementos.</p>
+                    <button class="btn btn-primary btn-sm" onclick="ejercicio7()">Ejecutar Ejercicio 7</button>
+                    <div id="resultado7" class="mt-3"></div>
+                </div>
+            </div>
+
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">8. Recorrer objeto</h5>
+                </div>
+                <div class="card-body">
+                    <p>Recorrer un objeto coche</p>
+                    <button class="btn btn-primary btn-sm" onclick="ejercicio8()">Ejecutar Ejercicio 8</button>
+                    <div id="resultado8" class="bg-light p-3 mt-3 rounded border"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+function ejercicio1() {
+    const resultado = document.getElementById('resultado1');
+    try {
+        const primerNumero = parseInt(prompt('Primer número entero:'));
+        const segundoNumero = parseInt(prompt('Segundo número entero:'));
+        const tercerNumero = parseInt(prompt('Tercer número entero:'));
+        
+        if (isNaN(primerNumero) || isNaN(segundoNumero) || isNaN(tercerNumero)) {
+            resultado.textContent = 'ERROR: Todos los valores deben ser números enteros válidos.';
+            return;
+        }
+        
+        const valor = Math.pow(primerNumero, 3) + Math.pow(segundoNumero, 4) + tercerNumero;
+        resultado.textContent = `Números: ${primerNumero}, ${segundoNumero}, ${tercerNumero}\n` +
+                            `${primerNumero}³ + ${segundoNumero}⁴ + ${tercerNumero}\n` +
+                            `= ${Math.pow(primerNumero, 3)} + ${Math.pow(segundoNumero, 4)} + ${tercerNumero}\n` +
+                            `= ${valor}`;
+    } catch {
+        resultado.textContent = 'ERROR';
+    }
+}
+
+function ejercicio2() {
+    const salida = document.getElementById('resultado2');
+
+    const numero = 42;
+    const cadena = "Hola";
+    const arreglo = [1, 2, 3];
+    const funcion = function() {};
+    const objeto = { nombre: "Juan" };
+    const booleano = true;
+    const nulo = null;
+    const indefinido = undefined;
+    
+    function MiClase() { this.prop = 'valor'; }
+    const instancia = new MiClase();
+    
+    let texto = 'TYPEOF: ';
+    texto += `número (42): ${typeof numero}, `;
+    texto += `cadena ("Hola"): ${typeof cadena}, `;
+    texto += `arreglo [1,2,3]: ${typeof arreglo}, `;
+    texto += `función: ${typeof funcion}, `;
+    texto += `objeto { }: ${typeof objeto}, `;
+    texto += `booleano (true): ${typeof booleano}, `;
+    texto += `null: ${typeof nulo}, `;
+    texto += `undefined: ${typeof indefinido}, `;
+    
+    texto += 'INSTANCEOF:\n';
+    texto += `[1,2,3] instanceof Array: ${arreglo instanceof Array}, `;
+    texto += `"Hola" instanceof String: ${cadena instanceof String}, `;
+    texto += `function() {} instanceof Function: ${funcion instanceof Function}, `;
+    texto += `{ } instanceof Object: ${objeto instanceof Object}, `;
+    texto += `instancia instanceof MiClase: ${instancia instanceof MiClase}, `;
+    texto += `42 instanceof Number: ${numero instanceof Number}, `;
+    
+    salida.textContent = texto;
+}
+
+function ejercicio3() {
+    const salida = document.getElementById('resultado3');
+    try {
+        const mes = parseInt(prompt('Introduce número de mes (1-12):'));
+        
+        if (isNaN(mes) || mes < 1 || mes > 12) {
+            salida.textContent = 'Mes no válido';
+            return;
+        }
+        
+        let estacion, nombreEstacion;
+        
+        if (mes === 6 || mes === 7) {
+            estacion = 'verano';
+            nombreEstacion = 'verano';
+        } else if (mes === 1 || mes === 2 || mes === 12) {
+            estacion = 'invierno';
+            nombreEstacion = 'invierno';
+        } else if (mes === 8) {
+            estacion = 'verono';
+            nombreEstacion = 'veroño';
+        } else if (mes === 5) {
+            estacion = 'primaverano';
+            nombreEstacion = 'primaverano';
+        } else if (mes === 3 || mes === 4) {
+            estacion = 'primavera';
+            nombreEstacion = 'primavera';
+        } else if (mes === 9 || mes === 10 || mes === 11) {
+            estacion = 'otono';
+            nombreEstacion = 'otoño';
+        } else {
+            salida.textContent = 'Mes no válido';
+            return;
+        }
+        
+        const rutaImagen = `./${estacion}.jpg`;
+        salida.innerHTML = `<div style="text-align: center;">
+            <p><strong>Mes: ${mes} - Estación: ${nombreEstacion}</strong></p>
+            <img src="${rutaImagen}" alt="${nombreEstacion}" style="max-width: 300px; max-height: 300px; border: 2px solid #0d6efd; border-radius: 8px; padding: 10px;">
+        </div>`;
+    } catch {
+        salida.textContent = 'ERROR';
+    }
+}
+
+function ejercicio4() {
+    const salida = document.getElementById('resultado4');
+    try {
+        const primerNumero = parseInt(prompt('Primer número:'));
+        const segundoNumero = parseInt(prompt('Segundo número:'));
+        const operacion = prompt('Operación (SUMA, RESTA, AND, OR):').toUpperCase();
+        
+        if (isNaN(primerNumero) || isNaN(segundoNumero)) {
+            salida.textContent = 'ERROR: Los números deben ser válidos.';
+            return;
+        }
+        
+        let resultado;
+        switch(operacion) {
+            case 'SUMA':
+                resultado = primerNumero + segundoNumero;
+                break;
+            case 'RESTA':
+                resultado = primerNumero - segundoNumero;
+                break;
+            case 'AND':
+                resultado = primerNumero & segundoNumero;
+                break;
+            case 'OR':
+                resultado = primerNumero | segundoNumero;
+                break;
+            default:
+                salida.textContent = 'ERROR: Operación no válida.';
+                return;
+        }
+        
+        let texto = `Números: ${primerNumero}, ${segundoNumero}\nOperación: ${operacion}\n\n`;
+        texto += `Decimal: ${resultado}\n`;
+        texto += `Binario: ${resultado.toString(2)}\n`;
+        texto += `Hexadecimal: ${resultado.toString(16).toUpperCase()}\n`;
+        
+        salida.textContent = texto;
+    } catch {
+        salida.textContent = 'ERROR';
+    }
+}
+
+function ejercicio5() {
+    const salida = document.getElementById('resultado5');
+    try {
+        const textoIngresado = prompt('Introduce un texto:');
+        if (!textoIngresado) {
+            salida.textContent = 'ERROR: Debe ingresar un texto.';
+            return;
+        }
+        
+        const propiedades = [];
+        
+        if (/^[A-Z]/.test(textoIngresado)) propiedades.push('EmpiezaMayus');
+        
+        const numero = parseFloat(textoIngresado);
+        if (!isNaN(numero) && numero > 100) propiedades.push('Mayor que 100');
+        
+        if (textoIngresado.endsWith('.')) propiedades.push('TerminaPunto');
+        
+        if (!isNaN(parseFloat(textoIngresado)) && isFinite(textoIngresado)) propiedades.push('Numerico');
+        
+        if (/^0x/i.test(textoIngresado)) propiedades.push('Hexadecimal');
+        
+        if (textoIngresado.length > 15) propiedades.push('CadenaLarga');
+        
+        if (propiedades.length === 0) propiedades.push('Otro');
+        
+        salida.textContent = `Texto: "${textoIngresado}"\nPropiedades: ${propiedades.join(', ')}`;
+    } catch {
+        salida.textContent = 'ERROR';
+    }
+}
+
+function ejercicio6() {
+    const salida = document.getElementById('resultado6');
+    try {
+        const tamanio = parseInt(prompt('Introduce N (tamaño de tabla):'));
+        if (isNaN(tamanio) || tamanio < 1) {
+            salida.textContent = 'ERROR: N debe ser un número positivo.';
+            return;
+        }
+        
+        const coloresLista = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F'];
+        let contenidoTabla = '<table class="table table-bordered table-sm">';
+        
+        for (let fila = 0; fila < tamanio; fila++) {
+            contenidoTabla += '<tr>';
+            for (let columna = 0; columna < tamanio; columna++) {
+                const color = coloresLista[columna % coloresLista.length];
+                contenidoTabla += `<td style="background-color: ${color};">${fila + 1}</td>`;
+            }
+            contenidoTabla += '</tr>';
+        }
+        contenidoTabla += '</table>';
+        salida.innerHTML = contenidoTabla;
+    } catch {
+        salida.textContent = 'ERROR';
+    }
+}
+
+function ejercicio7() {
+    const salida = document.getElementById('resultado7');
+    try {
+        const tamanio = parseInt(prompt('Introduce N:'));
+        if (isNaN(tamanio) || tamanio < 1) {
+            salida.textContent = 'ERROR: N debe ser un número positivo.';
+            return;
+        }
+        
+        let contenidoHtml = '<div style="font-family: Arial, sans-serif; padding: 15px; line-height: 1.6;">';
+        
+        for (let i = 1; i <= tamanio; i++) {
+            contenidoHtml += `<div style="margin-bottom: 10px;">
+                <strong>${i}. Item ${i}</strong>
+                <div style="margin-left: 30px;">`;
+            
+            for (let j = 1; j <= tamanio; j++) {
+                contenidoHtml += `<div style="margin-bottom: 5px;">
+                    <span>${i}.${j}. Sub ${j}</span>
+                    <div style="margin-left: 30px;">`;
+                
+                for (let k = 1; k <= tamanio; k++) {
+                    contenidoHtml += `<div style="margin-bottom: 3px;">Elemento ${i}.${j}.${k}</div>`;
+                }
+                
+                contenidoHtml += '</div></div>';
+            }
+            
+            contenidoHtml += '</div></div>';
+        }
+        
+        contenidoHtml += '</div>';
+        salida.innerHTML = contenidoHtml;
+    } catch {
+        salida.textContent = 'ERROR';
+    }
+}
+
+function ejercicio8() {
+    const salida = document.getElementById('resultado8');
+    try {
+        const coche = {
+            marca: "Seat",
+            modelo: "Ibiza",
+            año: 2018,
+            colores: ["rojo", "azul", "negro"],
+            motor: { tipo: "diesel", cv: 90 }
+        };
+        
+        let texto = '';
+        for (const propiedad in coche) {
+            if (Array.isArray(coche[propiedad])) {
+                texto += `${propiedad}: ${coche[propiedad].join(' - ')}\n`;
+            } else if (typeof coche[propiedad] === 'object') {
+                texto += `${propiedad}:\n`;
+                for (const subprop in coche[propiedad]) {
+                    texto += `  ${subprop}: ${coche[propiedad][subprop]}\n`;
+                }
+            } else {
+                texto += `${propiedad}: ${coche[propiedad]}\n`;
+            }
+        }
+        salida.textContent = texto;
+    } catch {
+        salida.textContent = 'ERROR';
+    }
+}
+
+</script>
+
+</body>
+</html>
