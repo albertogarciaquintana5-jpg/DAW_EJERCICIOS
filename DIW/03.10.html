@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Práctica</title>
+</head>
+<body>
+<h1>Práctica SVG</h1>
+
+<h2>Ejercicio 1: Crear las figuras</h2>
+<svg width="400" height="200" style="border:1px solid #ccc">
+
+  <rect x="20" y="40" width="100" height="100" fill="lightblue"/>
+
+  <polygon points="200,40 250,140 150,140" fill="orange"/>
+
+  <circle cx="320" cy="110" r="40" fill="red"/>
+
+</svg>
+
+<h2>Ejercicio 2: Mover figuras a izquierda y derecha</h2>
+<svg width="500" height="200" style="border:1px solid #ccc">
+
+  <rect x="20" y="40" width="80" height="80" fill="lightblue">
+    <animate attributeName="x"
+             from="20" to="350"
+             dur="3s" repeatCount="indefinite"/>
+  </rect>
+
+  <circle cx="450" cy="80" r="40" fill="red">
+    <animate attributeName="cx"
+             from="450" to="50"
+             dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+</svg>
+
+<h2>Ejercicio 3: Cambiar de color</h2>
+<svg width="300" height="200" style="border:1px solid #ccc">
+
+  <circle cx="150" cy="100" r="50">
+    <animate attributeName="fill"
+             values="red; blue; green; yellow; red"
+             dur="4s" repeatCount="indefinite"/>
+  </circle>
+
+</svg>
+
+<h2>Ejercicio 4: animateMotion siguiendo un path</h2>
+<svg width="500" height="200" style="border:1px solid #ccc">
+
+  <!-- Path -->
+  <path id="curva" d="M50 150 C150 20, 350 20, 450 150"
+        fill="none" stroke="black"/>
+
+  <!-- Circulo siguiendo el path -->
+  <circle r="12" fill="red">
+    <animateMotion dur="4s" repeatCount="indefinite">
+      <mpath href="#curva"/>
+    </animateMotion>
+  </circle>
+
+</svg>
+
+<h2>Ejercicio 5: Mover texto a la izquierda (animateTransform)</h2>
+<svg viewBox="0 0 240 80" style="border:1px solid #ccc">
+
+  <style>
+    .small { font: italic 13px sans-serif; }
+    .heavy { font: bold 30px sans-serif; }
+    .Rrrr { font: italic 40px serif; fill: red; }
+  </style>
+
+  <text x="20" y="35" class="small">EI
+    <animateTransform attributeName="transform"
+                      type="translate"
+                      from="0 0" to="-150 0"
+                      dur="3s" repeatCount="indefinite"/>
+  </text>
+
+  <text x="40" y="35" class="heavy">IES Playamar
+    <animateTransform attributeName="transform"
+                      type="translate"
+                      from="0 0" to="-150 0"
+                      dur="3s" repeatCount="indefinite"/>
+  </text>
+
+  <text x="55" y="55" class="small">es
+    <animateTransform attributeName="transform"
+                      type="translate"
+                      from="0 0" to="-150 0"
+                      dur="3s" repeatCount="indefinite"/>
+  </text>
+
+  <text x="65" y="55" class="Rrrr">Genial
+    <animateTransform attributeName="transform"
+                      type="translate"
+                      from="0 0" to="-150 0"
+                      dur="3s" repeatCount="indefinite"/>
+  </text>
+
+</svg>
+
+<h2>Ejercicio 6: Girar sobre un mismo punto</h2>
+<svg width="300" height="200" style="border:1px solid #ccc">
+  <text x="150" y="100" font-size="40" text-anchor="middle">Hola
+    <animateTransform attributeName="transform"
+                      type="rotate"
+                      from="0 150 100" to="360 150 100"
+                      dur="3s" repeatCount="indefinite"/>
+  </text>
+</svg>
+
+<h2>Ejercicio 7: Girar sobre sí mismos</h2>
+<svg width="300" height="200" style="border:1px solid #ccc">
+  <text x="150" y="100" font-size="40" text-anchor="middle">Hola
+    <animateTransform attributeName="transform"
+                      type="rotate"
+                      from="0" to="360"
+                      dur="2s" repeatCount="indefinite"/>
+  </text>
+</svg>
+
+</body>
+</html>

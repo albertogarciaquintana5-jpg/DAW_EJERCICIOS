@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1200" viewBox="0 0 1000 1200">
+  
+  <!-- Fondo -->
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  
+  <!-- Título principal -->
+  <text x="500" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333">
+    Práctica 03-07 - Círculos y ViewBox
+  </text>
+  
+  <!-- ===== EJERCICIO 1: Ejemplos básicos de círculos ===== -->
+  <text x="100" y="80" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2c3e50">
+    Ejercicio 1: Ejemplos básicos de círculos
+  </text>
+  
+  <!-- Ejemplo 1: Círculo básico -->
+  <circle cx="150" cy="150" r="40" fill="#3498db" stroke="#2980b9" stroke-width="3"/>
+  <text x="150" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    círculo básico
+  </text>
+  
+  <!-- Ejemplo 2: Círculo con borde grueso -->
+  <circle cx="300" cy="150" r="40" fill="#2ecc71" stroke="#27ae60" stroke-width="8"/>
+  <text x="300" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    borde grueso
+  </text>
+  
+  <!-- Ejemplo 3: Círculo transparente -->
+  <circle cx="450" cy="150" r="40" fill="none" stroke="#e74c3c" stroke-width="4" opacity="0.7"/>
+  <text x="450" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    transparente
+  </text>
+  
+  <!-- Ejemplo 4: Círculo con borde punteado -->
+  <circle cx="600" cy="150" r="40" fill="#9b59b6" stroke="#8e44ad" stroke-width="3" stroke-dasharray="5,3"/>
+  <text x="600" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    borde punteado
+  </text>
+  
+  <!-- Línea separadora -->
+  <line x1="50" y1="240" x2="950" y2="240" stroke="#bdc3c7" stroke-width="1"/>
+  
+  <!-- ===== EJERCICIO 2: Círculos anidados ===== -->
+  <text x="100" y="280" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2c3e50">
+    Ejercicio 2: Círculos anidados (300x300 con viewport 250x250)
+  </text>
+  
+  <!-- Contenedor para el viewport -->
+  <svg x="100" y="300" width="300" height="300" viewBox="0 0 250 250">
+    <!-- Círculo grande (tamaño 300 en viewBox 250) -->
+    <circle cx="125" cy="125" r="150" fill="#ecf0f1" stroke="#95a5a6" stroke-width="2"/>
+    
+    <!-- Círculo mediano (tamaño 200 en viewBox 250) -->
+    <circle cx="125" cy="125" r="100" fill="#fff" stroke="#7f8c8d" stroke-width="3"/>
+    
+    <!-- Círculo pequeño -->
+    <circle cx="125" cy="125" r="50" fill="#34495e" stroke="#2c3e50" stroke-width="2"/>
+    
+    <text x="125" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">
+      ViewBox: 250x250 | Width: 300x300
+    </text>
+  </svg>
+  
+  <!-- ===== EJERCICIO 3: Círculos rojos degradados ===== -->
+  <text x="500" y="280" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2c3e50">
+    Ejercicio 3: Círculos rojos degradados
+  </text>
+  
+  <!-- Círculos rojos con radios crecientes -->
+  <circle cx="500" cy="380" r="25" fill="#550000"/>
+  <circle cx="500" cy="380" r="30" fill="#880000"/>
+  <circle cx="500" cy="380" r="35" fill="#AA0000"/>
+  <circle cx="500" cy="380" r="40" fill="#CC0000"/>
+  <circle cx="500" cy="380" r="45" fill="#FF0000"/>
+  
+  <text x="500" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    Radios: 25, 30, 35, 40, 45
+  </text>
+  
+  <text x="500" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">
+    Colores: #550000, #880000, #AA0000, #CC0000, #FF0000
+  </text>
+  
+  <!-- Línea separadora -->
+  <line x1="50" y1="500" x2="950" y2="500" stroke="#bdc3c7" stroke-width="1"/>
+  
+  <!-- ===== EJERCICIO 4: Círculos verdes degradados verticales ===== -->
+  <text x="100" y="540" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2c3e50">
+    Ejercicio 4: Círculos verdes degradados (vertical)
+  </text>
+  
+  <!-- Círculos verdes con desplazamiento vertical -->
+  <circle cx="200" cy="620" r="25" fill="#003300"/>
+  <circle cx="200" cy="645" r="30" fill="#005500"/>
+  <circle cx="200" cy="670" r="35" fill="#008800"/>
+  <circle cx="200" cy="695" r="40" fill="#00AA00"/>
+  <circle cx="200" cy="720" r="45" fill="#00FF00"/>
+  
+  <text x="200" y="780" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    cy: 620, 645, 670, 695, 720
+  </text>
+  
+  <text x="200" y="800" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">
+    Radios: 25, 30, 35, 40, 45
+  </text>
+  
+  <!-- ===== EJERCICIO 5: Círculos cyan, amarillo y púrpura ===== -->
+  <text x="500" y="540" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2c3e50">
+    Ejercicio 5: Cyan, amarillo y púrpura
+  </text>
+  
+  <!-- Grupo Cyan -->
+  <g>
+    <circle cx="500" cy="620" r="15" fill="#005555"/>
+    <circle cx="525" cy="645" r="20" fill="#008888"/>
+    <circle cx="550" cy="670" r="25" fill="#00AAAA"/>
+    <circle cx="575" cy="695" r="30" fill="#00CCCC"/>
+    <circle cx="600" cy="720" r="35" fill="#00FFFF"/>
+    
+    <text x="550" y="760" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#006666">
+      Cyan
+    </text>
+  </g>
+  
+  <!-- Grupo Amarillo -->
+  <g>
+    <circle cx="650" cy="620" r="15" fill="#555500"/>
+    <circle cx="675" cy="645" r="20" fill="#888800"/>
+    <circle cx="700" cy="670" r="25" fill="#AAAA00"/>
+    <circle cx="725" cy="695" r="30" fill="#CCCC00"/>
+    <circle cx="750" cy="720" r="35" fill="#FFFF00"/>
+    
+    <text x="700" y="760" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666600">
+      Amarillo
+    </text>
+  </g>
+  
+  <!-- Grupo Púrpura -->
+  <g>
+    <circle cx="800" cy="620" r="15" fill="#550055"/>
+    <circle cx="825" cy="645" r="20" fill="#880088"/>
+    <circle cx="850" cy="670" r="25" fill="#AA00AA"/>
+    <circle cx="875" cy="695" r="30" fill="#CC00CC"/>
+    <circle cx="900" cy="720" r="35" fill="#FF00FF"/>
+    
+    <text x="850" y="760" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#660066">
+      Púrpura
+    </text>
+  </g>
+  
+  <!-- Línea separadora -->
+  <line x1="50" y1="800" x2="950" y2="800" stroke="#bdc3c7" stroke-width="1"/>
+  
+  <!-- ===== EJERCICIO 6: Demostración de viewBox ===== -->
+  <text x="100" y="840" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2c3e50">
+    Ejercicio 6: Demostración de viewBox
+  </text>
+  
+  <!-- Primer ejemplo de viewBox -->
+  <text x="250" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    viewBox="-150 -150 500 500"
+  </text>
+  <svg x="150" y="890" width="200" height="200" viewBox="-150 -150 500 500">
+    <!-- Patrón de fondo -->
+    <rect x="-150" y="-150" width="500" height="500" fill="#e8f4f8" stroke="#3498db" stroke-width="1"/>
+    
+    <!-- Elementos -->
+    <circle cx="0" cy="0" r="100" fill="#3498db" opacity="0.5"/>
+    <circle cx="150" cy="150" r="50" fill="#e74c3c" opacity="0.7"/>
+    <circle cx="-100" cy="-100" r="30" fill="#2ecc71" opacity="0.7"/>
+    <rect x="50" y="50" width="60" height="60" fill="#f39c12" opacity="0.7"/>
+    
+    <text x="100" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">
+      Vista parcial
+    </text>
+  </svg>
+  
+  <!-- Segundo ejemplo de viewBox -->
+  <text x="550" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    viewBox="-200 -200 600 600"
+  </text>
+  <svg x="450" y="890" width="200" height="200" viewBox="-200 -200 600 600">
+    <!-- Patrón de fondo -->
+    <rect x="-200" y="-200" width="600" height="600" fill="#f8e8e8" stroke="#e74c3c" stroke-width="1"/>
+    
+    <!-- Elementos (mismos que arriba) -->
+    <circle cx="0" cy="0" r="100" fill="#3498db" opacity="0.5"/>
+    <circle cx="150" cy="150" r="50" fill="#e74c3c" opacity="0.7"/>
+    <circle cx="-100" cy="-100" r="30" fill="#2ecc71" opacity="0.7"/>
+    <rect x="50" y="50" width="60" height="60" fill="#f39c12" opacity="0.7"/>
+    
+    <text x="100" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">
+      Vista ampliada
+    </text>
+  </svg>
+  
+  <!-- Tercer ejemplo de viewBox -->
+  <text x="850" y="880" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+    viewBox="0 0 200 200" (zoom)
+  </text>
+  <svg x="750" y="890" width="200" height="200" viewBox="0 0 200 200">
+    <!-- Patrón de fondo -->
+    <rect x="0" y="0" width="200" height="200" fill="#e8f8e8" stroke="#2ecc71" stroke-width="1"/>
+    
+    <!-- Elementos (mismos que arriba) -->
+    <circle cx="100" cy="100" r="40" fill="#3498db" opacity="0.5"/>
+    <circle cx="150" cy="150" r="20" fill="#e74c3c" opacity="0.7"/>
+    <circle cx="50" cy="50" r="15" fill="#2ecc71" opacity="0.7"/>
+    <rect x="80" y="80" width="30" height="30" fill="#f39c12" opacity="0.7"/>
+    
+    <text x="100" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">
+      Zoom
+    </text>
+  </svg>
+  
+  <!-- Pie de página -->
+  <text x="500" y="1150" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#7f8c8d">
+    Práctica 03-07 - Círculos y ViewBox - Todos los ejercicios
+  </text>
+  <text x="500" y="1170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#95a5a6">
+    SVG completo con implementación de todos los ejercicios
+  </text>
+  
+</svg>
+    
+    <!-- Separador -->
+    <line x1="20" y1="520" x2="380" y2="520" stroke="#ccc" stroke-width="1"/>
+    
+    <!-- Ejercicio 3: Círculos rojos degradados -->
+    <text x="400" y="60" font-family="Arial" font-size="14" font-weight="bold">
+      Ejercicio 3: Círculos rojos degradados
+    </text>
+    
+    <!-- Círculos rojos con radio creciente -->
+    <circle cx="470" cy="120" r="25" fill="#550000"/>
+    <circle cx="470" cy="120" r="30" fill="#880000"/>
+    <circle cx="470" cy="120" r="35" fill="#AA0000"/>
+    <circle cx="470" cy="120" r="40" fill="#CC0000"/>
+    <circle cx="470" cy="120" r="45" fill="#FF0000"/>
+    <text x="470" y="180" text-anchor="middle" font-family="Arial" font-size="10">
+      Radios: 25,30,35,40,45
+    </text>
+    
+    <!-- Ejercicio 4: Círculos verdes degradados -->
+    <text x="400" y="220" font-family="Arial" font-size="14" font-weight="bold">
+      Ejercicio 4: Círculos verdes degradados (vertical)
+    </text>
+    
+    <!-- Círculos verdes con desplazamiento vertical -->
+    <circle cx="550" cy="260" r="25" fill="#005500"/>
+    <circle cx="550" cy="285" r="30" fill="#008800"/>
+    <circle cx="550" cy="310" r="35" fill="#00AA00"/>
+    <circle cx="550" cy="335" r="40" fill="#00CC00"/>
+    <circle cx="550" cy="360" r="45" fill="#00FF00"/>
+    <text x="550" y="390" text-anchor="middle" font-family="Arial" font-size="10">
+      cy: 260,285,310,335,360
+    </text>
+    
+    <!-- Separador -->
+    <line x1="400" y1="420" x2="700" y2="420" stroke="#ccc" stroke-width="1"/>
+    
+    <!-- Ejercicio 5: Círculos cyan, amarillo y púrpura -->
+    <text x="400" y="450" font-family="Arial" font-size="14" font-weight="bold">
+      Ejercicio 5: Cyan, amarillo y púrpura
+    </text>
+    
+    <!-- Círculos cyan (con desplazamiento en cx y cy) -->
+    <circle cx="450" cy="520" r="15" fill="#005555"/>
+    <circle cx="475" cy="545" r="20" fill="#008888"/>
+    <circle cx="500" cy="570" r="25" fill="#00AAAA"/>
+    <circle cx="525" cy="595" r="30" fill="#00CCCC"/>
+    <circle cx="550" cy="620" r="35" fill="#00FFFF"/>
+    
+    <!-- Círculos amarillos -->
+    <circle cx="600" cy="520" r="15" fill="#555500"/>
+    <circle cx="625" cy="545" r="20" fill="#888800"/>
+    <circle cx="650" cy="570" r="25" fill="#AAAA00"/>
+    <circle cx="675" cy="595" r="30" fill="#CCCC00"/>
+    <circle cx="700" cy="620" r="35" fill="#FFFF00"/>
+    
+    <!-- Círculos púrpura -->
+    <circle cx="525" cy="480" r="15" fill="#550055"/>
+    <circle cx="550" cy="505" r="20" fill="#880088"/>
+    <circle cx="575" cy="530" r="25" fill="#AA00AA"/>
+    <circle cx="600" cy="555" r="30" fill="#CC00CC"/>
+    <circle cx="625" cy="580" r="35" fill="#FF00FF"/>
+    
+    <text x="575" y="660" text-anchor="middle" font-family="Arial" font-size="10">
+      Tres conjuntos con desplazamiento en cx y cy
+    </text>
+    
+    <!-- Separador -->
+    <line x1="20" y1="680" x2="780" y2="680" stroke="#ccc" stroke-width="1"/>
+    
+    <!-- Ejercicio 6: Demostración de viewBox -->
+    <text x="20" y="710" font-family="Arial" font-size="14" font-weight="bold">
+      Ejercicio 6: Ejemplos de viewBox
+    </text>
+    
+    <!-- Primer ejemplo de viewBox -->
+    <text x="20" y="730" font-family="Arial" font-size="10">
+      viewBox="-150 -150 500 500" (muestra solo parte central)
+    </text>
+    <svg x="20" y="740" width="150" height="150" viewBox="-150 -150 500 500">
+      <circle cx="0" cy="0" r="200" fill="lightblue" opacity="0.5"/>
+      <circle cx="100" cy="100" r="50" fill="red" opacity="0.7"/>
+      <circle cx="-50" cy="-50" r="30" fill="green" opacity="0.7"/>
+      <rect x="-20" y="-20" width="40" height="40" fill="yellow" opacity="0.7"/>
+    </svg>
+    
+    <!-- Segundo ejemplo de viewBox -->
+    <text x="200" y="730" font-family="Arial" font-size="10">
+      viewBox="-200 -200 600 600" (muestra área más amplia)
+    </text>
+    <svg x="200" y="740" width="100" height="100" viewBox="-200 -200 600 600">
+      <circle cx="0" cy="0" r="200" fill="lightblue" opacity="0.5"/>
+      <circle cx="100" cy="100" r="50" fill="red" opacity="0.7"/>
+      <circle cx="-50" cy="-50" r="30" fill="green" opacity="0.7"/>
+      <rect x="-20" y="-20" width="40" height="40" fill="yellow" opacity="0.7"/>
+    </svg>
+    
+    <!-- Tercer ejemplo de viewBox (zoom) -->
+    <text x="350" y="730" font-family="Arial" font-size="10">
+      viewBox="50 50 100 100" (zoom en una parte)
+    </text>
+    <svg x="350" y="740" width="150" height="150" viewBox="50 50 100 100">
+      <circle cx="0" cy="0" r="200" fill="lightblue" opacity="0.5"/>
+      <circle cx="100" cy="100" r="50" fill="red" opacity="0.7"/>
+      <circle cx="-50" cy="-50" r="30" fill="green" opacity="0.7"/>
+      <rect x="-20" y="-20" width="40" height="40" fill="yellow" opacity="0.7"/>
+    </svg>
+    
+    <!-- Leyenda final -->
+    <text x="400" y="920" font-family="Arial" font-size="10" fill="#666">
+      Práctica 03-07 - Todos los ejercicios en un solo archivo SVG
+    </text>
+      </svg>
+  </svg>
+</svg>

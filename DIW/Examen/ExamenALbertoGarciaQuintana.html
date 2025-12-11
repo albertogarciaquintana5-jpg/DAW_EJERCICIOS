@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Examen SVG</title>
+</head>
+<body>
+  <h1>Examen ALberto Garcia Quintana</h1>
+
+  <h2>Ejercicio 1</h2>
+  <div>
+    <div>
+      <p><strong>Original:</strong></p>
+      <img src="ej1-numero2.jpg" alt="original" width="320">
+    </div>
+    <div>
+      <p><strong>Versión modificada:</strong></p>
+      <img src="modificado.jpg" alt="modificado" width="320">
+    </div>
+  </div>
+
+  <h2>Ejercicio 3</h2>
+  <div>
+    <svg width="540" height="120" viewBox="0 0 540 120" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="540" height="120" fill="#fff"/>
+      <rect x="10" y="15" width="90" height="90" fill="#e31a1c"/>
+      <text x="14" y="12" font-size="10" fill="#c22">(5,15)</text>
+      <text x="18" y="112" font-size="10" fill="#c22">40px</text>
+
+      <ellipse id="elipse1" cx="120" cy="60" rx="50" ry="40" fill="#0b6623" data-origrx="50"/>
+      <text x="110" y="68" font-size="10" fill="#fff">x/y= (70,46)</text>
+      <text x="110" y="80" font-size="10" fill="#fff">r= (30,20)</text>
+
+      <rect x="200" y="15" width="120" height="90" fill="#ffef00"/>
+      <ellipse id="elipse2" cx="290" cy="60" rx="55" ry="38" fill="#0b3fbf" data-origrx="55"/>
+      <text x="202" y="12" font-size="10" fill="#333">(85,15)</text>
+
+      <rect x="420" y="15" width="90" height="90" fill="#ff00d4"/>
+      <text x="424" y="12" font-size="10" fill="#c22">(155,15)</text>
+    </svg>
+  </div>
+
+  <h2>Ejercicio 4</h2>
+  <div>
+    <img id="img3" src="ej3coordenadas.jpg" alt="imagen3" width="220">
+    <div>
+      <button onclick="downloadIcon()">Descargar PNG 64x64</button>
+    </div>
+  </div>
+
+  <h2>Ejercicio 5</h2>
+  <div>
+    <svg width="620" height="140" viewBox="0 0 620 140" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bggrad" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#aaf8f5"/>
+          <stop offset="100%" stop-color="#00e6e6"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="310" cy="70" rx="290" ry="60" fill="url(#bggrad)" stroke="#33cccc" stroke-width="2"/>
+      <text x="310" y="82" font-family="Georgia, serif" font-size="42" text-anchor="middle" fill="#003399">
+        <tspan>Desarrollo </tspan>
+        <tspan onmouseover="this.setAttribute('fill','#cc2222')" onmouseout="this.setAttribute('fill','#0a8a2f')">SVG</tspan>
+        <tspan> </tspan>
+        <tspan fill="#cc2222">2025</tspan>
+      </text>
+    </svg>
+  </div>
+
+  <h2>Ejercicio 6</h2>
+  <div>
+    <p>Suba al ejercicio 3 y pulse los circulos y cuadrados para iniciar/detener.</p>
+  </div>
+  <script>
+    (function(){
+      function makeOscillator(el){
+        const orig = parseFloat(el.getAttribute('data-origrx') || el.getAttribute('rx')) || 30;
+        const amplitude = orig * 0.5;
+        const period = 1000;
+        let rafId = null;
+        let start = null;
+        let running = false;
+
+        function step(timestamp){
+          if(!start) start = timestamp;
+          const t = timestamp - start;
+          const theta = (t % period) / period * Math.PI * 2;
+          const factor = (Math.sin(theta) + 1) / 2; 
+          const rx = orig + amplitude * factor;
+          el.setAttribute('rx', rx.toFixed(2));
+          if(running) rafId = requestAnimationFrame(step);
+        }
+
+        return {
+          start(){ if(running) return; running=true; start=null; rafId = requestAnimationFrame(step); el._osc_running=true; },
+          stop(){ if(!running) return; running=false; if(rafId) cancelAnimationFrame(rafId); rafId=null; el.setAttribute('rx', orig); el._osc_running=false; }
+        };
+      }
+
+      const ids = ['elipse1','elipse2'];
+      ids.forEach(id=>{
+        const el = document.getElementById(id);
+        if(!el) return;
+        const osc = makeOscillator(el);
+        el.addEventListener('click', ()=>{
+          if(el._osc_running) osc.stop(); else osc.start();
+        });
+      });
+    })();
+  </script>
+
+  <h2>Ejercicio 7</h2>
+  <div>
+    <div>
+      <strong>1. Rotando</strong>
+      <svg id="svg7-1" width="720" height="70" viewBox="0 0 720 70" xmlns="http://www.w3.org/2000/svg">
+        <rect id="trigger7-1" x="0" y="0" width="720" height="70" fill="transparent"/>
+        <g id="g7-1" transform="translate(20,45)" font-family="Verdana" font-size="36" fill="#0000FF"></g>
+      </svg>
+    </div>
+
+    <div>
+      <strong>2. Rotando y escalando</strong>
+      <svg id="svg7-2" width="720" height="90" viewBox="0 0 720 90" xmlns="http://www.w3.org/2000/svg">
+        <rect id="trigger7-2" x="0" y="0" width="720" height="90" fill="transparent"/>
+        <g id="scaleGroup7-2" transform="translate(20,60)"></g>
+      </svg>
+    </div>
+
+    <div>
+      <strong>3. Rotando, escalando y color</strong>
+      <svg id="svg7-3" width="720" height="90" viewBox="0 0 720 90" xmlns="http://www.w3.org/2000/svg">
+        <rect id="trigger7-3" x="0" y="0" width="720" height="90" fill="transparent"/>
+        <g id="scaleGroup7-3" transform="translate(20,60)"></g>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    const frase7 = 'Ejemplo Animado 7';
+    const _animData = {};
+    function buildRotatingChars(containerId, triggerId, withScale=false, withColor=false){
+      const container = document.getElementById(containerId);
+      const trigger = document.getElementById(triggerId);
+      if(!container || !trigger) return;
+      let x=0;
+      const groups = [];
+      const texts = [];
+      const positions = [];
+      for(let i=0;i<frase7.length;i++){
+        const ch = frase7[i];
+        const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+        g.setAttribute('transform', `translate(${x},0)`);
+        const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+        t.setAttribute('x',0);
+        t.setAttribute('y',0);
+        t.textContent = ch;
+        g.appendChild(t);
+        container.appendChild(g);
+        groups.push(g);
+        texts.push(t);
+        positions.push(x);
+        x += (ch === ' ' ? 14 : 18);
+      }
+
+      _animData[containerId] = { groups, texts, withScale, withColor, baseTransform: container.getAttribute('transform') || '' };
+
+      let running = false;
+      trigger.addEventListener('mouseover', ()=>{
+        if(running) return; running = true;
+        const start = performance.now();
+        const duration = 5000;
+        function step(now){
+          const t = Math.min(1, (now - start)/duration);
+          const rotFactor = Math.sin(Math.PI * t);
+          const scaleFactor = 1 - 0.2 * rotFactor;
+          const colorFactor = rotFactor;
+          for(let i=0;i<groups.length;i++){
+            const delay = i * 30;
+            const charT = Math.min(1, Math.max(0, ((now - start) - delay) / duration));
+            const charRot = Math.sin(Math.PI * charT) * 90;
+            groups[i].setAttribute('transform', `translate(${positions[i]},0) rotate(${charRot})`);
+          }
+          if(withScale){
+            try{ container.setAttribute('transform', `scale(${scaleFactor}) ${_animData[containerId].baseTransform}`); }catch(e){}
+          }
+          if(withColor){
+            const r = Math.round(255 * colorFactor);
+            const gcol = 0;
+            const b = Math.round(255 * (1 - colorFactor));
+            const color = `rgb(${r},${gcol},${b})`;
+            texts.forEach(tn=> tn.setAttribute('fill', color));
+          }
+          if(t < 1) requestAnimationFrame(step);
+          else {
+            for(let i=0;i<groups.length;i++){
+              groups[i].setAttribute('transform', `translate(${positions[i]},0)`);
+            }
+            if(withScale) container.setAttribute('transform', _animData[containerId].baseTransform);
+            if(withColor) texts.forEach(tn=> tn.setAttribute('fill','#0000FF'));
+            running = false;
+          }
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    buildRotatingChars('g7-1','trigger7-1', false, false);
+    (function(){
+      const scaleGroup = document.getElementById('scaleGroup7-2');
+      const temp = document.createElementNS('http://www.w3.org/2000/svg','g');
+      scaleGroup.appendChild(temp);
+      temp.setAttribute('id','g7-2');
+      buildRotatingChars('g7-2','trigger7-2', true, false);
+    })();
+    (function(){
+      const scaleGroup = document.getElementById('scaleGroup7-3');
+      const temp = document.createElementNS('http://www.w3.org/2000/svg','g');
+      scaleGroup.appendChild(temp);
+      temp.setAttribute('id','g7-3');
+      buildRotatingChars('g7-3','trigger7-3', true, true);
+    })();
+  </script>
+
+  <h2>Ejercicio 8</h2>
+  <div>
+    <svg width="760" height="160" viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="rainbowV" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ff0"/>
+          <stop offset="12%" stop-color="#7fff00"/>
+          <stop offset="25%" stop-color="#ff0000"/>
+          <stop offset="37%" stop-color="#ff7f00"/>
+          <stop offset="50%" stop-color="#ff0080"/>
+          <stop offset="62%" stop-color="#b200ff"/>
+          <stop offset="75%" stop-color="#3f00ff"/>
+          <stop offset="88%" stop-color="#0040ff"/>
+          <stop offset="100%" stop-color="#0000ff"/>
+        </linearGradient>
+      </defs>
+      <g>
+        <circle cx="90" cy="80" r="64" fill="url(#rainbowV)" stroke="none"/>
+        <text x="130" y="28" font-size="14" fill="#7a3c00">CCC</text>
+        <text x="130" y="142" font-size="14" fill="#7a3c00">CCC</text>
+      </g>
+      <g transform="translate(240,16)">
+        <circle cx="80" cy="64" r="64" fill="#e31a1c"/>
+        <circle cx="80" cy="64" r="40" fill="#ff8c1a"/>
+        <circle cx="80" cy="64" r="18" fill="#ffcc33"/>
+      </g>
+      <g transform="translate(460,16)">
+        <rect x="0" y="0" width="260" height="128" fill="#efefef"/>
+        <circle cx="70" cy="64" r="54" fill="#000"/>
+        <circle cx="190" cy="64" r="54" fill="#000"/>
+      </g>
+    </svg>
+  </div>
+
+  <h2>Ejercicio 9</h2>
+  <div>
+    <svg width="320" height="280" viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <path id="curveBottom" d="M 0 0 C 80 30 60 84 160 40 C 250 0 204 -63 7 -45" />
+        <path id="curveTop" d="M 0 0 C 80 30 60 84 160 40 C 250 0 204 -63 7 -45" />
+      </defs>
+      <use href="#curveBottom" fill="none" stroke="#ff0000" stroke-width="2"/>
+      <use href="#curveTop" fill="none" stroke="none"/>
+      <text font-family="Verdana" font-size="22" fill="#0033cc">
+        <textPath href="#curveBottom" startOffset="8%">DAW IES PlayaM A Diseño Web</textPath>
+      </text>
+
+    </svg>
+    <script>
+      const bottomTP = document.querySelector('textPath[href="#curveBottom"]');
+      if(bottomTP){
+        bottomTP.parentElement.addEventListener('mouseenter', ()=> bottomTP.setAttribute('fill','#008800'))
+        bottomTP.parentElement.addEventListener('mouseleave', ()=> bottomTP.setAttribute('fill','#0033cc'))
+      }
+    </script>
+  </div>
+
+  <h2>Ejercicio 10</h2>
+  <div>
+    <svg id="scene" width="900" height="420" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="bgPattern" patternUnits="userSpaceOnUse" width="900" height="300">
+          <image href="ej10fondo.jpg" x="0" y="0" width="900" height="300" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+        <pattern id="fishPattern" patternUnits="userSpaceOnUse" width="75" height="75">
+          <image href="ej10pescado.png" x="0" y="0" width="75" height="75" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+        <pattern id="boatPattern" patternUnits="userSpaceOnUse" width="100" height="100">
+          <image href="ej10barca.png" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+        <path id="fishPath" d="M 0 0 C -42 -159 -343 -230 -464 -1 C -384 -272 -128 -558 -1 -3" fill="none" />
+        <path id="sunPath" d="M 0 0 C -42 -100 -343 -100 -664 -1 C -384 -100 -128 -50 -1 -3" fill="none" />
+      </defs>
+
+      <rect id="bgRect" x="0" y="0" width="900" height="300" fill="url(#bgPattern)" />
+
+      <g transform="translate(12,312)">
+        <text x="0" y="0" font-family="Verdana" font-size="18">Viajes de Pesca: <tspan id="cntBoat">0</tspan></text>
+        <text x="220" y="0" font-family="Verdana" font-size="18">Saltos de Pescado: <tspan id="cntFish">0</tspan></text>
+        <text x="520" y="0" font-family="Verdana" font-size="18">Atardeceres: <tspan id="cntSun">0</tspan></text>
+      </g>
+
+      <rect id="boat" x="120" y="180" width="100" height="100" fill="url(#boatPattern)" style="cursor:pointer" />
+
+      <rect id="fish" x="740" y="240" width="75" height="75" fill="url(#fishPattern)" style="cursor:pointer" />
+
+      <g id="sunGroup" transform="translate(780,70) scale(1)" style="cursor:pointer">
+        <circle id="sunCore" cx="0" cy="0" r="30" fill="#ffde59" stroke="#ff9a00" stroke-width="3"/>
+        <g id="sunRays" stroke="#ff9a00" stroke-width="2">
+          <line x1="-42" y1="0" x2="-70" y2="0" />
+          <line x1="42" y1="0" x2="70" y2="0" />
+          <line x1="0" y1="-42" x2="0" y2="-70" />
+          <line x1="-30" y1="-30" x2="-50" y2="-50" />
+          <line x1="30" y1="-30" x2="50" y2="-50" />
+        </g>
+      </g>
+    </svg>
+
+    <div>
+      <button id="btnBoat">Mover barco</button>
+      <button id="btnFish">Hacer saltar pez</button>
+      <button id="btnSun">Atardecer</button>
+    </div>
+  </div>
+
+  <script>
+    function downloadIcon(){
+      const img = document.getElementById('img3');
+      const canvas = document.createElement('canvas');
+      canvas.width = 64; canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      const i = new Image();
+      i.crossOrigin = 'anonymous';
+      i.onload = ()=>{
+        ctx.drawImage(i,0,0,64,64);
+        const a = document.createElement('a');
+        a.href = canvas.toDataURL('image/png');
+        a.download = 'icon-64.png';
+        a.click();
+      };
+      i.src = img.src;
+    }
+
+
+    let boatCount = 0, fishCount = 0, sunCount = 0;
+    const cntBoat = document.getElementById('cntBoat');
+    const cntFish = document.getElementById('cntFish');
+    const cntSun = document.getElementById('cntSun');
+
+    function moveBoat(){
+      const boat = document.getElementById('boat');
+      if(!boat) return;
+      if(boat._animRunning) return;
+      boat._animRunning = true;
+      boatCount++; cntBoat.textContent = boatCount;
+      const anim = boat.animate([
+        { transform: 'translateX(0px)' },
+        { transform: 'translateX(600px)' },
+        { transform: 'translateX(0px)' }
+      ], { duration: 2200, easing: 'ease-in-out' });
+      anim.onfinish = ()=>{ boat._animRunning=false; };
+    }
+
+    function fishJump(){
+      const fish = document.getElementById('fish');
+      const path = document.getElementById('fishPath');
+      if(!fish || !path) return;
+      if(fish._animRunning) return;
+      fish._animRunning = true;
+      const startX = parseFloat(fish.getAttribute('x')) || 740;
+      const startY = parseFloat(fish.getAttribute('y')) || 240;
+      const len = path.getTotalLength();
+      const duration = 1400;
+      const startTime = performance.now();
+      fishCount++; cntFish.textContent = fishCount;
+      function step(now){
+        const t = Math.min(1, (now - startTime)/duration);
+        const p = path.getPointAtLength(t * len);
+        fish.setAttribute('x', (startX + p.x).toFixed(2));
+        fish.setAttribute('y', (startY + p.y).toFixed(2));
+        if(t < 1) requestAnimationFrame(step);
+        else { fish._animRunning = false; }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function sunToggle(){
+      const sunGroup = document.getElementById('sunGroup');
+      const sunCore = document.getElementById('sunCore');
+      const path = document.getElementById('sunPath');
+      if(!sunGroup || !sunCore || !path) return;
+      if(sunGroup._animRunning) return;
+      sunGroup._animRunning = true;
+      sunCount++; cntSun.textContent = sunCount;
+      sunCore.animate([
+        { fill: '#ffde59' },
+        { fill: '#ff9a00' },
+        { fill: '#ff3300' },
+        { fill: '#ff9a00' },
+        { fill: '#ffde59' }
+      ], { duration: 2200 });
+
+      const len = path.getTotalLength();
+      const duration = 2200;
+      const start = performance.now();
+      const baseTransform = sunGroup.getAttribute('transform') || 'translate(0,0)';
+      const m = /translate\(([-0-9.]+),\s*([-0-9.]+)\)/.exec(baseTransform);
+      const baseX = m ? parseFloat(m[1]) : 0;
+      const baseY = m ? parseFloat(m[2]) : 0;
+
+      function step(now){
+        const t = Math.min(1, (now - start)/duration);
+        const p = path.getPointAtLength(t * len);
+        sunGroup.setAttribute('transform', `translate(${(baseX + p.x).toFixed(2)},${(baseY + p.y).toFixed(2)})`);
+        if(t < 1) requestAnimationFrame(step);
+        else { sunGroup._animRunning = false; }
+      }
+      requestAnimationFrame(step);
+    }
+
+    (function(){
+      const btnBoat = document.getElementById('btnBoat');
+      const btnFish = document.getElementById('btnFish');
+      const btnSun = document.getElementById('btnSun');
+      const fish = document.getElementById('fish');
+      if(btnBoat) btnBoat.addEventListener('click', moveBoat);
+      if(btnFish) btnFish.addEventListener('click', fishJump);
+      if(btnSun) btnSun.addEventListener('click', sunToggle);
+      if(fish) fish.addEventListener('mouseenter', fishJump);
+    })();
+  </script>
+
+</body>
+</html>

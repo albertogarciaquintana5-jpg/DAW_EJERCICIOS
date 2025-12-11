@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Ejercicios filtros SVG (3-9)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; padding:20px; background:#fff; color:#111; }
+  h1 { font-size:18px; }
+  section { margin-bottom:28px; border-bottom:1px solid #eee; padding-bottom:18px; }
+  svg { display:block; max-width:900px; width:100%; height:auto; background:transparent; margin:8px 0 16px; }
+  .label { color:#555; font-size:13px; margin-top:-6px; }
+</style>
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="blurShadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feOffset in="SourceAlpha" dx="6" dy="8" result="off" />
+        <feGaussianBlur in="off" stdDeviation="10" result="blurOff" />
+        <feColorMatrix in="blurOff" type="matrix"
+          values="0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0.5" result="shadowGray"/>
+        <feMerge>
+          <feMergeNode in="shadowGray"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+
+      <filter id="irregularBlur" x="-60%" y="-60%" width="220%" height="220%">
+        <feTurbulence baseFrequency="0.015" numOctaves="3" seed="7" result="turb"/>
+        <feDisplacementMap in="SourceGraphic" in2="turb" scale="24" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+        <feGaussianBlur in="displaced" stdDeviation="10" result="blurred"/>
+        <feComposite in="blurred" in2="SourceGraphic" operator="over" />
+      </filter>
+
+      <filter id="softDrop" x="-50%" y="-50%" width="200%" height="200%">
+        <feOffset in="SourceAlpha" dx="4" dy="6" result="o1"/>
+        <feGaussianBlur in="o1" stdDeviation="8" result="b1"/>
+        <feColorMatrix in="b1" type="matrix"
+          values="0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0.45" result="scolor"/>
+        <feMerge>
+          <feMergeNode in="scolor"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <!-- Ej.5: varias variantes de turbulencia -->
+      <filter id="turbo_low" x="-50%" y="-50%" width="200%" height="200%">
+        <feTurbulence baseFrequency="0.01" numOctaves="1" seed="2" stitchTiles="stitch" result="t1"/>
+        <feDiffuseLighting in="t1" surfaceScale="4" diffuseConstant="0.9" lighting-color="#fff" result="lit">
+          <feDistantLight azimuth="45" elevation="50"/>
+        </feDiffuseLighting>
+      </filter>
+
+      <filter id="turbo_mid" x="-50%" y="-50%" width="200%" height="200%">
+        <feTurbulence baseFrequency="0.05" numOctaves="2" seed="12" stitchTiles="noStitch" result="t2"/>
+        <feColorMatrix in="t2" type="saturate" values="0.4" result="s2"/>
+        <feBlend in="SourceGraphic" in2="s2" mode="multiply"/>
+      </filter>
+
+      <filter id="turbo_high" x="-50%" y="-50%" width="200%" height="200%">
+        <feTurbulence baseFrequency="0.12" numOctaves="4" seed="21" stitchTiles="stitch" result="t3"/>
+        <feDisplacementMap in="SourceGraphic" in2="t3" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+
+      <!-- Ej.6: combinación de filtro (irregular + turbulencia + blur + sombra)
+           agrupa primitivos para que actúen en cadena -->
+      <filter id="combo_irregular_turb" x="-80%" y="-80%" width="260%" height="260%">
+        <!-- turb para textura -->
+        <feTurbulence baseFrequency="0.02" numOctaves="3" seed="99" result="comboTurb"/>
+        <!-- desplazar la gráfica sobre la turb -->
+        <feDisplacementMap in="SourceGraphic" in2="comboTurb" scale="28" xChannelSelector="R" yChannelSelector="G" result="comboDisp"/>
+        <!-- blur pronunciado -->
+        <feGaussianBlur in="comboDisp" stdDeviation="8" result="comboBlur"/>
+        <!-- sombra extra (offset + blur) -->
+        <feOffset in="comboBlur" dx="10" dy="12" result="comboOff"/>
+        <feGaussianBlur in="comboOff" stdDeviation="10" result="comboOffBlur"/>
+        <feColorMatrix in="comboOffBlur" type="matrix"
+          values="0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0.45" result="comboShadow"/>
+        <!-- Merge: sombra + grafico original -->
+        <feMerge>
+          <feMergeNode in="comboShadow"/>
+          <feMergeNode in="comboBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <!-- Ej.7: sombras dobles más suaves (dos capas de sombra) -->
+      <filter id="doubleSoftShadow" x="-80%" y="-80%" width="260%" height="260%">
+        <!-- sombra profunda -->
+        <feOffset in="SourceAlpha" dx="12" dy="14" result="off1"/>
+        <feGaussianBlur in="off1" stdDeviation="12" result="b1"/>
+        <feColorMatrix in="b1" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.28" result="s1"/>
+
+        <!-- sombra más cercana -->
+        <feOffset in="SourceAlpha" dx="6" dy="7" result="off2"/>
+        <feGaussianBlur in="off2" stdDeviation="6" result="b2"/>
+        <feColorMatrix in="b2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.45" result="s2"/>
+
+        <!-- Fusionar sombras y gráfico -->
+        <feMerge>
+          <feMergeNode in="s1"/>
+          <feMergeNode in="s2"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+    </defs>
+  </svg>
+
+  <!-- ================ EJERCICIO 2 ================= -->
+  <section>
+    <h2>Ejercicio 2 — Elipse irregular con blur (stdDeviation = 10)</h2>
+
+    <svg viewBox="0 0 420 140" width="700" height="240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elipse irregular con blur">
+      <!-- fondo para comparar -->
+      <rect x="0" y="0" width="420" height="140" fill="#f6f6f6"/>
+      <!-- elipse base (roja) con filtro irregularBlur -->
+      <ellipse cx="150" cy="70" rx="120" ry="60" fill="#e03b3b" filter="url(#irregularBlur)" />
+      <text x="20" y="20" font-size="12" fill="#333">Elipse irregular (desplazada) + blur 10</text>
+    </svg>
+  </section>
+
+  <!-- ================ EJERCICIO 3 ================= -->
+  <section>
+    <h2>Ejercicio 3 — Rectángulo rojo con sombra blur (misma idea)</h2>
+
+    <svg viewBox="0 0 420 140" width="700" height="240" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="20" width="200" height="90" rx="8" fill="#d83b3b" filter="url(#blurShadow)"/>
+      <text x="240" y="60" font-size="13" fill="#333">Rectángulo rojo con sombra/blur aplicada</text>
+    </svg>
+  </section>
+
+  <!-- ================ EJERCICIO 4 ================= -->
+  <section>
+    <h2>Ejercicio 4 — Imagen de superhéroe (vuela izquierda→derecha)</h2>
+
+    <svg viewBox="0 0 900 140" width="900" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet">
+      <rect width="100%" height="100%" fill="#eef7ff"/>
+      <!-- pista (path) por donde volará -->
+      <path id="flightPath" d="M -80 100 C 120 0, 380 0, 980 100" fill="none" stroke="transparent"/>
+
+      <!-- Grupo con superhéroe SVG (dibujado inline para no depender de recursos externos) -->
+      <g id="hero" transform="translate(-120,0)" filter="url(#softDrop)">
+        <!-- cuerpo/torso -->
+        <g transform="translate(0,0) scale(1.0)">
+          <ellipse cx="0" cy="0" rx="16" ry="26" fill="#0b5" transform="translate(0,38)"/>
+          <!-- cabeza -->
+          <circle cx="0" cy="0" r="10" fill="#ffdca3" transform="translate(0,18)"/>
+          <!-- capa -->
+          <path d="M-12,40 C -50,20 -60,70 -12,60 z" fill="#c62828" opacity="0.95"/>
+          <!-- logo simple -->
+          <ellipse cx="0" cy="34" rx="8" ry="6" fill="#ffd700"/>
+          <text x="-5" y="38" font-size="8" font-weight="700" fill="#7a2b2b">S</text>
+        </g>
+      </g>
+
+      <!-- Animación: hacer que el grupo "hero" siga el path mediante animateMotion -->
+      <g>
+        <use href="#hero" id="movingHero" />
+        <animateMotion xlink:href="#movingHero" dur="6s" repeatCount="indefinite" rotate="auto">
+          <mpath xlink:href="#flightPath" />
+        </animateMotion>
+      </g>
+    </svg>
+  </section>
+
+  <!-- ================ EJERCICIO 5 ================= -->
+  <section>
+    <h2>Ejercicio 5 — Variantes de turbulencia</h2>
+
+    <svg viewBox="0 0 900 200" width="900" height="200" xmlns="http://www.w3.org/2000/svg">
+      <!-- fondo -->
+      <rect x="0" y="0" width="900" height="200" fill="#fff"/>
+
+      <!-- 1: baja frecuencia (suave) -->
+      <g transform="translate(20,20)">
+        <rect width="200" height="160" rx="10" fill="#b3d9ff" filter="url(#turbo_low)"/>
+        <text x="10" y="14" font-size="12" fill="#333">turbulence: baseFrequency=0.01, numOctaves=1</text>
+      </g>
+
+      <!-- 2: frecuencia media (textura) -->
+      <g transform="translate(240,20)">
+        <rect width="200" height="160" rx="10" fill="#ffd9b3" filter="url(#turbo_mid)"/>
+        <text x="10" y="14" font-size="12" fill="#333">baseFrequency=0.05, numOctaves=2</text>
+      </g>
+
+      <!-- 3: alta frecuencia + displacement -->
+      <g transform="translate(460,20)">
+        <rect width="200" height="160" rx="10" fill="#d9ffea" filter="url(#turbo_high)"/>
+        <text x="10" y="14" font-size="12" fill="#333">baseFrequency=0.12, numOctaves=4 (displacement)</text>
+      </g>
+    </svg>
+  </section>
+
+  <!-- ================ EJERCICIO 6 ================= -->
+  <section>
+    <h2>Ejercicio 6 — Combinar filtros (irregular + turbulencia + blur + sombra)</h2>
+
+    <svg viewBox="0 0 700 160" width="700" height="160" xmlns="http://www.w3.org/2000/svg">
+      <rect x="40" y="24" rx="14" ry="14" width="420" height="110" fill="#ff8a8a" filter="url(#combo_irregular_turb)"/>
+      <text x="480" y="48" font-size="13" fill="#333">Rectángulo con filtro combinado</text>
+    </svg>
+  </section>
+
+  <!-- ================ EJERCICIO 7 ================= -->
+  <section>
+    <h2>Ejercicio 7 — Sombras revisadas (doble sombra suave)</h2>
+
+    <svg viewBox="0 0 700 140" width="700" height="140" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="20" width="220" height="90" rx="10" fill="#4070ff" filter="url(#doubleSoftShadow)"/>
+      <text x="270" y="80" font-size="13" fill="#333">Rectángulo con doble sombra suave</text>
+    </svg>
+  </section>
+
+</body>
+</html>

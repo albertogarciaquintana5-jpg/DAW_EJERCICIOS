@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Práctica completa SVG — Ejercicios 1-9 + Ejemplos vídeo (sin iframe)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+  body{font-family:system-ui,Arial; padding:18px; background:#fff; color:#111;}
+  header{margin-bottom:12px}
+  section{border:1px solid #ddd; padding:12px; margin:12px 0; border-radius:8px;}
+  h2{margin:4px 0 10px;}
+  svg{display:block; background:#fafafa; margin:8px 0;}
+  .controls{margin-top:8px}
+  button,input[type=range]{margin-right:8px}
+  pre{background:#f7f7f7;padding:8px;overflow:auto}
+  .small{font-size:12px;color:#555}
+</style>
+</head>
+<body>
+<header>
+  <h1>Práctica SVG — Documento completo</h1>
+  <p class="small">Incluye: Ejercicios SVG y ejemplos del vídeo (texto degradado, máscaras y modificaciones). Vídeo embebido eliminado.</p>
+</header>
+
+<section id="video-examples">
+  <h2>Parte B — Ejemplos del vídeo y modificaciones</h2>
+
+  <!-- Video example 1: Texto degradado estilo "Carmen" -->
+  <h3>Vídeo ejemplo 1 — Texto degradado con animación (usa gradiente y filtro)</h3>
+  <svg width="760" height="160" viewBox="0 0 760 160">
+    <defs>
+      <!-- degradado multicolor -->
+      <linearGradient id="lg1" x1="0" x2="1">
+        <stop offset="0%" stop-color="#ff4d4d"/>
+        <stop offset="25%" stop-color="#ffcd3c"/>
+        <stop offset="50%" stop-color="#5ee07a"/>
+        <stop offset="75%" stop-color="#4db8ff"/>
+        <stop offset="100%" stop-color="#b06bff"/>
+      </linearGradient>
+      <!-- desenfoque suave para brillo -->
+      <filter id="glow"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+
+    <!-- fondo oscuro para contraste -->
+    <rect width="100%" height="100%" fill="#0b0b0b"/>
+    <!-- texto grande con gradiente y sombra -->
+    <text id="t-deg" x="380" y="100" text-anchor="middle" font-family="cursive, 'Brush Script MT', serif" font-size="80" font-weight="700"
+          fill="url(#lg1)" style="filter:url(#glow);">
+      Carmen
+      <!-- ligera oscilación en Y para movimiento suave -->
+      <animateTransform attributeName="transform" type="translate" values="0 0; 0 -6; 0 0" dur="3.2s" repeatCount="indefinite"/>
+      <!-- rotación lenta para dar dinamismo (puedes ajustar) -->
+      <animateTransform attributeName="transform" type="rotate" from="0 380 80" to="4 380 80" dur="6s" additive="sum" repeatCount="indefinite"/>
+    </text>
+  </svg>
+  <div class="small">Ejemplo inspirado en el vídeo (texto multicolor degradado + movimiento). Modifica "Carmen" por tu nombre si quieres.</div>
+
+  <!-- Vídeo ejemplo 2: Texto degradado con tu nombre (control de rotación frecuencia) -->
+  <h3>Vídeo ejemplo 2 — Texto degradado con TU NOMBRE y control de frecuencia de giro</h3>
+  <label class="small">Introduce tu nombre: <input id="nameInput" value="TuNombre" /></label>
+  <label class="small" style="margin-left:12px">Velocidad giro: <input id="spinRange" type="range" min="0.5" max="8" step="0.1" value="6"/></label>
+
+  <svg id="svg-name" width="760" height="160" viewBox="0 0 760 160" style="border:1px solid #eee">
+    <defs>
+      <linearGradient id="lg-name" x1="0" x2="1">
+        <stop offset="0%" stop-color="#ff5a5a"/>
+        <stop offset="45%" stop-color="#ffde59"/>
+        <stop offset="100%" stop-color="#5ad8a6"/>
+      </linearGradient>
+    </defs>
+
+    <rect width="100%" height="100%" fill="#121212"/>
+    <text id="nameText" x="380" y="95" text-anchor="middle" font-family="'Montserrat', 'Arial', sans-serif" font-size="72" font-weight="800"
+          fill="url(#lg-name)" style="letter-spacing:2px">
+      TuNombre
+    </text>
+
+    <!-- rotación SMIL que usaremos para controlar la velocidad -->
+    <animateTransform id="name-rotate" xlink:href="#nameText" attributeName="transform"
+                      type="rotate" from="0 380 80" to="360 380 80" dur="6s" begin="indefinite" repeatCount="indefinite"/>
+  </svg>
+
+  <div class="controls">
+    <button onclick="startNameSpin()">Iniciar giro</button>
+    <button onclick="stopNameSpin()">Parar giro</button>
+  </div>
+
+  <!-- Vídeo ejemplo 3: SVG con máscara triangular que recorta la imagen -->
+  <h3>Vídeo ejemplo 3 — Imagen recortada por un triángulo (clippath)</h3>
+  <svg width="520" height="300" viewBox="0 0 520 300" style="border:1px solid #eee">
+    <defs>
+      <clipPath id="triClip" clipPathUnits="userSpaceOnUse">
+        <!-- triángulo -->
+        <polygon points="260,10 490,290 30,290"/>
+      </clipPath>
+    </defs>
+
+    <!-- una imagen de ejemplo (usamos img externa) -->
+    <image xlink:href="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60"
+           x="0" y="0" width="520" height="300" preserveAspectRatio="xMidYMid slice" clip-path="url(#triClip)"/>
+    <rect x="0" y="0" width="520" height="300" fill="none" stroke="#ddd" stroke-width="0.6"/>
+  </svg>
+  <div class="small">Se ha sustituido el recorte circular por un triángulo; cambia la URL de la imagen si necesitas otra.</div>
+
+  <!-- Vídeo ejemplo 4: Texto grande "MARINO" -> sustituido por nombre y font -->
+  <h3>Vídeo ejemplo 4 — Texto grande (cambia tipo de letra y nombre)</h3>
+  <label class="small">Escribe el texto: <input id="bigName" value="MARINO" /></label>
+  <label class="small" style="margin-left:12px">Elige fuente (si tu sistema no la tiene se usará fallback): <input id="fontInput" value="'Arial Black'" /></label>
+
+  <svg id="svg-big" width="760" height="120" viewBox="0 0 760 120">
+    <rect width="100%" height="100%" fill="#fff"/>
+    <text id="bigText" x="380" y="82" text-anchor="middle" font-size="82" font-family="'Arial Black', Impact, sans-serif" fill="#1f7fa8">
+      MARINO
+    </text>
+  </svg>
+  <div class="controls">
+    <button onclick="applyBigText()">Aplicar</button>
+  </div>
+
+  <!-- Vídeo ejemplo 5: cambiar clip circular por rectángulo y texto dentro -->
+  <h3>Vídeo ejemplo 5 — Imagen dentro de máscara circular, luego cambiamos a rectángulo</h3>
+  <svg id="clip-example" width="520" height="260" viewBox="0 0 520 260" style="border:1px solid #eee">
+    <defs>
+      <!-- especificamos userSpaceOnUse para que las coordenadas del circle y rect se interpreten en px -->
+      <clipPath id="circleClip" clipPathUnits="userSpaceOnUse">
+        <circle cx="260" cy="130" r="100"/>
+      </clipPath>
+      <clipPath id="rectClip" clipPathUnits="userSpaceOnUse">
+        <rect x="130" y="30" width="260" height="200" rx="20"/>
+      </clipPath>
+    </defs>
+
+    <image id="imgClip" xlink:href="https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=800&q=60"
+           x="0" y="0" width="520" height="260" preserveAspectRatio="xMidYMid slice" clip-path="url(#circleClip)"/>
+    <text x="400" y="200" fill="#fff">por la pantalla...</text>
+  </svg>
+  <div class="controls">
+    <button onclick="useRectMask()">Cambiar a rectángulo</button>
+    <button onclick="useCircleMask()">Volver a círculo</button>
+  </div>
+
+</section>
+
+<!-- =========================
+  Scripts para interacción (parte B)
+  ========================= -->
+<script>
+  // ===== Parte B: name spin control =====
+  const nameInput = document.getElementById('nameInput');
+  const nameText = document.getElementById('nameText');
+  const nameRotate = document.getElementById('name-rotate');
+  const spinRange = document.getElementById('spinRange');
+
+  // reflect name input immediately
+  nameInput.addEventListener('input', ()=> nameText.textContent = nameInput.value || 'TuNombre');
+
+  function startNameSpin(){
+    const sec = parseFloat(spinRange.value);
+    try { nameRotate.endElement(); } catch(e){}
+    nameRotate.setAttribute('dur', sec + 's');
+    nameRotate.beginElement();
+  }
+  function stopNameSpin(){
+    try { nameRotate.endElement(); } catch(e){}
+  }
+
+  // ===== big text apply =====
+  function applyBigText(){
+    const txt = document.getElementById('bigName').value || 'MARINO';
+    const font = document.getElementById('fontInput').value || "'Arial Black'";
+    const bigText = document.getElementById('bigText');
+    bigText.textContent = txt;
+    bigText.setAttribute('font-family', font);
+  }
+
+  // ===== clip example toggles =====
+  const imgClip = document.getElementById('imgClip');
+  function useRectMask(){
+    imgClip.setAttribute('clip-path','url(#rectClip)');
+    // opcional: cambiar texto u otra cosa al cambiar máscara
+  }
+  function useCircleMask(){
+    imgClip.setAttribute('clip-path','url(#circleClip)');
+  }
+
+  // inicializar valores UI
+  document.getElementById('nameText').textContent = nameInput.value;
+  document.getElementById('bigText').textContent = document.getElementById('bigName').value;
+</script>
+
+</body>
+</html>

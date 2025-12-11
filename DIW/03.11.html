@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Práctica SVG extendida (Ejercicios 1-9)</title>
+<style>
+  body { font-family: system-ui, Arial; padding: 18px; line-height: 1.4; }
+  section { border: 1px solid #ddd; padding: 12px; margin: 12px 0; border-radius: 6px; }
+  h2 { margin: 6px 0 10px; }
+  svg { display: block; background: #fafafa; margin: 8px 0; }
+  .small { font-size: 12px; color: #444; }
+  .controls { margin-top:6px; }
+  button { margin-right:6px; }
+</style>
+</head>
+<body>
+
+<h1>Práctica SVG extendida — Ejercicios 1 a 9</h1>
+
+<!-- =========================
+     Ejercicio 1
+     Crear cada uno de los ejemplos que aparecen en la práctica:
+     cuadrado, triángulo, círculo (se muestra simple)
+     ========================= -->
+<section>
+  <h2>Ejercicio 1 — Figuras básicas</h2>
+  <svg width="420" height="140" viewBox="0 0 420 140">
+    <!-- Cuadrado -->
+    <rect x="10" y="20" width="80" height="80" fill="#7fb3ff" stroke="#2c6fb1" rx="4"/>
+    <!-- Triángulo -->
+    <polygon points="160,20 210,100 110,100" fill="#ffb366" stroke="#c86b1a"/>
+    <!-- Círculo -->
+    <circle cx="320" cy="60" r="40" fill="#ff5a5a" stroke="#b02b2b"/>
+  </svg>
+  <div class="small">Cuadrado, triángulo y círculo simples.</div>
+</section>
+
+<!-- =========================
+     Ejercicio 2
+     1 ellipse con los mismos focos y al pulsar intercambie rx y ry (animación)
+     Implementación: dos <animate> que animan rx y ry; se disparan por JS al click
+     ========================= -->
+<section>
+  <h2>Ejercicio 2 — Elipse que intercambia rx y ry al pulsar</h2>
+
+  <svg id="svg-e2" width="420" height="160" viewBox="0 0 420 160">
+    <!-- Dibujamos la elipse y sus focos (focos ilustrativos) -->
+    <ellipse id="e2-ellipse" cx="210" cy="80" rx="90" ry="40" fill="#cfe8c6" stroke="#2e8a3a"/>
+    <circle cx="210-20" cy="80" r="2" fill="#333" /> <!-- placeholder no operativa -->
+    <!-- Animaciones definidas (no auto-inician) -->
+    <animate id="e2-anim-rx" xlink:href="#e2-ellipse" attributeName="rx"
+             from="90" to="40" dur="600ms" fill="freeze" begin="indefinite"/>
+    <animate id="e2-anim-ry" xlink:href="#e2-ellipse" attributeName="ry"
+             from="40" to="90" dur="600ms" fill="freeze" begin="indefinite"/>
+  </svg>
+
+  <div class="controls">
+    <button onclick="swapEllipseE2()">Pulsar / Intercambiar rx ↔ ry (anim.)</button>
+    <button onclick="resetEllipseE2()">Reset</button>
+  </div>
+
+  <script>
+    // Ej2: al pulsar iniciamos las animaciones que intercambian rx y ry
+    const animRX = document.getElementById('e2-anim-rx');
+    const animRY = document.getElementById('e2-anim-ry');
+    const ellipseE2 = document.getElementById('e2-ellipse');
+
+    function swapEllipseE2(){
+      // leemos valores actuales para poder hacer un swap dinámico
+      const rx = parseFloat(ellipseE2.getAttribute('rx'));
+      const ry = parseFloat(ellipseE2.getAttribute('ry'));
+      // actualizamos las animaciones para animar a los valores opuestos
+      animRX.setAttribute('from', rx);
+      animRX.setAttribute('to', ry);
+      animRY.setAttribute('from', ry);
+      animRY.setAttribute('to', rx);
+      // iniciar ambas animaciones simultáneamente
+      animRX.beginElement();
+      animRY.beginElement();
+      // al acabar, swap permanente (freeze ya lo hace); pero también actualizamos atributos finales
+      setTimeout(()=>{ ellipseE2.setAttribute('rx', ry); ellipseE2.setAttribute('ry', rx); }, 700);
+    }
+
+    function resetEllipseE2(){
+      ellipseE2.setAttribute('rx', 90);
+      ellipseE2.setAttribute('ry', 40);
+    }
+  </script>
+</section>
+
+<!-- =========================
+     Ejercicio 2bis
+     5 ellipses con mismos focos; al pulsar cada una crecen de manera diferente
+     ========================= -->
+<section>
+  <h2>Ejercicio 2bis — 5 elipses, cada una crece diferente al pulsar</h2>
+
+  <svg width="760" height="180" viewBox="0 0 760 180">
+    <!-- cinco elipses en fila; cada una tiene un animate en rx/ry con distinto dur/valores -->
+    <g transform="translate(40,20)">
+      <ellipse id="eb1" cx="0" cy="40" rx="40" ry="20" fill="#f2d7d5" stroke="#c1392b"/>
+      <animate xlink:href="#eb1" attributeName="rx" begin="eb1.click" dur="800ms" fill="freeze" from="40" to="70"/>
+      <animate xlink:href="#eb1" attributeName="ry" begin="eb1.click" dur="800ms" fill="freeze" from="20" to="35"/>
+    </g>
+
+    <g transform="translate(160,20)">
+      <ellipse id="eb2" cx="0" cy="40" rx="40" ry="20" fill="#d6eaf8" stroke="#2a68b0"/>
+      <animate xlink:href="#eb2" attributeName="rx" begin="eb2.click" dur="400ms" fill="freeze" from="40" to="100"/>
+      <animate xlink:href="#eb2" attributeName="ry" begin="eb2.click" dur="400ms" fill="freeze" from="20" to="30"/>
+    </g>
+
+    <g transform="translate(320,20)">
+      <ellipse id="eb3" cx="0" cy="40" rx="30" ry="18" fill="#e8f6d4" stroke="#4b9b2f"/>
+      <animate xlink:href="#eb3" attributeName="rx" begin="eb3.click" dur="1200ms" fill="freeze" values="30;60;45"/>
+      <animate xlink:href="#eb3" attributeName="ry" begin="eb3.click" dur="1200ms" fill="freeze" values="18;35;18"/>
+    </g>
+
+    <g transform="translate(480,20)">
+      <ellipse id="eb4" cx="0" cy="40" rx="35" ry="18" fill="#fdebd0" stroke="#d0892f"/>
+      <animate xlink:href="#eb4" attributeName="rx" begin="eb4.click" dur="700ms" fill="freeze" from="35" to="20"/>
+      <animate xlink:href="#eb4" attributeName="ry" begin="eb4.click" dur="700ms" fill="freeze" from="18" to="45"/>
+    </g>
+
+    <g transform="translate(640,20)">
+      <ellipse id="eb5" cx="0" cy="40" rx="38" ry="20" fill="#f0d9ff" stroke="#7a33b8"/>
+      <animate xlink:href="#eb5" attributeName="rx" begin="eb5.click" dur="900ms" fill="freeze" from="38" to="70"/>
+      <animate xlink:href="#eb5" attributeName="ry" begin="eb5.click" dur="900ms" fill="freeze" from="20" to="30"/>
+    </g>
+
+    <text x="10" y="10" font-size="12">Pulsa cualquier elipse para ver su animación de crecimiento (cada una distinta).</text>
+  </svg>
+</section>
+
+<!-- =========================
+     Ejercicio 3
+     Modifica el anterior svg para que al pasar el ratón encima de cada forma se mueva hacia la izquierda
+     Uso de animateTransform begin="mouseover" end="mouseout"
+     ========================= -->
+<section>
+  <h2>Ejercicio 3 — Hover: mover a la izquierda</h2>
+
+  <svg width="640" height="120" viewBox="0 0 640 120">
+    <!-- Repetimos 4 formas; al hover se moverán a la izquierda -->
+    <g transform="translate(40,20)">
+      <rect x="0" y="0" width="80" height="60" rx="6" fill="#9ad3bc" id="r3-1"/>
+      <animateTransform xlink:href="#r3-1" attributeName="transform" type="translate"
+                        from="0 0" to="-50 0" dur="300ms" begin="r3-1.mouseover" end="r3-1.mouseout" fill="freeze"/>
+    </g>
+
+    <g transform="translate(180,20)">
+      <circle id="r3-2" cx="40" cy="30" r="30" fill="#ffd79a"/>
+      <animateTransform xlink:href="#r3-2" attributeName="transform" type="translate"
+                        from="0 0" to="-60 0" dur="400ms" begin="r3-2.mouseover" end="r3-2.mouseout" fill="freeze"/>
+    </g>
+
+    <g transform="translate(320,20)">
+      <ellipse id="r3-3" cx="0" cy="30" rx="50" ry="22" fill="#f7c6c5"/>
+      <animateTransform xlink:href="#r3-3" attributeName="transform" type="translate"
+                        from="0 0" to="-40 0" dur="250ms" begin="r3-3.mouseover" end="r3-3.mouseout" fill="freeze"/>
+    </g>
+
+    <g transform="translate(480,20)">
+      <polygon id="r3-4" points="0,60 30,0 60,60" fill="#d7d9ff"/>
+      <animateTransform xlink:href="#r3-4" attributeName="transform" type="translate"
+                        from="0 0" to="-80 0" dur="500ms" begin="r3-4.mouseover" end="r3-4.mouseout" fill="freeze"/>
+    </g>
+
+    <text x="10" y="10" font-size="12">Pasa el ratón por encima para mover cada forma hacia la izquierda (vuelve al salir).</text>
+  </svg>
+</section>
+
+<!-- =========================
+     Ejercicio 4
+     Al hacer click, cada forma rote sobre sí misma
+     Usamos animateTransform type="rotate" begin="click"
+     ========================= -->
+<section>
+  <h2>Ejercicio 4 — Click: rotar sobre sí misma</h2>
+
+  <svg width="640" height="140" viewBox="0 0 640 140">
+    <!-- rect -->
+    <g transform="translate(60,20)">
+      <rect id="rot1" x="-40" y="-30" width="80" height="60" fill="#87cefa" stroke="#2a7bb0"/>
+      <animateTransform xlink:href="#rot1" attributeName="transform"
+                        type="rotate" from="0 -0 0" to="360 -0 0" dur="900ms"
+                        begin="rot1.click" fill="freeze"/>
+    </g>
+
+    <!-- circle -->
+    <g transform="translate(240,50)">
+      <circle id="rot2" cx="0" cy="0" r="32" fill="#ffb3b3"/>
+      <animateTransform xlink:href="#rot2" attributeName="transform"
+                        type="rotate" from="0 0 0" to="360 0 0" dur="700ms"
+                        begin="rot2.click" fill="freeze"/>
+    </g>
+
+    <!-- polygon -->
+    <g transform="translate(420,60)">
+      <polygon id="rot3" points="0,-40 35,20 -35,20" fill="#ffd3a5"/>
+      <animateTransform xlink:href="#rot3" attributeName="transform"
+                        type="rotate" from="0 0 0" to="360 0 0" dur="1s"
+                        begin="rot3.click" fill="freeze"/>
+    </g>
+
+    <text x="10" y="14" font-size="12">Pulsa en cada forma para que rote sobre su propio centro.</text>
+  </svg>
+</section>
+
+<!-- =========================
+     Ejercicio 5
+     4 círculos que comienzan a moverse en tiempos 0s, 2s, 4s, 6s. Usar begin/end y ocultarlos con <set>
+     ========================= -->
+<section>
+  <h2>Ejercicio 5 — 4 círculos que empiezan a moverse en 0s,2s,4s,6s y se ocultan</h2>
+
+  <svg width="720" height="100" viewBox="0 0 720 100">
+    <!-- definimos mismo path sencillo para que se muevan horizontalmente -->
+    <defs>
+      <path id="path-move" d="M 40 70 L 640 70" />
+    </defs>
+
+    <!-- Círculo A: comienza en 0s, dura 2s -->
+    <circle cx="40" cy="70" r="12" fill="#ff8a8a" id="cA">
+      <animateMotion id="moveA" begin="0s" dur="2s" fill="freeze" path="M0,0 L260,0"/>
+      <!-- ocultar al final (por ejemplo a los 4s) -->
+      <set attributeName="visibility" to="hidden" begin="4s" />
+    </circle>
+
+    <!-- Círculo B: comienza en 2s -->
+    <circle cx="40" cy="70" r="12" fill="#ffd36b" id="cB">
+      <animateMotion id="moveB" begin="2s" dur="2s" fill="freeze" path="M0,0 L260,0"/>
+      <set attributeName="visibility" to="hidden" begin="6s" />
+    </circle>
+
+    <!-- Círculo C: comienza en 4s -->
+    <circle cx="40" cy="70" r="12" fill="#9fe6a0" id="cC">
+      <animateMotion id="moveC" begin="4s" dur="2s" fill="freeze" path="M0,0 L260,0"/>
+      <set attributeName="visibility" to="hidden" begin="8s" />
+    </circle>
+
+    <!-- Círculo D: comienza en 6s -->
+    <circle cx="40" cy="70" r="12" fill="#b7d0ff" id="cD">
+      <animateMotion id="moveD" begin="6s" dur="2s" fill="freeze" path="M0,0 L260,0"/>
+      <set attributeName="visibility" to="hidden" begin="10s" />
+    </circle>
+
+    <text x="10" y="20" font-size="12">Los círculos comienzan en 0s, 2s, 4s y 6s y se ocultan después.</text>
+  </svg>
+</section>
+
+<!-- =========================
+     Ejercicio 6
+     Rectángulo con JS: al pulsar se pone medio transparente y salta un alert
+     ========================= -->
+<section>
+  <h2>Ejercicio 6 — Rectángulo con JavaScript (opacity + alert)</h2>
+
+  <svg id="svg-e6" width="420" height="120" viewBox="0 0 420 120">
+    <rect id="rect-e6" x="60" y="20" width="300" height="80" rx="8" fill="#58c4a3" stroke="#2b8a63" style="cursor:pointer"/>
+    <text x="210" y="65" font-size="18" text-anchor="middle" fill="#fff" pointer-events="none">Púlsame</text>
+  </svg>
+
+  <script>
+    document.getElementById('rect-e6').addEventListener('click', function(ev){
+      // medio transparente:
+      this.style.opacity = 0.5;
+      alert('Has pulsado el rectángulo — ahora está medio transparente');
+    });
+  </script>
+</section>
+
+<!-- =========================
+     Ejercicio 7
+     2 rectángulos (verde y morado) y un texto en medio que al pulsar se mueve girando sobre sí mismo
+     Implementación: texto en <g> que recibe animateMotion + rotate al hacer click
+     ========================= -->
+<section>
+  <h2>Ejercicio 7 — Dos rectángulos y texto que se mueve girando al pulsar</h2>
+
+  <svg width="640" height="180" viewBox="0 0 640 180">
+    <!-- Dos rectángulos -->
+    <rect x="40" y="30" width="240" height="120" fill="#6fcf97" rx="8"/>
+    <rect x="360" y="30" width="240" height="120" fill="#9b73d6" rx="8"/>
+
+    <!-- Texto entre ambos, dentro de un grupo para aplicar transform y animaciones -->
+    <g id="g-text" transform="translate(320,90)" style="cursor:pointer">
+      <text id="text7" x="0" y="6" text-anchor="middle" font-size="20" fill="#fff" font-weight="700">Pulsa aquí</text>
+
+      <!-- Animación de movimiento (se definirá y se disparará al click por el begin="text7.click") -->
+      <animateMotion id="t7-motion" xlink:href="#g-text" begin="text7.click" dur="1200ms" fill="freeze"
+                     path="M0,0 L-120,-20 L0,0"/>
+      <!-- Rotación sobre su propio centro -->
+      <animateTransform id="t7-rotate" xlink:href="#g-text" attributeName="transform"
+                        type="rotate" from="0 0 0" to="360 0 0" dur="1200ms" begin="text7.click" fill="freeze"/>
+    </g>
+
+    <text x="10" y="18" font-size="12">Pulsa el texto para verlo moverse y girar (sobre sí mismo).</text>
+  </svg>
+</section>
+
+<!-- =========================
+     Ejercicio 8
+     Usar path (se proporciona ejemplo), modificar ejemplo de la pelota para que la siga.
+     Iniciar al hacer click y parar al hacer doble click.
+     Implementación: animateMotion invocado por JS: beginElement() en click, endElement() en dblclick
+     ========================= -->
+<section>
+  <h2>Ejercicio 8 — Pelota que sigue ruta chula; start click / stop dblclick</h2>
+
+  <svg id="svg-e8" width="560" height="220" viewBox="-30 -40 260 220" style="border:1px dashed #ddd">
+    <!-- Ruta proporcionada en la consigna (un ejemplo curvado) -->
+    <path id="ruta-chula" d="M -3 -7 C -2 -9 3 -11 6 -6 C 9 0 6 4 -8 -2 C -20 -11 -4.6667 -13.3333 -2 -16 C 9 -21 11 -13 17 1"
+          transform="translate(100,100) scale(6)" fill="none" stroke="#333" stroke-width="1.5"/>
+
+    <!-- Pelota -->
+    <circle id="ball" r="6" fill="#ff6b6b" transform="translate(40,100)"></circle>
+
+    <!-- animateMotion sin begin (se iniciará por JS) -->
+    <animateMotion id="ball-motion" xlink:href="#ball" dur="4s" fill="freeze" rotate="auto">
+      <mpath xlink:href="#ruta-chula"/>
+    </animateMotion>
+
+    <text x="-20" y="-10" font-size="12">Click sobre la pelota para iniciar. Double-click para parar (terminar).</text>
+  </svg>
+
+  <script>
+    const ballMotion = document.getElementById('ball-motion');
+    const ball = document.getElementById('ball');
+
+    // Cuando se hace click: comienza el movimiento
+    ball.addEventListener('click', ev => {
+      // invoca el begin de la animación
+      try { ballMotion.beginElement(); } catch(e){ console.warn(e); }
+    });
+
+    // Cuando se hace dblclick: terminamos la animación (endElement)
+    ball.addEventListener('dblclick', ev => {
+      try { ballMotion.endElement(); } catch(e){ console.warn(e); }
+    });
+  </script>
+</section>
+
+<!-- =========================
+     Ejercicio 9
+     Modificar ejemplos 9,10,11 y tener controles de rotate, translate, skew en un mismo ejemplo
+     Aquí proveo una caja con botones para aplicar cada transformación (SMIL animations triggered)
+     ========================= -->
+<section>
+  <h2>Ejercicio 9 — Caja con controles: rotate, translate, skew</h2>
+
+  <svg width="520" height="220" viewBox="0 0 520 220">
+    <rect x="40" y="40" width="160" height="120" rx="12" fill="#f0f0f8" stroke="#666" id="box9" />
+
+    <!-- Animaciones predefinidas (no comienzan hasta que sean lanzadas por JS o por botones) -->
+    <!-- Translate -->
+    <animateTransform id="box9-translate" xlink:href="#box9" attributeName="transform"
+                      type="translate" from="0 0" to="180 0" dur="700ms" begin="indefinite" fill="freeze"/>
+
+    <!-- Rotate (sobre el centro de la caja ~ 120,100 en SVG coords) -->
+    <animateTransform id="box9-rotate" xlink:href="#box9" attributeName="transform"
+                      type="rotate" from="0 120 100" to="360 120 100" dur="900ms" begin="indefinite" fill="freeze"/>
+
+    <!-- SkewX: simulamos con matrix via animateTransform skewX si está soportado; usamos skewX -->
+    <animateTransform id="box9-skew" xlink:href="#box9" attributeName="transform"
+                      type="skewX" from="0" to="25" dur="600ms" begin="indefinite" fill="freeze"/>
+
+    <text x="40" y="20" font-size="12">Caja con controles: usa los botones para aplicar transformaciones</text>
+  </svg>
+
+  <div class="controls">
+    <button onclick="document.getElementById('box9-translate').beginElement()">Translate →</button>
+    <button onclick="document.getElementById('box9-rotate').beginElement()">Rotate</button>
+    <button onclick="document.getElementById('box9-skew').beginElement()">SkewX</button>
+    <button onclick="resetBox9()">Reset</button>
+  </div>
+
+  <script>
+    function resetBox9(){
+      // Para "resetear" quitamos transform y reiniciamos elementos (no hay api directa para resetear SMIL fill=freeze)
+      const box = document.getElementById('box9');
+      box.removeAttribute('transform');
+      // Re-crear las anims reponiendo el elemento (fácil forma de 'resetear' SMIL)
+      ['box9-translate','box9-rotate','box9-skew'].forEach(id=>{
+        const a = document.getElementById(id);
+        try { a.endElement(); } catch(e) {}
+      });
+    }
+  </script>
+</section>
+
+</body>
+</html>
