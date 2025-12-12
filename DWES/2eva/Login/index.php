@@ -65,15 +65,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="utf-8">
 <title>Login</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body { background: #e9eef3; }
+    .card { border-radius: 20px; }
+</style>
+
 </head>
 <body>
-<form id="loginForm" method="post" action="login.php" novalidate>
-  <label>Usuario: <input type="text" name="username" id="username" required></label><br>
-  <label>Contraseña: <input type="password" name="password" id="password" required></label><br>
-  <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-  <button type="submit">Entrar</button>
-</form>
+
+<div class="container d-flex justify-content-center align-items-center" style="height:100vh;">
+    <div class="card p-4 shadow-lg" style="width: 380px;">
+        <h3 class="text-center mb-3">Iniciar Sesión</h3>
+
+        <form id="loginForm" method="post" action="login.php" novalidate>
+            <div class="mb-3">
+                <label class="form-label">Usuario</label>
+                <input type="text" name="username" id="username" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+
+            <button class="btn btn-primary w-100 mt-2">Entrar</button>
+        </form>
+
+        <p class="text-center mt-3">
+            ¿No tienes cuenta?  
+            <a href="register.php" class="text-decoration-none">Registrarse</a>
+        </p>
+    </div>
+</div>
 
 <script src="validation.js"></script>
 </body>
 </html>
+

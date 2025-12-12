@@ -3,17 +3,22 @@ require_once 'db.php';
 session_start();
 
 function secure_session_start() {
-    $cookieParams = session_get_cookie_params();
-    $cookieLifetime = 0;
-    session_set_cookie_params([
-        'lifetime' => $cookieLifetime,
-        'path' => $cookieParams['path'],
-        'domain' => $cookieParams['domain'],
-        'secure' => isset($_SERVER['HTTPS']),
-        'httponly' => true,
-        'samesite' => 'Lax'
-    ]);
-    if(session_status() !== PHP_SESSION_ACTIVE) session_start();
+
+    if (session_status() === PHP_SESSION_NONE) {
+
+        $cookieParams = session_get_cookie_params();
+
+        session_set_cookie_params([
+            'lifetime' => 0,
+            'path' => $cookieParams['path'],
+            'domain' => $cookieParams['domain'],
+            'secure' => isset($_SERVER['HTTPS']),
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
+
+        session_start();
+    }
 }
 
 function generate_csrf_token() {
