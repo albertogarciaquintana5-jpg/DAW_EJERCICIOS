@@ -2,6 +2,23 @@ import sys
 from dataclasses import dataclass
 
 
+"""Agenda de contactos (Tarea 7)
+
+Programa interactivo en consola que mantiene un diccionario como
+agenda de contactos. Las claves del diccionario son los nombres en
+mayúsculas para permitir búsquedas case-insensitive. Cada contacto
+se representa mediante la clase `Persona`.
+
+Operaciones disponibles:
+- Listar contactos en orden alfabético
+- Añadir, modificar, eliminar contactos
+- Buscar por número de teléfono
+
+Nota: El programa está pensado como un ejemplo para practicar
+estructuras de datos y manejo de entrada por consola.
+"""
+
+
 @dataclass
 class Persona:
     nombre: str
@@ -13,6 +30,8 @@ class Persona:
 
 
 def mostrar_menu():
+    """Muestra el menú principal en pantalla."""
+
     print('\nMENÚ DE OPCIONES')
     print('a) Listado de contactos por orden alfabético')
     print('b) Añadir un nuevo contacto')
@@ -25,8 +44,14 @@ def mostrar_menu():
 def listar_alfabetico(dAgenda):
     """Muestra el listado ordenado alfabéticamente.
 
+    - `dAgenda` es un dict donde las claves son nombres en mayúsculas
+         y los valores son instancias de `Persona`.
+    - Se ordena por la clave en minúsculas para obtener un orden
+        alfabético independiente de acentos y mayúsculas/minúsculas.
+
     Formato por línea: Nombre: xxx Dirección: xxx Teléfono: xxx
     """
+
     if not dAgenda:
         print('(Listín vacío)')
         return
@@ -38,6 +63,14 @@ def listar_alfabetico(dAgenda):
 
 
 def anadir_contacto(dAgenda):
+    """Añade un nuevo contacto o actualiza el teléfono de uno existente.
+
+    - Solicita `nombre`, `direccion`, `telefono` por consola.
+    - Las búsquedas se hacen usando la clave `nombre.upper()` para
+        evitar distinciones por capitalización.
+    - Si el contacto ya existe ofrece reemplazar el teléfono.
+    """
+
     nombre = input('Nombre del contacto: ').strip()
     if not nombre:
         print('Nombre vacío. Operación cancelada.')
@@ -62,6 +95,12 @@ def anadir_contacto(dAgenda):
 
 
 def modificar_contacto(dAgenda):
+    """Modifica un contacto existente o lo inserta si no existe.
+
+    - Pide el nombre; si no existe ofrece insertar un nuevo contacto.
+    - Para mantener valores actuales deje la entrada en blanco.
+    """
+
     nombre = input('Nombre del contacto a modificar: ').strip()
     if not nombre:
         print('Nombre vacío. Operación cancelada.')
@@ -88,6 +127,12 @@ def modificar_contacto(dAgenda):
 
 
 def buscar_por_telefono(dAgenda):
+    """Busca un contacto por número de teléfono exacto.
+
+    - Devuelve todos los contactos cuya propiedad `telefono` coincida
+        exactamente con la cadena introducida.
+    """
+
     telefono = input('Introduce el número de teléfono a buscar: ').strip()
     encontrados = [p for p in dAgenda.values() if p.telefono == telefono]
     if encontrados:
@@ -98,6 +143,11 @@ def buscar_por_telefono(dAgenda):
 
 
 def eliminar_contacto(dAgenda):
+    """Elimina un contacto por nombre (case-insensitive).
+
+    - Usa `nombre.upper()` para localizar la clave en `dAgenda`.
+    """
+
     nombre = input('Nombre del contacto a eliminar: ').strip()
     if not nombre:
         print('Nombre vacío. Operación cancelada.')
@@ -111,10 +161,18 @@ def eliminar_contacto(dAgenda):
 
 
 def pausa():
+    """Pausa de consola para que el usuario pueda leer la salida."""
+
     input('\nPulsa ENTER para continuar...')
 
 
 def main():
+    """Bucle principal del programa que maneja las opciones del usuario.
+
+    - Mantiene `dAgenda` en memoria durante la ejecución.
+    - Se incluyen algunos contactos de ejemplo para facilitar pruebas.
+    """
+
     dAgenda = {}
 
     # Datos de ejemplo (opcional)
