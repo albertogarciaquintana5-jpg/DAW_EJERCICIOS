@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio1</title>
+
+    <style>
+        @font-face {
+            font-family: 'Lobster';
+            font-style: normal;
+            font-weight: 400;
+            src: url(lobster.woff2) format('woff2');
+            unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+        }
+
+        .cajabonita {
+            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+            color: #006;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            background: #ccccff;
+            overflow: hidden;
+            padding: 20px;
+            width: 500px;
+            margin: 40px auto;
+            border-radius: 35px 0px 35px 0px;
+            -moz-border-radius: 35px 0px 35px 0px;
+            -webkit-border-radius: 35px 0px 35px 0px;
+            border: 2px solid #0000ff;
+        }
+
+        h1,
+        h2 {
+            color: #0000DD;
+            font-family: 'Georgia';
+        }
+
+        .resultado {
+            background-color: #f0f0ff;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cajabonita">
+        <h1> Nombre: ALberto Garcia Quintana </h1>
+
+    </div>
+     <div style="margin: auto;width:800px"> 
+            </div>
+    <div class="cajabonita">
+        <h2>Ejercicio 1 Arrays</h2>
+                1. Crea una funcion que reciba un numero indeterminado de Arrays de tamaños distintos crea una funcion function ej1Mezclar(array1, array2 ) que los mezcle y los muestre en la web.
+           
+	let array1 = [1,2,4,5] ;  let array2 = [6,7,1];  let array3 = [100];  let array4 = [6,7,1]
+	ej1Mezclar( array1, array2)  // [1,6,2,7,4,1,5]
+	ej1Mezclar( array1, array2,array3)  // [1,6,100,2,7,4,1,5]
+        
+        <br>
+        <div id="info1" class="resultado"></div>
+              
+        <script>
+
+            function ej1Mezclar(...arrays) {
+                const maxLen = arrays.reduce((max, arr) => Math.max(max, arr.length), 0);
+                const resultado = [];
+                for (let i = 0; i < maxLen; i++) {
+                    for (const arr of arrays) {
+                        if (i < arr.length) resultado.push(arr[i]);
+                    }
+                }
+                return resultado;
+            }
+
+            let array1 = [1, 2, 4, 5]
+            let array2 = [6, 7, 1]
+            let ej1_1 = ej1Mezclar(array1, array2);
+            document.getElementById('info1').innerHTML = '<strong>ej1Mezclar([1,2,4,5], [6,7,1]) = </strong>' + JSON.stringify(ej1_1);
+
+            array1 = [1, 2, 4, 5]
+            array2 = [6, 7, 1]
+            let array3 = [100]
+            let ej1_2 = ej1Mezclar(array1, array2, array3);
+            document.getElementById('info1').innerHTML += '<br><strong>ej1Mezclar([1,2,4,5], [6,7,1], [100]) = </strong>' + JSON.stringify(ej1_2);
+        
+        </script>
+    </div>
+   
+    
+   
+    <div class="cajabonita">
+        <h2>Ejercicio 2 Funciones</h2>
+        <label>Año</label>
+        <input type="text" id="year"><br>
+        <label>Mes</label>
+        <input type="text" id="mes"><br>
+        <label>Dia</label>
+        <input type="text" id="dia"><br><br>
+        <button onclick="calcularDias()">Escribe la fecha Funcion Tradicional</button>
+        <p id="fechaIntroducida">Fecha: </p>
+        <button onclick="calcularDiasAnonima()">Escribe la fecha Funcion Anonima</button>
+        <p id="fechaIntroducidaanonima">Fecha: </p>
+        <button onclick="calcularDiasLambda()">Escribe la fecha funcion flechas</button>
+        <p id="fechaIntroducidaflechas">Fecha: </p>
+        <button onclick="calcularDiasLambdaparametros('#444','negrita')">Escribe funcion flechas parametros </button>
+        <p id="fechaIntroducidaflechasParams">Fecha:</p>
+        <script>
+            function calcularDias() {
+                const y = document.getElementById('year').value;
+                const m = document.getElementById('mes').value;
+                const d = document.getElementById('dia').value;
+                document.getElementById('fechaIntroducida').textContent = 'Fecha: ' + d + '/' + m + '/' + y;
+            }
+
+            const calcularDiasAnonima = function() {
+                const y = document.getElementById('year').value;
+                const m = document.getElementById('mes').value;
+                const d = document.getElementById('dia').value;
+                document.getElementById('fechaIntroducidaanonima').textContent = 'Fecha: ' + d + '/' + m + '/' + y;
+            };
+
+            const calcularDiasLambda = (function() {
+                return function() {
+                    const y = document.getElementById('year').value;
+                    const m = document.getElementById('mes').value;
+                    const d = document.getElementById('dia').value;
+                    document.getElementById('fechaIntroducidaflechas').textContent = 'Fecha: ' + d + '/' + m + '/' + y;
+                };
+            })();
+
+            const calcularDiasLambdaparametros = (color, estilo) => {
+                const y = document.getElementById('year').value;
+                const m = document.getElementById('mes').value;
+                const d = document.getElementById('dia').value;
+                const p = document.getElementById('fechaIntroducidaflechasParams');
+                if (p) {
+                    p.textContent = 'Fecha: ' + d + '/' + m + '/' + y;
+                    p.style.color = color;
+                    p.style.fontWeight = estilo;
+                }
+            };
+        </script>
+
+    </div>
+
+
+
+    <div class="cajabonita">
+        <h2>4. Metodos Funcionales 1 </h2>
+             (los ejercicio de esto punto deben hacerse con metodos funcionales si no no vale)
+       
+        ◦ Crea una función tresMitad(array)  que  recorra un array de cadenas  y nos devuelva    <br>   
+        la cadena de tres que aparecen en la mitad y los dos laterales.    <br>  
+           <br>   Si tiene menos de 3 se devuelve todo. 
+           <br>  Si tiene pares para mitad se escoge mitad-1. 
+            <br>   tresMitad(['pepes','Lopez','c','javascript','java']) //  'epe','ope','c','asc','jav',
+        <br><br>
+        <br>
+        <div id="info4" class="resultado"></div>
+              <script>
+            function tresMitad(arr) {
+                return arr.map(s => {
+                    s = String(s);
+                    if (s.length < 3) return s;
+                    const mid = s.length % 2 === 0 ? s.length / 2 - 1 : Math.floor(s.length / 2);
+                    return s.slice(Math.max(0, mid - 1), mid + 2);
+                });
+            }
+            
+            const arr4 = ['pepes', 'Lopez', 'c', 'javascript', 'java'];
+            const resultado4 = tresMitad(arr4);
+            document.getElementById('info4').innerHTML = 'Entrada: ' + JSON.stringify(arr4) + '<br>Resultado: ' + JSON.stringify(resultado4);
+        </script>
+ </div>
+
+
+ 
+ <div class="cajabonita">
+    <h2>5. Metodos Funcionales 2 </h2>
+      <br>  ◦ Crea una función sumarPotencias2Indices  que  nos devuelva el resultado de multiplicar 
+    <br>    cada numero por su posicion elevado a 2 y sumarlos
+     <br>   Por ejemplo 
+     <br>
+sumarPotencias2Indices([1,3,4,2,1]) 
+<br>//  [1*1 + 3*2 + 2*4 + 2*8 + 1*16] = 1+6 +  8 + 16 + 16 = 47
+
+        <br>
+        <div id="info5" class="resultado"></div>
+<script>
+            function sumarPotencias2Indices(arr) {
+                return arr.reduce((sum, num, i) => sum + (num * Math.pow(2, i)), 0);
+            }
+            
+            const arr5 = [1, 3, 4, 2, 1];
+            const resultado5 = sumarPotencias2Indices(arr5);
+            const detalles5 = arr5.map((n, i) => n + '*2^' + i).join(' + ');
+            document.getElementById('info5').innerHTML = 'Entrada: ' + JSON.stringify(arr5) + '<br>Cálculo: ' + detalles5 + '<br><strong>Resultado: ' + resultado5 + '</strong>';
+        </script>
+ </div>
+ 
+
+
+ <div class="cajabonita">
+
+    <h2>6. Metodos Funcionales 3 </h2>
+        ◦ Crea una función ordenTamaño que tenga por entrada un array de strings
+            <br> y nos lo devuelva ordenados por su tamaño y si son iguales por 
+                <br>el orden alfabetico de la primera letra
+                    <br>ordenTamaño ([“hola”, “mv”, “adios”, “xz” , “ b”])
+                        <br> =>  [“ b”, “mv”,  “xz” , “hola”,“adios”]
+
+        <br>
+        <div id="info6" class="resultado"></div>
+<script>
+            function ordenTamaño(arr) {
+                return [...arr].sort((a, b) => {
+                    if (a.length !== b.length) return a.length - b.length;
+                    return a[0].localeCompare(b[0]);
+                });
+            }
+            
+            const arr6 = ["hola", "mv", "adios", "xz", " b"];
+            const resultado6 = ordenTamaño(arr6);
+            document.getElementById('info6').innerHTML = 'Entrada: ' + JSON.stringify(arr6) + '<br>Resultado: ' + JSON.stringify(resultado6);
+        </script>
+ </div>
+ 
+
+
+ <div class="cajabonita">
+<h2>7. Metodos Funcionales 4 </h2>
+        ◦ Crea una función sumasLetras(ArrayDoble) que sume todos los elementos de un array de arrays . Puede haber letras con los valores Hexadecimales A = 10  B=11 … F= 15 … si sale algo mas que F es un error
+          sumasLetras ([ 1,2], [“B”,1, 1], [1,3,”A”] ])  =>  1+2+11+1+1+1+3+10 = 30
+                <br>
+                <div id="info7" class="resultado"></div>
+                    <script>
+            function sumasLetras(...arrays) {
+                const flat = arrays.flat();
+                let sum = 0;
+                for (const x of flat) {
+                    if (typeof x === 'number') {
+                        sum += x;
+                    } else if (typeof x === 'string') {
+                        const hex = x.trim().toUpperCase();
+                        const val = parseInt(hex, 16);
+                        if (isNaN(val) || val > 15) throw new Error('Valor hex inválido: ' + x);
+                        sum += val;
+                    }
+                }
+                return sum;
+            }
+            
+            try {
+                const resultado7 = sumasLetras([1, 2], ["B", 1, 1], [1, 3, "A"]);
+                document.getElementById('info7').innerHTML = 'sumasLetras([1,2], ["B",1,1], [1,3,"A"]) = <strong>' + resultado7 + '</strong>';
+            } catch (e) {
+                document.getElementById('info7').innerHTML = 'Error: ' + e.message;
+            }
+        </script>
+ </div>
+
+
+ 
+ <div class="cajabonita">
+    <h2>8. Metodos Funcionales 5 </h2>
+   <br> • Crea una función contarCadenas(array) que  Dado un array con palabras repetidas, 
+   <br>debes agruparlas y contar cuántas veces aparece cada una, usando únicamente reduce..  <br>
+    <br>  const palabras = [   "js",    "html",   "css",  "js",   "css",   "js",   "react" ];
+   <br>  Debes usar reduce para genera un array de arrays donde Cada sub-array tenga el formato:
+<br> ["palabra", cantidad]
+   <br> • contarCadenas(palabras)  // [    ["js", 3],    ["html", 1],    ["css", 2],   ["react", 1]  ]
+  <br>  • Ordena el resultado de mayor a menor cantidad: 
+      [    ["js", 3],   ["css", 2],   ["html", 1],   ["react", 1]  ]
+        
+        <br>
+        <div id="info8" class="resultado"></div>
+        <script>
+            function contarCadenas(arr) {
+                const conteos = arr.reduce((acc, palabra) => {
+                    acc[palabra] = (acc[palabra] || 0) + 1;
+                    return acc;
+                }, {});
+                
+                return Object.entries(conteos)
+                    .map(([palabra, cantidad]) => [palabra, cantidad])
+                    .sort((a, b) => b[1] - a[1]);
+            }
+
+            const palabras = ["js", "html", "css", "js", "css", "js", "react"];
+            const resultado8 = contarCadenas(palabras);
+            const tabla8 = '<table border="1" style="margin-top: 10px; border-collapse: collapse; width: 100%"><tr><th>Palabra</th><th>Frecuencia</th></tr>' +
+                resultado8.map(([p, c]) => '<tr><td>' + p + '</td><td>' + c + '</td></tr>').join('') +
+                '</table>';
+            document.getElementById('info8').innerHTML = 'Entrada: ' + JSON.stringify(palabras) + '<br>' + tabla8;
+        </script>
+    </div>
+
+
+    <div class="cajabonita">
+        <h2>Ejercicio 9. Arrays Multidimensional</h2>
+        <br>Dado un valor num.  haz un array del triangulo de pascal y muestralo por pantalla
+         <br> Para hacer el triangulo solo debes  ver que <br><br>
+         <br> Cada celda es la suma de las dos anterior superiores 
+         <br> <strong> triangulo[i][1] = (triangulo[i][0] + triangulo[i-1][0]) </strong><br><br>
+        si el valor esta definido en ese parametro si no 0. Por ejemplo para n=6
+
+        
+        <br>
+        <div id="info9" class="resultado"></div>
+        <script>
+            function pascal(n) {
+                const triangulo = [];
+                for (let i = 0; i < n; i++) {
+                    triangulo[i] = [];
+                    triangulo[i][0] = 1;
+                    triangulo[i][i] = 1;
+                    for (let j = 1; j < i; j++) {
+                        triangulo[i][j] = triangulo[i-1][j-1] + triangulo[i-1][j];
+                    }
+                }
+                return triangulo;
+            }
+            
+                const tri9 = pascal(6);
+                let tabla9 = '<table border="1" style="margin-top: 10px; border-collapse: collapse; text-align: center;"><tbody>';
+                const rows9 = tri9.length;
+                const cols9 = rows9;
+                for (let i = 0; i < rows9; i++) {
+                    const fila = tri9[i];
+                    tabla9 += '<tr>';
+                    for (let j = 0; j < cols9; j++) {
+                        const v = (fila[j] === undefined) ? 0 : fila[j];
+                        tabla9 += '<td style="padding: 5px 10px;">' + v + '</td>';
+                    }
+                    tabla9 += '</tr>';
+                }
+                tabla9 += '</tbody></table>';
+                document.getElementById('info9').innerHTML = tabla9;
+        </script>
+
+    </div>
+    <div class="cajabonita">
+        <h2>Ejercicio 10. Arrays Multidimensional fibonaci </h2>
+       <br><br>  Calcula un termino de la secuencia de fibonaci usando el triangulo de pascal 
+          <br><br> sabiendo que se calcula con las    diagonales de este triangulo
+
+        <br>   fib(n) = triangulo[n][0] +triangulo[n-1][1] + … + triangulo[0][n]
+        <br>
+        <br>
+        <div id="info10" class="resultado"></div>
+        <script>
+            
+            function fibonacciPascal(n) {
+                const tri = pascal(n + 1);
+                let suma = 0;
+                for (let k = 0; k <= Math.floor(n / 2); k++) {
+                    if (n - k >= 0 && k < tri[n - k].length) {
+                        suma += tri[n - k][k];
+                    }
+                }
+                return suma;
+            }
+
+            (function renderPascalAndFibo(){
+                const filas = 7;
+                const tri = pascal(filas);
+                const cols = filas;
+
+                let tabla10 = '<table border="1" style="margin-top: 10px; border-collapse: collapse; text-align: center;">';
+                for (let i = 0; i < tri.length; i++) {
+                    tabla10 += '<tr>';
+                    for (let j = 0; j < cols; j++) {
+                        const v = (tri[i][j] === undefined) ? 0 : tri[i][j];
+                        tabla10 += '<td style="padding:5px 10px;">' + v + '</td>';
+                    }
+                    tabla10 += '</tr>';
+                }
+                tabla10 += '</table>';
+
+                const fibonacci5 = fibonacciPascal(5);
+                const primeros10 = [];
+                for (let k = 1; k <= 10; k++) primeros10.push(fibonacciPascal(k));
+
+                document.getElementById('info10').innerHTML = tabla10 + '<br><strong>Fibonacci(5) = ' + fibonacci5 + '</strong><br>Primeros 10 términos: ' + JSON.stringify(primeros10);
+            })();
+        </script>
+    </div>
+</body>
+
+</html>
