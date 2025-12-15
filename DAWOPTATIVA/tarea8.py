@@ -2,6 +2,19 @@ import sys
 from dataclasses import dataclass
 
 
+"""Clase `Persona` y ejemplos (Tarea 8)
+
+Implementación de una clase simple `Persona` con getters, setters
+con validación y métodos de utilidad como `mostrar()` y
+`mayor_de_edad()`. Las cadenas de texto se normalizan a mayúsculas
+internamente para facilitar comparaciones y presentaciones.
+
+El bloque `if __name__ == "__main__"` contiene ejemplos y pruebas
+simples de uso que demuestran las validaciones lanzando
+`ValueError` en entradas inválidas.
+"""
+
+
 @dataclass
 class Persona:
     def __init__(self, nombre="", apellidos="", dni="", edad=0):

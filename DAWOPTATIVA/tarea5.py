@@ -1,3 +1,13 @@
+"""
+tarea5.py
+Colección de funciones pequeñas para practicar manipulación de cadenas,
+listas y operaciones básicas. Selecciona el ejercicio que quieras ejecutar
+mediante la variable `iNumEjer`.
+
+Comentarios incluidos para explicar qué hace cada función y cuáles son
+sus parámetros/retornos, útiles como apuntes para examen.
+"""
+
 iNumEjer = int(input("introduce el ejercicio que quiera revisar: "))
 
 
@@ -40,6 +50,9 @@ def rota(n: int, xs: list) -> list:
      n = n % len(xs)
      return xs[n:] + xs[:n]
 
+# Explicación: `rota` desplaza la lista hacia la izquierda n posiciones.
+# Si n es mayor que la longitud, se usa el módulo para normalizar.
+
 if (iNumEjer == 4):
      raw = input("introduce una lista de elementos separados por espacios: ")
      xs = raw.split()
@@ -52,6 +65,8 @@ def rango(xs: list) -> list:
      if not xs:
           return []
      return [min(xs), max(xs)]
+
+# 6. interior : devuelve la lista sin el primer ni el último elemento.
 
 if (iNumEjer == 5):
      raw = input("introduce una lista de números separados por espacios: ")
@@ -94,6 +109,8 @@ def segmento(m: int, n: int, xs: list) -> list:
      end = min(len(xs), n)
      return xs[start:end]
 
+# 9. extremos : devuelve los primeros n y últimos n elementos concatenados.
+
 if (iNumEjer == 8):
      raw = input("introduce una lista de elementos separados por espacios: ")
      xs = raw.split()
@@ -123,6 +140,8 @@ def mayorRectangulo(r1: tuple, r2: tuple) -> tuple:
      a2 = r2[0] * r2[1]
      return r1 if a1 >= a2 else r2
 
+# 11. intercambia : swaps a tuple (x, y) -> (y, x). Levanta error si la tupla no tiene 2 elementos.
+
 if (iNumEjer == 10):
      b1 = float(input("rect1 base: "))
      h1 = float(input("rect1 altura: "))
@@ -147,6 +166,7 @@ if (iNumEjer == 11):
 
 
 # ----------------- Segundo PDF de ejercicios -----------------
+# Continuación: más ejercicios (listado, palíndromos, ordenaciones...)
 iNumEjer2 = int(input("introduce el ejercicio que quiera revisar del segundo pdf de ejercicios: "))
 
 # 1. leer números hasta cero y mostrar en 3 modos

@@ -1,6 +1,6 @@
 import math
 
-#1 MENU DE OPCIONES DE a A LA h
+# Menú principal: el usuario elige una letra para ejecutar la opción
 print("ELIGE UNA OPCION")
 print("a) Mostrar un rombo.")
 print("b) Adivinar un número.")
@@ -13,80 +13,102 @@ print("h) Salir")
 sEjercicio = input("Inserte una opcion poniendo su letra correspondiente: ")
 
 def CrearRombo():
- print("Mostrando un rombo...")
-        
- iNum = input("Introduzca la altura del rombo (número impar): ")
-                 
- if (iNum % 2 == 0 or iNum.isnumeric == False):
-    print("Error. El número debe ser impar.")
- else:
-    for i in range(iNum//2 + 1):
-        print(" " * (iNum//2 - i) + "*" * (2*i + 1))
-    for i in range(iNum//2 - 1, -1, -1):
-        print(" " * (iNum//2 - i) + "*" * (2*i + 1))
+    # Muestra un rombo de asteriscos cuya altura debe ser un número impar.
+    print("Mostrando un rombo...")
+    try:
+        # Convertimos a entero y validamos impar
+        iNum = int(input("Introduzca la altura del rombo (número impar): "))
+    except ValueError:
+        print("Error. Debes introducir un número entero.")
+        return
+    if iNum % 2 == 0:
+        print("Error. El número debe ser impar.")
+        return
+    # Construcción del rombo: primera mitad (creciente) y segunda mitad (decreciente)
+    for i in range(iNum // 2 + 1):
+        print(" " * (iNum // 2 - i) + "*" * (2 * i + 1))
+    for i in range(iNum // 2 - 1, -1, -1):
+        print(" " * (iNum // 2 - i) + "*" * (2 * i + 1))
         
            
 
 def AdivinarNum():
- import random
+    # Juego: el programa genera un número aleatorio y el usuario intenta adivinarlo.
+    import random
 
- iNumRandom = int(random.randrange(1,100)) 
- iNum = int(input("Adivine el numero del 1 al 100: "))
- 
+    iNumRandom = int(random.randrange(1, 101))  # rango 1..100 inclusive
+    iNum = int(input("Adivine el numero del 1 al 100: "))
 
- while(iNumRandom != iNum):
-    
-    if (iNum > iNumRandom):
-        print(iNum,"Es mayor que el numero secreto")
+    # Bucle que termina cuando el usuario acierta
+    while iNumRandom != iNum:
+        if iNum > iNumRandom:
+            print(iNum, "es mayor que el numero secreto")
+        elif iNum < iNumRandom:
+            print(iNum, "es menor que el numero secreto")
+        # Pedimos otra entrada
         iNum = int(input("Adivine el numero del 1 al 100: "))
-    elif(iNum < iNumRandom):
-        print(iNum,"Es menor que el numero secreto")
-        iNum = int(input("Adivine el numero del 1 al 100: "))
-    
- if(iNum == iNumRandom):
-    print("FELICIDADES LO ACERTASTE, ES EL NUMERO: ",iNumRandom)
+
+    # Cuando sale del bucle, el usuario ha acertado
+    print("FELICIDADES LO ACERTASTE, ES EL NUMERO:", iNumRandom)
 
 
 def Ecuacion2º():
-    iNuma = int(input("ponga el numero que sustituye la 'a': "))
-    iNumb = int(input("ponga el numero que sustituye la 'b': "))
-    iNumc = int(input("ponga el numero que sustituye la 'c': "))
+    # Resolver ecuación cuadrática ax^2 + bx + c = 0 usando la fórmula general
+    try:
+        iNuma = float(input("ponga el numero que sustituye la 'a' (no 0): "))
+        iNumb = float(input("ponga el numero que sustituye la 'b': "))
+        iNumc = float(input("ponga el numero que sustituye la 'c': "))
+    except ValueError:
+        print("Entrada no válida")
+        return
 
-    if iNuma == 0 or iNumb == 0 or iNumc == 0:
-        print("!NO PUEDES PONER SOLO EL NUMERO 0¡")
-        Ecuacion2º()
-            
-    iCalcElevado = iNumb ** 2 - 4 * iNuma * iNumc
-    iFormula2º = 2 * iNuma / (iNumb - math.sqrt(iCalcElevado))
+    if iNuma == 0:
+        print("El coeficiente 'a' no puede ser 0 en una ecuación de segundo grado.")
+        return
 
-    print ("Resultado de la operacion de 2 grado: ", iFormula2º)
+    # Calculamos el discriminante
+    discriminante = iNumb ** 2 - 4 * iNuma * iNumc
+    if discriminante < 0:
+        print("No hay raíces reales (discriminante < 0).")
+        return
+
+    # Fórmula correcta: (-b ± sqrt(discriminante)) / (2*a)
+    raiz = math.sqrt(discriminante)
+    x1 = (-iNumb + raiz) / (2 * iNuma)
+    x2 = (-iNumb - raiz) / (2 * iNuma)
+    print("Soluciones reales:", x1, "y", x2)
 
 #def TablaNumero():
 
 
 
 match sEjercicio:
-
     case "a":
         CrearRombo()
- 
+
     case "b":
         AdivinarNum()
 
     case "c":
         Ecuacion2º()
 
-    case "d": 
-        TablaNumero()   
+    case "d":
+        # TablaNumero() no implementada aún
+        print("Opción D no implementada todavía")
+
     case "e":
-        print ("")
+        print("Opción E no implementada todavía")
+
     case "f":
-        print ("")
+        print("Opción F no implementada todavía")
+
     case "g":
-        print ("")
+        print("Opción G no implementada todavía")
+
     case "h":
         print("Saliendo del programa...")
         exit()
+
     case _:
         print("Opcion incorrecta. Saliendo del programa...")
         exit()

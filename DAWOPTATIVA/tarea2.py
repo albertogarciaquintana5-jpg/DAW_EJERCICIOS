@@ -1,6 +1,16 @@
+# Programa interactivo con varios ejercicios cortos de práctica en Python.
+# Cada ejercicio está numerado del 1 al 10. Se pide al usuario que indique
+# el número del ejercicio que quiere ejecutar y, según su elección, se
+# solicita la información pertinente y se muestra el resultado.
+#
+# Comentarios: Uso de condicionales (if/elif/else), conversiones de tipo
+# (int/float), manejo básico de errores con try/except y listas para
+# acumular motivos en ejercicios más complejos.
+
 iNum_ejer = int(input("Introduzca el numero del ejercicio: "))
 
-#1. Escribe un programa que recoja un número e indique si se trata de un número par o impar.
+# 1. Determinar si un número es par o impar: comprobamos el resto (%)
+#    de la división entera entre 2.
 if (iNum_ejer == 1):
     iNum = int(input("Introduzca un numero: "))
     if (iNum % 2 == 0):
@@ -8,7 +18,9 @@ if (iNum_ejer == 1):
     else:
         print("El numero es impar.")
 
-#2. Escribe un programa que recoja un número por teclado y muestre el día de la semana que es (1 = Lunes, 2 = Martes...). En caso de introducir un número incorrecto, mostrará el mensaje “Día de la semana incorrecto”.
+# 2. Mostrar el día de la semana según un número (1..7).
+#    Se usa una serie de condicionales para mapear el número a nombre.
+#    Si el número no está en el rango 1-7, mostramos un mensaje de error.
 if (iNum_ejer == 2):
     iNum = int(input("Introduzca un numero: "))
     if (iNum == 1):
@@ -28,17 +40,20 @@ if (iNum_ejer == 2):
     else:
         print("Dia de la semana incorrecto.")
 
-#3. Escribe un programa que lea tres números y que muestre los números mayor y menor.
+# 3. Leer tres números y mostrar el mayor y el menor.
+#    Se comparan los tres valores para determinar el máximo y mínimo.
 if (iNum_ejer == 3):
     iNum1 = float(input("Introduzca el primer numero: "))
     iNum2 = float(input("Introduzca el segundo numero: "))
     iNum3 = float(input("Introduzca el tercer numero: "))
+    # Determinar el mayor
     if (iNum1 >= iNum2) and (iNum1 >= iNum3):
         print("El numero mayor es: ", iNum1)
     elif (iNum2 >= iNum1) and (iNum2 >= iNum3):
         print("El numero mayor es: ", iNum2)
     else:
         print("El numero mayor es: ", iNum3)
+    # Determinar el menor
     if (iNum1 <= iNum2) and (iNum1 <= iNum3):
         print("El numero menor es: ", iNum1)
     elif (iNum2 <= iNum1) and (iNum2 <= iNum3):
@@ -46,20 +61,21 @@ if (iNum_ejer == 3):
     else:
         print("El numero menor es: ", iNum3)
 
-#4. Escribe un programa que recoja dividendo y divisor, y realice su división siempre que el divisor sea distinto de cero.
+# 4. División segura: pedir dividendo y divisor y controlar división por cero.
 if (iNum_ejer == 4):
     iDividendo = float(input("Introduzca el dividendo: "))
     iDivisor = float(input("Introduzca el divisor: "))
+    # Comprobamos que el divisor no sea cero antes de dividir
     if (iDivisor != 0):
         print("El resultado de la division es: ", iDividendo / iDivisor)
     else:
         print("Error. No se puede dividir entre 0.")
 
-#5. Escribe un programa que calcule el precio de entrada a un museo a partir de la edad del visitante, teniendo en cuenta que:
-    #a. Menores de 5 años entran gratis.
-    #b. Niños entre 5 años y 18 (sin llegar a los 18) pagan 3€.
-    #c. Mayores de edad hasta los 65 (sin llegar a los 65) pagan 6€.
-    #d. Jubilados entran gratis.
+# 5. Precio de entrada según la edad:
+#    - Menores de 5 años: gratis
+#    - 5 <= edad < 18: 3€
+#    - 18 <= edad < 65: 6€
+#    - >=65: gratis (jubilados)
 if (iNum_ejer == 5):
     iEdad = int(input("Introduzca su edad: "))
     if (iEdad < 5):
@@ -71,14 +87,8 @@ if (iNum_ejer == 5):
     else:
         print("La entrada es gratis.")
 
-#6. Escribe un programa que muestre la nota final de un alumno a partir de su calificación numérica (valor decimal), teniendo en cuenta que:
-    #a. Nota menor de 5 es suspenso.
-    #b. Nota entre 5 y 6 (sin llegar) es suficiente.
-    #c. Nota entre 6 y 7 (sin llegar) es bien.
-    #d. Nota entre 7 y 9 (sin llegar) es notable.
-    #e. Nota entre 9 y 10 (sin llegar) es sobresaliente.
-    #f. Nota igual a 10 es matrícula de honor.
-    #g. Cualquier otro valor numérico fuera de este rango es un error.
+# 6. Convertir calificación numérica a calificación cualitativa
+#    - Se controla también el rango válido (0 a 10) y valores extremos.
 if (iNum_ejer == 6):
     fNota = float(input("Introduzca su nota: "))
     if (fNota < 5) and (fNota >= 0):
@@ -96,11 +106,10 @@ if (iNum_ejer == 6):
     else:
         print("Error. Nota incorrecta.")
 
-#7. Escribe un programa que recoja la hora del día y devuelva un saludo, según las siguientes reglas:
-#INTERVALO DE HORAS SALUDO
-#[7,12) Buenos días
-#[12, 20) Buenas tardes
-#En otro caso Buenas noches
+# 7. Saludo según la hora del día (horario 24h):
+#    - [7,12): Buenos días
+#    - [12,20): Buenas tardes
+#    - resto: Buenas noches
 if (iNum_ejer == 7):
     iHora = int(input("Introduzca la hora del dia (formato 24h): "))
     if (iHora >= 7) and (iHora < 12):
@@ -110,7 +119,8 @@ if (iNum_ejer == 7):
     else:
         print("Buenas noches")
 
-#8. Escribe un programa que recoja un mes del año (en número) y devuelva el número de días que tiene el mes. En caso de indicar un mes incorrecto deberá mostrar un mensaje de error.
+# 8. Determinar el número de días de un mes dado (1-12).
+#    Se atiende la excepción de febrero (28 o 29 días) y se valida el rango.
 if (iNum_ejer == 8):
     iMes = int(input("Introduzca un mes del año (1-12): "))
     if (iMes == 1) or (iMes == 3) or (iMes == 5) or (iMes == 7) or (iMes == 8) or (iMes == 10) or (iMes == 12):
@@ -121,14 +131,10 @@ if (iNum_ejer == 8):
         print("El mes tiene 28 o 29 dias.")
     else:
         print("Error. Mes incorrecto.")
-#9. Escribe un programa que recoja un año e indique si se trata de un año bisiesto o no. Un año es bisiesto si cumple estas condiciones:
-    #a. El año es divisible por 4.
-    #b. Si además el año es divisible por 100, debe ser también divisible por 400.
-#Ejemplos:
-#- 1992 es bisiesto (cumple el caso a. Al no ser divisible por 100 no aplica el caso b)
-#- 2023 no es bisiesto (no cumple ningún caso)
-#- 2000 es bisiesto (cumple los casos a y b)
-#- 1900 no es bisiesto (cumple el caso a, pero no el b porque es divisible por 100 y no por 400)
+# 9. Saber si un año es bisiesto:
+#    - Un año es bisiesto si es divisible por 4.
+#    - Si además es divisible por 100, debe ser divisible por 400 para ser bisiesto.
+#    Este bloque muestra claramente la lógica en cascada.
 if (iNum_ejer == 9):
     iAño = int(input("Introduzca un año: "))
     if (iAño % 4 == 0):
@@ -157,12 +163,17 @@ if (iNum_ejer == 9):
     #ii. En mujeres: superior a 12,5 gramos por litro.
     #g. Plaquetas: más de 150.000 cc
     #h. Proteínas totales: más de 6 gr/dl.
+# 10. Evaluación para donación de sangre.
+#     Este ejercicio recoge múltiples parámetros del donante y valida cada
+#     campo introducido. En caso de incumplimiento se añaden mensajes a la
+#     lista 'razones' que explican por qué no debería donar.
 if (iNum_ejer == 10):
     # Recogida de datos
+    # 'sAyuna' indica si la persona está en ayunas (no recomendable para donar)
     sAyuna = input("¿Está en ayunas? (s/n): ").strip().lower()
-    razones = []
+    razones = []  # lista donde se almacenan las razones por las que no puede donar
 
-    # Edad
+    # Edad: debe estar entre 18 y 65 (incluidos)
     try:
         iEdad = int(input("Introduzca su edad: "))
         if not (18 <= iEdad <= 65):
@@ -170,7 +181,7 @@ if (iNum_ejer == 10):
     except Exception:
         razones.append("Edad no válida")
 
-    # Peso
+    # Peso: debe ser mayor de 50 kg
     try:
         fPeso = float(input("Introduzca su peso en kg: "))
         if not (fPeso > 50):
@@ -178,7 +189,7 @@ if (iNum_ejer == 10):
     except Exception:
         razones.append("Peso no válido")
 
-    # Tensión arterial: sistólica (alta) y diastólica (baja)
+    # Tensión arterial: comprobamos sistólica y diastólica dentro de rangos seguros
     try:
         iSistolica = int(input("Tensión sistólica (mm Hg) - valor alto: "))
         iDiastolica = int(input("Tensión diastólica (mm Hg) - valor bajo: "))
@@ -189,7 +200,7 @@ if (iNum_ejer == 10):
     except Exception:
         razones.append("Valores de tensión no válidos")
 
-    # Pulso
+    # Pulso: frecuencia cardíaca entre 50 y 110
     try:
         iPulso = int(input("Pulso (pulsaciones por minuto): "))
         if not (50 <= iPulso <= 110):
@@ -197,7 +208,7 @@ if (iNum_ejer == 10):
     except Exception:
         razones.append("Pulso no válido")
 
-    # Sexo y hemoglobina
+    # Sexo y hemoglobina: los umbrales son distintos para hombres y mujeres
     sSexo = input("Sexo (H para hombre / M para mujer): ").strip().upper()
     try:
         fHemo = float(input("Valor de hemoglobina (g/L): "))
@@ -212,7 +223,7 @@ if (iNum_ejer == 10):
     except Exception:
         razones.append("Valor de hemoglobina no válido")
 
-    # Plaquetas
+    # Plaquetas: más de 150.000 por cc
     try:
         iPlaquetas = int(input("Plaquetas (por cc): "))
         if not (iPlaquetas > 150000):
@@ -220,7 +231,7 @@ if (iNum_ejer == 10):
     except Exception:
         razones.append("Valor de plaquetas no válido")
 
-    # Proteínas totales
+    # Proteínas totales: más de 6 gr/dl
     try:
         fProteinas = float(input("Proteínas totales (gr/dl): "))
         if not (fProteinas > 6.0):
@@ -228,11 +239,11 @@ if (iNum_ejer == 10):
     except Exception:
         razones.append("Valor de proteínas no válido")
 
-    # Ayunas
+    # No donar en ayunas: si la respuesta es afirmativa, lo añadimos como motivo
     if sAyuna in ('s', 'si'):
         razones.insert(0, "No debe donar en ayunas")
 
-    # Resultado
+    # Resultado final: si no hay razones, el donante es apto
     if len(razones) == 0:
         print("Puede donar sangre. Todos los parámetros cumplen los requisitos.")
     else:
