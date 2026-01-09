@@ -1,0 +1,15 @@
+/.env
+/vendor/
+/vendor/*
+/.idea/
+/.vscode/
+/.DS_Store
+/node_modules/
+/.phpunit.result.cache
+/public/uploads/
+
+# Composer
+composer.lock
+
+# SQLite DB for tests
+/tests/*.sqlite
