@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <p class="text-center mt-3">
             ¿Ya tienes cuenta?  
-            <a href="login.php">Iniciar sesión</a>
+            <a href="index.php">Iniciar sesión</a>
         </p>
     </div>
 </div>

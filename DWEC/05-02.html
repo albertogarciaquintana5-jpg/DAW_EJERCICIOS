@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script type="text/javascript"> 
+function convertirMayusculas(){ 
+	document.getElementById("nombre").value=document.getElementById("nombre"). value.toUpperCase(); 
+} 
+    
+function ejercicio3(){
+	let txt = document.getElementById("nombre");
+
+	let salida = "<h3>Propiedades del input</h3><ul>";
+	salida += "<li>defaultValue: " + txt.defaultValue + "</li>";
+	salida += "<li>maxLength: " + txt.maxLength + "</li>";
+	salida += "<li>name: " + txt.name + "</li>";
+	salida += "<li>readOnly: " + txt.readOnly + "</li>";
+	salida += "<li>size: " + txt.size + "</li>";
+	salida += "<li>type: " + txt.type + "</li>";
+	salida += "<li>value: " + txt.value + "</li>";
+	salida += "</ul>";
+
+	document.getElementById("ej3").innerHTML = salida;
+}
+
+function ejercicio4(){
+	let nombres = ["Antonio", "Luis", "Pedro", "María", "Lucía"];
+	let aleatorio = nombres[Math.floor(Math.random()*nombres.length)];
+	document.getElementById("nombre").value = aleatorio;
+}
+
+function ejercicio5(){
+	let chk = document.getElementById("aprobar");
+	chk.checked = !chk.checked;
+}
+
+let actual = 0;
+
+function ejercicio6(){
+	let radios = document.getElementsByName("opcion");
+	radios[actual].checked = false;
+	actual = (actual + 1) % radios.length;
+	radios[actual].checked = true;
+}
+
+
+function ejercicio7(){
+	let select = document.getElementById("idselect");
+	let salida = "<ul>";
+
+	for(let i=0;i<select.options.length;i++){
+		if(i == select.selectedIndex){
+			salida += "<li><b>" + select.options[i].text + "</b></li>";
+		}else{
+			salida += "<li>" + select.options[i].text + "</li>";
+		}
+	}
+	salida += "</ul>";
+
+	document.getElementById("ej6").innerHTML = salida;
+}
+
+
+function ejercicio8(){
+	let select = document.getElementById("idselect");
+	let texto = document.getElementById("nombre").value;
+
+	let option = document.createElement("option");
+	option.text = texto;
+	option.value = texto;
+	select.add(option);
+}
+
+function ponerminusculas(obj){
+	obj.value = obj.value.toLowerCase();
+}
+
+function cambiarimagen(sel){
+	let img = document.getElementsByClassName("image2")[0];
+	img.src = sel.value;
+}
+
+function eliminarOpcion(){
+	let sel = document.getElementById("idselect");
+	sel.remove(sel.selectedIndex);
+}
+</script> 
+
+</head>
+    
+<html> 
+
+<body> 
+<h1>Propiedad VALUE de un objeto INPUT de tipo TEXT </h1> 
+<input type="radio" name="opcion"> Opción 1
+<input type="radio" name="opcion"> Opción 2
+<input type="radio" name="opcion"> Opción 3
+<input type="radio" name="opcion"> Opción 4
+<input type="radio" name="opcion"> Opción 5
+
+<select id="idselect" name="nombreCampoSelect">
+	<option value="1">Uno</option>
+	<option value="2">Dos</option>
+	<option value="3">Tres</option>
+	<option value="4">Cuatro</option>
+	<option value="5">Cinco</option>
+	<option value="6">Seis</option>
+</select>
+
+<form id="formulario" > 
+	<p>  <label for="nombre">Nombre y Apellidos: </label> 
+	<input type="text" id="nombre" name="nombre" value="" size="30" onblur="convertirMayusculas()"> 
+	 Introduce tu Nombre y Apellidos y haz click fuera del campo.  </p>
+	<input type="checkbox" id="aprobar" name="aprobarn" value="Si"/>¿Te gustaria Aprobar? 
+	<button type="button" onclick="ejercicio3()">ejercicio3</button>
+	<button type="button" onclick="ejercicio4()">ejercicio4</button>
+	<button type="button" onclick="ejercicio5()">ejercicio5</button>
+	<button type="button" onclick="ejercicio6()">ejercicio6</button>
+	<button type="button" onclick="ejercicio7()">ejercicio7</button>
+	<button type="button" onclick="ejercicio8()">ejercicio8</button>
+    <input type="text" onchange="ponerminusculas(this)">
+</form> 
+<div id="ej3" > </div>
+<div id="ej4" > </div>
+<div id="ej5" > </div>
+<div id="ej6" > </div>
+
+<select id="paises" onchange="cambiarimagen(this)">
+	<option value="spain.jpg">España</option>
+	<option value="reinounido.jpg">Reino Unido</option>
+	<option value="francia.jpg">Francia</option>
+	<option value="italia.jpg">Italia</option>
+</select>
+
+<br><br>
+<img class="image2" src="spain.jpg" width="200">
+
+<button type="button" onclick="eliminarOpcion()">Eliminar opción</button>
+</body>
+</html>
