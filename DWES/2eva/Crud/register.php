@@ -7,9 +7,15 @@ $success = "";
 // REGISTRO
 if ($_POST) {
     if (isset($_POST['register'])) {
+        // Datos del usuario
         $nombre = $_POST['nombre'];
+        $apellido = $_POST['apellido'];
+        $telefono = $_POST['telefono'];
         $email = $_POST['email'];
         $contraseña = $_POST['contraseña'];
+        $fecha = $_POST['fecha'];
+        
+
 
         // Verificar si el email existe
         $verificar = $conexion->query("SELECT * FROM usuarios WHERE email='$email'");
@@ -17,8 +23,10 @@ if ($_POST) {
         if ($verificar->num_rows > 0) {
             $error = "El email ya está registrado";
         } else {
-            $conexion->query("INSERT INTO usuarios (nombre, email, contraseña, apellido, telefono, fecha) VALUES ('$nombre', '$email', '$contraseña', '', '', '2000-01-01')");
-            $success = "Registro exitoso, ahora puedes iniciar sesión";
+            $conexion->query("INSERT INTO usuarios (nombre, email, contraseña, fecha, apellido, telefono) VALUES ('$nombre', '$email', '$contraseña', '$fecha','$apellido', '$telefono')");
+            // Redirigir a la página de login con mensaje de éxito (no auto-login)
+            header('Location: index.php?registered=1&nombre=' . urlencode($nombre));
+            exit;
         }
     }
 }
@@ -30,7 +38,7 @@ if ($_POST) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - CRUD PHP</title>
+    <title>Registro</title>
     <link href="./bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -69,6 +77,20 @@ if ($_POST) {
                             </div>
 
                             <div class="mb-3">
+                                <label for="apellido" class="form-label">Apellidos</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                            </div>
+                        
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Telefono</label>
+                                <input type="text" class="form-control" id="telefono" name="telefono" required>
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
@@ -78,12 +100,13 @@ if ($_POST) {
                                 <input type="password" class="form-control" id="contraseña" name="contraseña" required>
                             </div>
 
-                            <button type="submit" name="register" class="btn btn-success w-100">Registrarse</button>
+                                    <button type="submit" name="register" class="btn btn-success w-100">Registrarse</button>
+                                    <br><br>
+                                   <a href="index.php"><button type="button" class="btn btn-success w-100">Volver al login</button></a>
+
                         </form>
 
                         <hr>
-
-                        <p class="text-center">¿Ya tienes cuenta? <a href="index.php">Inicia sesión aquí</a></p>
                     </div>
                 </div>
             </div>
@@ -93,6 +116,7 @@ if ($_POST) {
     <footer class="text-center mt-4 mb-2 text-muted">
         CRUD en PHP - Bootstrap 5
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

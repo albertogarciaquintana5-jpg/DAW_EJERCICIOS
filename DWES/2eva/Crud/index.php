@@ -1,7 +1,15 @@
 <?php
+session_start();
 include "db.php";
 
 $error = "";
+$success = "";
+
+// Mostrar mensaje si venimos de registro
+if (isset($_GET['registered']) && $_GET['registered'] == '1') {
+    $nombre_reg = isset($_GET['nombre']) ? urldecode($_GET['nombre']) : '';
+    $success = "Registro exitoso. Ya puedes iniciar sesión.";
+}
 
 // LOGIN
 if ($_POST) {
@@ -12,11 +20,11 @@ if ($_POST) {
         $resultado = $conexion->query("SELECT * FROM usuarios WHERE email='$email' AND contraseña='$contraseña'");
 
         if ($resultado->num_rows > 0) {
-            session_start();
             $usuario = $resultado->fetch_assoc();
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['usuario_nombre'] = $usuario['nombre'];
-            header("Location: home.html");
+            header("Location: home.php");
+            exit;
         } else {
             $error = "Email o contraseña incorrectos";
         }
@@ -57,6 +65,18 @@ if ($_POST) {
                             </div>
                         <?php endif; ?>
 
+                        <?php if ($success != ""): ?>
+                            <div class="alert alert-success" role="alert">
+                                <?php echo htmlspecialchars($success, ENT_QUOTES, 'UTF-8'); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (isset($nombre_reg) && $nombre_reg != ''): ?>
+                            <div class="alert alert-success" role="alert">
+                                ¡Bienvenido <?php echo htmlspecialchars($nombre_reg, ENT_QUOTES, 'UTF-8'); ?>! Tu cuenta fue creada correctamente.
+                            </div>
+                        <?php endif; ?>
+
                         <form method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -81,6 +101,10 @@ if ($_POST) {
     </div>
 
 
+    <footer class="text-center mt-4 mb-2 text-muted">
+        CRUD en PHP - Bootstrap 5
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

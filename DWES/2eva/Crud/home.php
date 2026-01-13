@@ -1,0 +1,91 @@
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel CRUD PHP</title>
+    <link href="./bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">CRUD en PHP</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <h1 class="fw-bold">Panel de Control</h1>
+            <p class="text-muted">Selecciona una acción para gestionar usuarios</p>
+
+            <?php if (isset($_SESSION['usuario_nombre']) && $_SESSION['usuario_nombre'] != ''): ?>
+                <div class="alert alert-success mt-3" role="alert">
+                    ¡Bienvenido <?php echo htmlspecialchars($_SESSION['usuario_nombre'], ENT_QUOTES, 'UTF-8'); ?>!
+                </div>
+            <?php endif; ?>
+
+        </div>
+
+
+        <div class="row justify-content-center">
+            <!-- Listar registros -->
+            <div class="col-md-3">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Ver Usuarios</h5>
+                        <p class="card-text">Muestra todos los registros almacenados.</p>
+                        <a href="lista.php" class="btn btn-primary">Entrar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crear nuevo usuario -->
+            <div class="col-md-3">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Crear Usuario</h5>
+                        <p class="card-text">Añade un nuevo registro al sistema.</p>
+                        <a href="create.php" class="btn btn-success">Crear</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editar usuarios -->
+            <div class="col-md-3">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Editar Usuario</h5>
+                        <p class="card-text">Modifica los datos de un usuario existente.</p>
+                        <a href="updatelist.php" class="btn btn-warning">Editar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eliminar registros -->
+            <div class="col-md-3">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Eliminar Usuario</h5>
+                        <p class="card-text">Elimina usuarios del sistema.</p>
+                        <a href="deletelist.php" class="btn btn-danger">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="text-center mt-4 mb-2 text-muted">
+        CRUD en PHP - Bootstrap 5
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

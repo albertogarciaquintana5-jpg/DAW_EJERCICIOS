@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>04-02 CSS Selectores</title>
+
+<style>
+
+/* ========================= */
+/* EJERCICIO 2 */
+* {
+  color: grey;
+}
+
+/* ========================= */
+/* EJERCICIO 3 */
+p * {
+  color: green;
+  font-family: Georgia;
+}
+
+/* ========================= */
+/* EJERCICIO 4 */
+table * {
+  border: 1px solid red;
+  background-color: yellow;
+}
+
+/* ========================= */
+/* EJERCICIO 5 */
+p > * {
+  color: blue;
+  font-family: Arial;
+}
+
+/* ========================= */
+/* EJERCICIO 6 */
+li strong {
+  color: blue;
+}
+
+/* ========================= */
+/* EJERCICIO 7 */
+div * a {
+  color: magenta;
+}
+
+/* ========================= */
+/* EJERCICIO 8 */
+div > a:first-child {
+  text-decoration: none;
+}
+
+/* ========================= */
+/* EJERCICIO 9 */
+h1 > strong {
+  text-decoration: underline;
+}
+
+/* ========================= */
+/* EJERCICIO 10 */
+h3 + p {
+  color: red;
+}
+
+/* ========================= */
+/* EJERCICIO 11 */
+#ejercicio10 {
+  color: red;
+}
+
+/* ========================= */
+/* EJERCICIO 12 */
+.ejercicio11 {
+  color: blue;
+}
+
+/* ========================= */
+/* EJERCICIO 13 */
+.ejercicio12 {
+  color: blue;
+}
+h2.ejercicio12 {
+  color: green;
+}
+h3.ejercicio12 {
+  color: yellow;
+}
+
+/* ========================= */
+/* EJERCICIO 14 */
+a.ejercicio13:link { color: green; }
+a.ejercicio13:visited { color: olive; }
+a.ejercicio13:hover { color: red; }
+a.ejercicio13:active { color: blue; }
+
+/* ========================= */
+/* EJERCICIO 15 */
+p {
+  color: blue !important;
+}
+p.ejercicio14 {
+  color: green;
+}
+
+/* ========================= */
+/* EJERCICIO 17 */
+p.ejercicio16:first-line {
+  color: blue;
+}
+p.ejercicio16:first-letter {
+  color: red;
+  font-size: 15px;
+}
+p.ejercicio16:before {
+  content: "adios ";
+  color: yellow;
+}
+p.ejercicio16:after {
+  content: " hola";
+  color: green;
+}
+
+/* ========================= */
+/* EJERCICIO 18 */
+input:focus {
+  background-color: yellow;
+}
+
+/* ========================= */
+/* EJERCICIO 19 */
+ul li:first-child {
+  font-weight: bold;
+}
+
+/* ========================= */
+/* EJERCICIO 20 */
+p:lang(en) {
+  color: red;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Ejercicio 6</h2>
+<ul>
+  <li><strong>Azul</strong></li>
+  <li><strong>No cambia</strong></li>
+</ul>
+
+<h2>Ejercicio 9</h2>
+<h1><strong>Subrayado</strong></h1>
+
+<h2>Ejercicio 10</h2>
+<h3>Título</h3>
+<p>Párrafo rojo</p>
+
+<h2>Ejercicio 11</h2>
+<p id="ejercicio10">Texto rojo por ID</p>
+
+<h2>Ejercicio 12</h2>
+<p class="ejercicio11">Texto azul por clase</p>
+
+<h2 class="ejercicio12">Ejercicio 13 H2</h2>
+<h3 class="ejercicio12">Ejercicio 13 H3</h3>
+
+<h2>Ejercicio 14</h2>
+<p>LVHA = Link Visited Hover Active</p>
+<a href="#" class="ejercicio13">Enlace</a>
+
+<h2>Ejercicio 15</h2>
+<p class="ejercicio14">Este párrafo es azul por !important</p>
+
+<h2>Ejercicio 17</h2>
+<p class="ejercicio16">Texto de prueba</p>
+
+<h2>Ejercicio 18</h2>
+<form>
+  <input type="text"><br>
+  <input type="text"><br>
+  <input type="text"><br>
+  <input type="text"><br>
+  <input type="text">
+</form>
+
+<h2>Ejercicio 19</h2>
+<ul>
+  <li>Primero</li>
+  <li>Segundo</li>
+  <li>Tercero</li>
+  <li>Cuarto</li>
+  <li>Quinto</li>
+</ul>
+
+<h2>Ejercicio 20</h2>
+<p lang="en">This text is red</p>
+
+</body>
+</html>

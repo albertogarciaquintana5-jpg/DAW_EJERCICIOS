@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Práctica CSS 04-01</title>
+
+    <link rel="stylesheet" href="estilos.css">
+
+    <style>
+        @import url("importado.css");
+
+        h2 { color: green; }
+        p { color: blue; }
+
+        table, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        .borde {
+            width: 300px;
+            border: 5px solid black;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        div h1 {
+            color: purple;
+        }
+
+        h3 { color: red; }
+        h3 { color: blue; }
+
+    </style>
+</head>
+
+<body>
+
+    <h1 style="color:red;">Título H1 en rojo</h1>
+    <h2>Título H2 en verde</h2>
+    <p>Párrafo en azul</p>
+
+    <hr>
+
+    <img src="imagen.jpg" width="200">
+
+    <hr>
+
+    <table>
+        <tr>
+            <td>1</td><td>2</td><td>3</td><td>4</td>
+            <td>5</td><td>6</td><td>7</td><td>8</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <table>
+        <tr>
+            <th>Afirmación</th>
+            <th>V / F</th>
+        </tr>
+        <tr>
+            <td>El content va fuera del padding</td>
+            <td>F</td>
+        </tr>
+        <tr>
+            <td>El padding va dentro del margin</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>El border va entre el margin y el padding</td>
+            <td>V</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <div class="borde">
+        <h3>Borde ejemplo</h3>
+    </div>
+
+    <div class="nueve">
+        <h3>Bordes 9</h3>
+    </div>
+
+</body>
+</html>

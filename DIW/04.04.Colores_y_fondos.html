@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>04-04 CSS Colores y Fondos</title>
+
+<style>
+div {
+  width: 150px;
+  height: 40px;
+  margin: 5px;
+}
+
+.color1 { background-color: gray; }
+.color2 { background-color: #0000FF; }
+.color3 { background-color: #00F; }
+.color4 { background-color: rgb(0,0,255); }
+.color5 { background-color: rgba(0,0,255,0.5); }
+.color6 { background-color: lch(50% 100 240); }
+.color7 { background-color: hsl(150 30% 60%); }
+.color8 { background-color: lab(52% 40 59); }
+.color9 { background-color: oklab(60% 0.1 0.1); }
+.color10 { background-color: hwb(194 0% 0%); }
+
+.fondo-gif {
+  background-image: url("fondo.gif");
+}
+
+.fondo-png {
+  background-color: red;
+  background-image: url("imagen.png");
+  background-repeat: repeat-x;
+}
+
+.fondo-jpg {
+  background-image: url("foto.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.pos {
+  background-image: url("foto.jpg");
+  background-repeat: no-repeat;
+  height: 100px;
+}
+
+.p1 { background-position: left bottom; }
+.p2 { background-position: left top; }
+.p3 { background-position: right center; }
+.p4 { background-position: right bottom; }
+.p5 { background-position: bottom center; }
+.p6 { background-position: 25% 10%; }
+.p7 { background-position: 100px 500px; }
+
+body { background: #00f; color: black; }
+
+#saludo {
+  background: white;
+  width: 200px;
+  height: 200px;
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
+
+#frase {
+  background: white;
+  width: 200px;
+  height: 200px;
+  filter: alpha(opacity=100);
+  -moz-opacity: 1;
+  opacity: 1;
+}
+
+#despedida {
+  background: white;
+  width: 200px;
+  height: 200px;
+  filter: alpha(opacity=0);
+  -moz-opacity: 0;
+  opacity: 0;
+}
+
+.img50 {
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
+
+.img25 {
+  filter: alpha(opacity=25);
+  -moz-opacity: 0.25;
+  opacity: 0.25;
+}
+
+.img75 {
+  filter: alpha(opacity=75);
+  -moz-opacity: 0.75;
+  opacity: 0.75;
+}
+
+.hoverimg:hover {
+  opacity: 0.5;
+}
+</style>
+
+<script>
+var coloresCss1 = ["aqua","black","blue","fuchsia","gray","green","lime","maroon"];
+for (var i = 0; i < coloresCss1.length; i++) {
+  document.write("<div style='background-color:"+coloresCss1[i]+"'>"+coloresCss1[i]+"</div>");
+}
+</script>
+
+</head>
+
+<body>
+
+<h2>Ejercicio 2</h2>
+<div class="color1"></div>
+<div class="color2"></div>
+<div class="color3"></div>
+<div class="color4"></div>
+<div class="color5"></div>
+<div class="color6"></div>
+<div class="color7"></div>
+<div class="color8"></div>
+<div class="color9"></div>
+<div class="color10"></div>
+
+<h2>Ejercicio 3</h2>
+<div class="fondo-gif"></div>
+
+<h2>Ejercicio 4</h2>
+<div class="fondo-png"></div>
+
+<h2>Ejercicio 5</h2>
+<div class="fondo-jpg"></div>
+
+<h2>Ejercicio 6</h2>
+<div class="pos p1"></div>
+<div class="pos p2"></div>
+<div class="pos p3"></div>
+<div class="pos p4"></div>
+<div class="pos p5"></div>
+<div class="pos p6"></div>
+<div class="pos p7"></div>
+
+<h2>Ejercicio 7</h2>
+<div id="saludo"><h1>Hola</h1></div>
+<div id="frase">Ejemplo</div>
+<div id="despedida"><h2>Adiós</h2></div>
+
+<h2>Ejercicio 8</h2>
+<img src="foto.jpg" class="img50">
+<img src="foto.jpg" class="img25">
+<img src="foto.jpg" class="img75">
+
+<h2>Ejercicio 9</h2>
+<img src="foto.jpg" class="hoverimg">
+
+</body>
+</html>

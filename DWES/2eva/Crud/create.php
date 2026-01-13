@@ -22,9 +22,9 @@ if ($_POST) {
     Apellido: <input type="text" name="apellido" required><br><br>
     Email: <input type="email" name="email" required><br><br>
     Telefono: <input type="number" name="telefono" required><br><br>
-    Año de nacimiento: <input type="date" name="fecha" required><br><br>
+    Fecha de nacimiento: <input type="date" name="fecha" required><br><br>
 
     <button type="submit">Guardar</button>
 </form>
 
-<a href="index.php">Volver</a>
+<a href="home.php">Volver</a>
