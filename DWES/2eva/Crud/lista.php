@@ -1,46 +1,63 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista</title>
+    <title>Listado de Usuarios</title>
     <link href="./bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    
-<h2>Listado de Usuarios</h2>
+    <!-- Contenedor principal con padding -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <h2 class="mb-4 text-primary">Listado de Usuarios</h2>
 
-<a href="create.php">Crear nuevo usuario</a>
-<br><br>
+                <!-- Botón para crear nuevo usuario -->
+                <a href="create.php" class="btn btn-success mb-3">
+                    Crear nuevo usuario
+                </a>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellidos</th>
-        <th>Fecha</th>
-        <th>Teléfono</th>
-        <th>Email</th>
-    </tr>
+                <!-- Tabla con estilos Bootstrap -->
+                <table class="table table-striped table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Fecha</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Incluir conexión a BD
+                        include "db.php";
+                        // Recuperar todos los usuarios
+                        $resultado = $conexion->query("SELECT * FROM usuarios");
 
-    <?php
-    include "db.php";
-    $resultado = $conexion->query("SELECT * FROM usuarios");
+                        while ($fila = $resultado->fetch_assoc()) {
+                            echo "<tr>
+                                <td>{$fila['id']}</td>
+                                <td>{$fila['nombre']}</td>
+                                <td>{$fila['apellido']}</td>
+                                <td>{$fila['fecha']}</td>
+                                <td>{$fila['telefono']}</td>
+                                <td>{$fila['email']}</td>
+                            </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
 
-    while ($fila = $resultado->fetch_assoc()) {
-        echo "<tr>
-            <td>{$fila['id']}</td>
-            <td>{$fila['nombre']}</td>
-            <td>{$fila['apellido']}</td>
-            <td>{$fila['fecha']}</td>
-            <td>{$fila['telefono']}</td>
-            <td>{$fila['email']}</td>
-          </tr>";
-    }
-    ?>
-</table>
-<br>
-<a href="home.php">Volver</a>
+                <!-- Botón volver -->
+                <a href="home.php" class="btn btn-secondary">
+                    Volver
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
