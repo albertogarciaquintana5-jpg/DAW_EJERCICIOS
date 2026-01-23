@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios DOM - createElement, appendChild, removeChild, replaceChild</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .contenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .ejercicio {
+            background-color: white;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .ejercicio h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .ejercicio h3 {
+            color: #34495e;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .ejercicio p {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95em;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button.danger {
+            background-color: #e74c3c;
+        }
+        button.danger:hover {
+            background-color: #c0392b;
+        }
+        input[type="text"], select {
+            padding: 8px 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 0.95em;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+        li {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        #listaVacia, #listaParaEliminar {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .resultado {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            color: #2c3e50;
+            border-left: 4px solid #3498db;
+        }
+        .info-nodos {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        #contenedor {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        #panel {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        section {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #27ae60;
+            border-radius: 4px;
+        }
+        section h3 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        .controls {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1 style="color: #2c3e50; margin-bottom: 30px;">Ejercicios de Manipulación del DOM</h1>
+
+        <!-- EJERCICIO 1 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 1: Crear elementos simples</h2>
+            <p>Crea un botón que añada un párrafo al final del body con texto dinámico.</p>
+            <button id="btnEj1">Añadir párrafo</button>
+            <div class="resultado" id="resultadoEj1" style="display:none;"></div>
+        </div>
+
+        <!-- EJERCICIO 2 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 2: Lista dinámica</h2>
+            <p>Crear 5 elementos de lista numerados del 1 al 5.</p>
+            <ul id="listaVacia"></ul>
+            <button id="btnEj2">Generar lista</button>
+        </div>
+
+        <!-- EJERCICIO 3 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 3: Select dinámico</h2>
+            <p>Añadir opciones a un select desde un array.</p>
+            <select id="selectEj3"></select>
+            <button id="btnEj3">Generar opciones</button>
+        </div>
+
+        <!-- EJERCICIO 4 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 4: Select dinámico con frutas</h2>
+            <p>Añadir opciones de frutas a un select desde un array.</p>
+            <select id="selectEj4"></select>
+            <button id="btnEj4">Generar opciones</button>
+        </div>
+
+        <!-- EJERCICIO 5 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 5: Contar nodos hijos con childNodes</h2>
+            <p>Obtén la colección childNodes y muestra información de cada nodo.</p>
+            <div id="contenedor">
+                <p>Texto 1</p>
+                <p>Texto 2</p>
+            </div>
+            <button id="btnEj5">Analizar nodos</button>
+            <div class="resultado" id="resultadoEj5" style="display:none;"></div>
+        </div>
+
+        <!-- EJERCICIO 6 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 6: Cambiar texto usando childNodes</h2>
+            <p>Modifica el texto del primer nodo para que diga "Opcion modificada".</p>
+            <button id="btnEj6">Modificar texto</button>
+            <div class="resultado" id="resultadoEj6" style="display:none;"></div>
+        </div>
+
+        <!-- EJERCICIO 7 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 7: Reemplazar elementos con replaceChild()</h2>
+            <p>Reemplaza "Banana" por "Pera" usando replaceChild().</p>
+            <ul id="listaFrutas"></ul>
+            <button id="btnEj7">Generar y reemplazar</button>
+        </div>
+
+        <!-- EJERCICIO 8 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 8: Reemplazo condicional</h2>
+            <p>Reemplaza párrafos que contengan "error" por "Contenido corregido".</p>
+            <div id="contenedorEj8"></div>
+            <button id="btnEj8">Generar y corregir</button>
+        </div>
+
+        <!-- EJERCICIO 9 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 9: Eliminar elementos</h2>
+            <p>Crea una lista y elimina el último elemento al pulsar el botón.</p>
+            <ul id="listaParaEliminar"></ul>
+            <button id="btnEj9">Generar lista</button>
+            <button id="btnEliminarUltimo" class="danger" style="display:none;">Eliminar último elemento</button>
+        </div>
+
+        <!-- EJERCICIO 10 -->
+        <div class="ejercicio">
+            <h2>Ejercicio 10: Editor dinámico de secciones</h2>
+            <p>Sistema para reemplazar, eliminar y añadir secciones.</p>
+            
+            <div class="controls">
+                <div>
+                    <label for="seccion">Número de Sección:</label>
+                    <input type="text" id="seccion" placeholder="1 o 2">
+                    <button id="btnAdd">Añadir sección</button>
+                    <button id="btnReemplazar">Reemplazar sección</button>
+                    <button id="btnEliminar" class="danger">Eliminar párrafo de sección</button>
+                </div>
+            </div>
+
+            <div id="panel">
+                <section>
+                    <h3>Título 1</h3>
+                    <p>Contenido A</p>
+                </section>
+                <section>
+                    <h3>Título 2</h3>
+                    <p>Contenido B</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ======== EJERCICIO 1 ========
+        document.getElementById('btnEj1').addEventListener('click', function() {
+            const p = document.createElement('p');
+            const texto = document.createTextNode('Este párrafo fue creado dinámicamente');
+            p.appendChild(texto);
+            document.body.appendChild(p);
+            
+            const resultado = document.getElementById('resultadoEj1');
+            resultado.style.display = 'block';
+            resultado.textContent = 'Párrafo añadido al final del body.';
+        });
+
+        // ======== EJERCICIO 2 ========
+        document.getElementById('btnEj2').addEventListener('click', function() {
+            const lista = document.getElementById('listaVacia');
+            // Limpiar la lista si ya contiene elementos
+            while (lista.childNodes.length > 0) {
+                lista.removeChild(lista.childNodes[0]);
+            }
+            
+            for (let i = 1; i <= 5; i++) {
+                const li = document.createElement('li');
+                const texto = document.createTextNode(i);
+                li.appendChild(texto);
+                lista.appendChild(li);
+            }
+        });
+
+        // ======== EJERCICIO 3 ========
+        document.getElementById('btnEj3').addEventListener('click', function() {
+            const select = document.getElementById('selectEj3');
+            const datos = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
+            
+            // Limpiar opciones previas
+            while (select.childNodes.length > 0) {
+                select.removeChild(select.childNodes[0]);
+            }
+            
+            datos.forEach(function(dato, index) {
+                const option = document.createElement('option');
+                option.value = index;
+                const texto = document.createTextNode(dato);
+                option.appendChild(texto);
+                select.appendChild(option);
+            });
+        });
+
+        // ======== EJERCICIO 4 ========
+        document.getElementById('btnEj4').addEventListener('click', function() {
+            const select = document.getElementById('selectEj4');
+            const frutas = [
+                { valor: 1, texto: 'Manzana' },
+                { valor: 2, texto: 'Plátano' },
+                { valor: 3, texto: 'Naranja' },
+                { valor: 4, texto: 'Fresa' },
+                { valor: 5, texto: 'Uva' }
+            ];
+            
+            // Limpiar opciones previas
+            while (select.childNodes.length > 0) {
+                select.removeChild(select.childNodes[0]);
+            }
+            
+            frutas.forEach(function(fruta) {
+                const option = document.createElement('option');
+                option.value = fruta.valor;
+                const texto = document.createTextNode(fruta.texto);
+                option.appendChild(texto);
+                select.appendChild(option);
+            });
+        });
+
+        // ======== EJERCICIO 5 ========
+        document.getElementById('btnEj5').addEventListener('click', function() {
+            const contenedor = document.getElementById('contenedor');
+            const nodos = contenedor.childNodes;
+            
+            let info = '<strong>Análisis de nodos en #contenedor:</strong><br>';
+            info += 'Total de nodos: ' + nodos.length + '<br><br>';
+            
+            for (let i = 0; i < nodos.length; i++) {
+                const nodo = nodos[i];
+                let tipo = '';
+                
+                if (nodo.nodeType === 1) {
+                    tipo = 'Elemento (' + nodo.nodeName + ')';
+                } else if (nodo.nodeType === 3) {
+                    tipo = 'Nodo de texto';
+                }
+                
+                info += 'Nodo ' + i + ': ' + tipo + '<br>';
+            }
+            
+            const resultado = document.getElementById('resultadoEj5');
+            resultado.innerHTML = info;
+            resultado.style.display = 'block';
+        });
+
+        // ======== EJERCICIO 6 ========
+        document.getElementById('btnEj6').addEventListener('click', function() {
+            const contenedor = document.getElementById('contenedor');
+            const nodos = contenedor.childNodes;
+            
+            // Buscar el primer nodo de texto dentro de un elemento P
+            for (let i = 0; i < nodos.length; i++) {
+                if (nodos[i].nodeType === 1 && nodos[i].nodeName === 'P') {
+                    const p = nodos[i];
+                    // Cambiar el texto del primer hijo
+                    if (p.childNodes.length > 0) {
+                        const nuevoTexto = document.createTextNode('Opcion modificada');
+                        p.replaceChild(nuevoTexto, p.childNodes[0]);
+                        break;
+                    }
+                }
+            }
+            
+            const resultado = document.getElementById('resultadoEj6');
+            resultado.innerHTML = 'Primer nodo de texto modificado.';
+            resultado.style.display = 'block';
+        });
+
+        // ======== EJERCICIO 7 ========
+        document.getElementById('btnEj7').addEventListener('click', function() {
+            const lista = document.getElementById('listaFrutas');
+            
+            // Limpiar la lista si ya contiene elementos
+            while (lista.childNodes.length > 0) {
+                lista.removeChild(lista.childNodes[0]);
+            }
+            
+            const frutas = ['Manzana', 'Banana', 'Naranja'];
+            const lis = [];
+            
+            frutas.forEach(function(fruta) {
+                const li = document.createElement('li');
+                const texto = document.createTextNode(fruta);
+                li.appendChild(texto);
+                lista.appendChild(li);
+                lis.push(li);
+            });
+            
+            // Reemplazar Banana por Pera
+            const liNuevo = document.createElement('li');
+            const textoNuevo = document.createTextNode('Pera');
+            liNuevo.appendChild(textoNuevo);
+            lista.replaceChild(liNuevo, lis[1]);
+        });
+
+        // ======== EJERCICIO 8 ========
+        document.getElementById('btnEj8').addEventListener('click', function() {
+            const contenedor = document.getElementById('contenedorEj8');
+            
+            // Limpiar contenedor previo
+            while (contenedor.childNodes.length > 0) {
+                contenedor.removeChild(contenedor.childNodes[0]);
+            }
+            
+            const textos = ['Hola', 'Hola error', 'Adios error', 'Adios'];
+            const parrafos = [];
+            
+            textos.forEach(function(texto) {
+                const p = document.createElement('p');
+                const nodoTexto = document.createTextNode(texto);
+                p.appendChild(nodoTexto);
+                contenedor.appendChild(p);
+                parrafos.push(p);
+            });
+            
+            // Reemplazar párrafos con "error"
+            const nodosActuales = contenedor.childNodes;
+            const nodosArray = Array.from(nodosActuales);
+            
+            nodosArray.forEach(function(nodo) {
+                if (nodo.nodeType === 1 && nodo.nodeName === 'P') {
+                    if (nodo.textContent.includes('error')) {
+                        const pNuevo = document.createElement('p');
+                        const textoNuevo = document.createTextNode('Contenido corregido');
+                        pNuevo.appendChild(textoNuevo);
+                        contenedor.replaceChild(pNuevo, nodo);
+                    }
+                }
+            });
+        });
+
+        // ======== EJERCICIO 9 ========
+        document.getElementById('btnEj9').addEventListener('click', function() {
+            const lista = document.getElementById('listaParaEliminar');
+            
+            // Limpiar la lista si ya contiene elementos
+            while (lista.childNodes.length > 0) {
+                lista.removeChild(lista.childNodes[0]);
+            }
+            
+            const elementos = ['Elemento 1', 'Elemento 2', 'Elemento 3', 'Elemento 4', 'Elemento 5'];
+            
+            elementos.forEach(function(elemento) {
+                const li = document.createElement('li');
+                const texto = document.createTextNode(elemento);
+                li.appendChild(texto);
+                lista.appendChild(li);
+            });
+            
+            document.getElementById('btnEliminarUltimo').style.display = 'inline-block';
+        });
+
+        document.getElementById('btnEliminarUltimo').addEventListener('click', function() {
+            const lista = document.getElementById('listaParaEliminar');
+            
+            // Encontrar el último elemento li
+            if (lista.childNodes.length > 0) {
+                const ultimos = lista.childNodes;
+                for (let i = ultimos.length - 1; i >= 0; i--) {
+                    if (ultimos[i].nodeType === 1) {
+                        lista.removeChild(ultimos[i]);
+                        break;
+                    }
+                }
+            }
+        });
+
+        // ======== EJERCICIO 10 ========
+        document.getElementById('btnAdd').addEventListener('click', function() {
+            const numSeccion = document.getElementById('seccion').value;
+            const panel = document.getElementById('panel');
+            
+            if (!numSeccion) {
+                alert('Introduce un número de sección');
+                return;
+            }
+            
+            const section = document.createElement('section');
+            
+            const h3 = document.createElement('h3');
+            const textoH3 = document.createTextNode('Título ' + numSeccion);
+            h3.appendChild(textoH3);
+            section.appendChild(h3);
+            
+            const p = document.createElement('p');
+            const textoP = document.createTextNode('Contenido ' + String.fromCharCode(64 + parseInt(numSeccion)));
+            p.appendChild(textoP);
+            section.appendChild(p);
+            
+            panel.appendChild(section);
+            document.getElementById('seccion').value = '';
+        });
+
+        document.getElementById('btnReemplazar').addEventListener('click', function() {
+            const numSeccion = document.getElementById('seccion').value;
+            const panel = document.getElementById('panel');
+            
+            if (!numSeccion) {
+                alert('Introduce un número de sección (1 o 2)');
+                return;
+            }
+            
+            const nodos = panel.childNodes;
+            let contador = 0;
+            let indexSeccion = -1;
+            
+            // Contar solo las secciones (elementos)
+            for (let i = 0; i < nodos.length; i++) {
+                if (nodos[i].nodeType === 1 && nodos[i].nodeName === 'SECTION') {
+                    contador++;
+                    if (contador == numSeccion) {
+                        indexSeccion = i;
+                        break;
+                    }
+                }
+            }
+            
+            if (indexSeccion === -1) {
+                alert('Sección no encontrada');
+                return;
+            }
+            
+            // Crear nueva sección
+            const section = document.createElement('section');
+            
+            const h3 = document.createElement('h3');
+            const textoH3 = document.createTextNode('Título reemplazado');
+            h3.appendChild(textoH3);
+            section.appendChild(h3);
+            
+            const p = document.createElement('p');
+            const textoP = document.createTextNode('Este contenido fue creado dinámicamente');
+            p.appendChild(textoP);
+            section.appendChild(p);
+            
+            // Reemplazar la sección
+            panel.replaceChild(section, nodos[indexSeccion]);
+            document.getElementById('seccion').value = '';
+        });
+
+        document.getElementById('btnEliminar').addEventListener('click', function() {
+            const numSeccion = document.getElementById('seccion').value;
+            const panel = document.getElementById('panel');
+            
+            if (!numSeccion) {
+                alert('Introduce un número de sección (1 o 2)');
+                return;
+            }
+            
+            const nodos = panel.childNodes;
+            let contador = 0;
+            let indexSeccion = -1;
+            
+            // Contar solo las secciones
+            for (let i = 0; i < nodos.length; i++) {
+                if (nodos[i].nodeType === 1 && nodos[i].nodeName === 'SECTION') {
+                    contador++;
+                    if (contador == numSeccion) {
+                        indexSeccion = i;
+                        break;
+                    }
+                }
+            }
+            
+            if (indexSeccion === -1) {
+                alert('Sección no encontrada');
+                return;
+            }
+            
+            const section = nodos[indexSeccion];
+            const nodosSeccion = section.childNodes;
+            
+            // Eliminar el párrafo
+            for (let i = 0; i < nodosSeccion.length; i++) {
+                if (nodosSeccion[i].nodeType === 1 && nodosSeccion[i].nodeName === 'P') {
+                    section.removeChild(nodosSeccion[i]);
+                    break;
+                }
+            }
+            
+            document.getElementById('seccion').value = '';
+            alert('Párrafo de la sección ' + numSeccion + ' eliminado');
+        });
+    </script>
+</body>
+</html>

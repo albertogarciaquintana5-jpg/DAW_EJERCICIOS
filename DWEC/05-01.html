@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios DOM - Formularios</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        fieldset { margin-bottom: 20px; }
+        h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 5px; }
+        div[id^="Ejercicio"] { background-color: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        input[type="button"] { padding: 8px 15px; margin: 5px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        input[type="button"]:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<h1>Ejercicios de Manipulación de Formularios con DOM</h1>
+
+<form action="" method="post" id="idformulario" name="nameformulario">
+        <div> 
+        <fieldset>  <legend> Datos Personales </legend>
+            <p> Nombre: <input id="f1" type="text" name="name_control" autofocus required value="Manolo" />       </p> 
+            <p> Contraseña: <input id="f2" type="password" name="pass_control" required />       </p> 
+            <p> Correo Electrónico: <input id="f3" type="email" name="email_control" required />       </p> 
+             <br />
+         </fieldset>
+         <fieldset>  <legend> Gustos  </legend>
+            <br />
+            <p>  URL: <input type="url" name="url_control" placeholder="Escripe la URL de tu página web personal" /> </p> 
+            <p> Fecha: <input type="date" name="date_control" />          </p> 
+            <p> Tiempo: <input type="time" name="time_control" />      </p> 
+            <p> Número (min -10, max 10): <input type="number" name="number_control" min="-10" max="10" value="0" /></p> 
+            <p> Teléfono: <input type="tel" name="tel_control" /></p> 
+            <p> Término de búsqueda: <input type="search" name="search_control" /></p> 
+            <p> Color Favorito: <input type="color" name="color_control" /></p>   
+             
+            <br/><br />
+          </fieldset>
+        <fieldset>  <legend> Informatica   </legend>
+            <br/>
+            <p>  Sistema operativo:
+                <select name="sistema_control"> 
+                        <option value="windows">Windows</option>
+                        <option value="linux">Linux</option>
+                        <option value="macos">Macos</option>
+                </select></p>
+            <p> Que lenguaje de programación web conoces? </p> 
+            <input id="cb1" name="lenguaje_control" type="checkbox" value="html5" checked /> Html5
+            <input id="cb2" name="lenguaje_control" type="checkbox" value="ccs3" checked /> Css3
+            <input id="cb3" name="lenguaje_control" type="checkbox" value="javascript"/> JavaScript
+            <input id="cb4" name="lenguaje_control" type="checkbox" value="php"/> Php
+            <input id="cb5" name="lenguaje_control" type="checkbox" value="python"/> Python     
+        <p>  Sabes utilizar Python?  </p> 
+        <p>   <input id="r1" name="python_control" type="radio"  value="si" checked /> Si  <input id="r2" name="python_control" type="radio" value="no" /> No </p> 
+        <p>  Comentarios: </p> 
+                 <p>   <textarea id="ta1" name="comentario_control" rows="4" cols="50"></textarea> </p> 
+             
+             <br/><br />
+            <input type="submit" value="Submit!" />
+        </fieldset>
+    </div>
+        </form>
+    
+     <h2> Ejercicio2 </h2><div id="Ejercicio2">  </div>
+     <input type="button" value="Ver Contenido" onclick="verEj1FormularioMetodo3()"/>
+
+     <script > 
+     /*
+     Crea una funcion que Use el Método 3 a través de la colección forms[] del objeto document,  
+     que contiene la referencia a todos los controles del formulario para para mostrar los
+      datos del formulario con InnerElements. Añade un boton que llame a esa función.
+     */
+
+    function verEj1FormularioMetodo3 () {
+        var miformulario=document.forms[0];
+        var cadena="";
+         for (i=0; i<miformulario.length; i++ )   {
+            cadena+= "<b>"+miformulario[i].name +":</b> ";
+            cadena+= miformulario[i].value+ "<br>";
+         }
+         document.getElementById("Ejercicio2").innerHTML=cadena;
+    }
+    </script>
+
+
+
+    <h2> Ejercicio3 </h2><div id="Ejercicio3"> </div>
+
+    <input type="button" value="Ver Contenido" onclick="verEj3FormularioMetodo2()"/>
+
+    <script> 
+    /* Usa el Método 2 A través del método getElementsByTagName() . 
+    Añade un botón (MostrarDatosName)  que llame una función para  
+    mostrar los datos del formulario con InnerElements en el div con id ejercicio */
+    
+   function verEj3FormularioMetodo2 () {
+       var miformulario=document.getElementsByTagName("form")[0]; 
+       var cadena="";
+        for (i=0; i<miformulario.length; i++ )   {
+           cadena+= "<b>"+miformulario[i].name +":</b> ";
+           cadena+= miformulario[i].value+ "<br>";
+        }
+        document.getElementById("Ejercicio3").innerHTML=cadena;
+   }
+   </script>
+
+    <h2> Ejercicio4 </h2> <div id="Ejercicio4"> </div>
+    <input type="button" value="Ver Contenido" onclick="verEj4FormularioMetodo1()"/>
+    <script> 
+        /* Ejercicio 4. Usa el Método 1 A través del método getElementById() del DOM,
+        que nos permite acceder a un objeto a través de su atributo ID. 
+        Añade un botón que llame una función para mostrar los datos del formulario 
+        con InnerElements en el div con id Ejercicio4 */
+        
+       function verEj4FormularioMetodo1 () {
+        var cadena="";
+        cadena+="<b>Nombre:</b> "+document.getElementById('f1').value+"<br>";
+        cadena+="<b>Contraseña:</b> "+document.getElementById('f2').value+"<br>";
+        cadena+="<b>Email:</b> "+document.getElementById('f3').value+"<br>";
+        
+        document.getElementById("Ejercicio4").innerHTML=cadena;
+       }
+    </script>
+    <h2> Ejercicio5 </h2> <div id="Ejercicio5"> </div>
+
+    <input type="button" value="Rellenar datos" onclick="verEj5Rellenar()"/>
+    <script> 
+        /* Ejercicio 5. Crea un botón que rellene con datos el formulario 
+        utilizando el método anterior que más te guste */
+        
+       function verEj5Rellenar () {
+        document.getElementById('f1').value="Pepe pepillo";
+        document.getElementById('f2').value="password123";
+        document.getElementById('f3').value="Pepe@pepillo.com";
+        
+        document.getElementById("Ejercicio5").innerHTML="<b>Formulario rellenado correctamente</b>";
+       }
+    </script>
+    <h2> Ejercicio6 </h2> <div id="Ejercicio6"> </div>
+
+    <input type="button" value="Comprobar no vacío" onclick="ej6Comprobar()"/>
+
+    <script> 
+    /*
+    Ejercicio 6. Haz una función que empleando la propiedad elements[] 
+    haga un bucle que recorra el formulario y compruebe que ninguno de 
+    los controles esté en blanco.
+    */
+
+   function ej6Comprobar () {
+       var misElementos=document.forms[0].elements;
+       var cadena="";
+       var vacio=false;
+       
+        for (i=0; i<misElementos.length; i++ )   {
+           if(misElementos[i].value=="") {
+            cadena+="<br> Elemento vacío: "+misElementos[i].name;
+            vacio=true;
+           };
+        }
+        
+        if(!vacio) {
+            cadena="<b style='color:green;'> Todos los campos están rellenos</b>";
+        }
+        
+        document.getElementById("Ejercicio6").innerHTML=cadena;
+   }
+   </script>
+
+<h2> Ejercicio7 </h2> <div id="Ejercicio7"> </div>
+
+<script>
+    /*
+    Ejercicio 7. Resumen de las diferentes formas de acceder a un formulario 
+    y sus elementos
+    */
+    
+    var contenido = "<h3>Métodos de acceso a formularios:</h3>";
+    
+    // Método 1: Acceso por ID (usando name en elements)
+    contenido += "<p><b>Método 1 - Por name en elements:</b><br>";
+    contenido += "Sintaxis: document.forms['nameformulario'].elements['f1'].value<br>";
+    contenido += "Valor: " + document.forms["nameformulario"].elements["f1"].value + "</p>";
+    
+    // Método 2: Acceso por propiedad directa (usando name del formulario)
+    contenido += "<p><b>Método 2 - Por propiedad name:</b><br>";
+    contenido += "Sintaxis: document.nameformulario.name_control.value<br>";
+    contenido += "Valor: " + document.nameformulario.name_control.value + "</p>";
+    
+    // Método 3: Acceso usando forms[] con índice
+    contenido += "<p><b>Método 3 - Por índice forms[]:</b><br>";
+    contenido += "Sintaxis: document.forms[0].elements[0].value<br>";
+    contenido += "Valor: " + document.forms[0].elements[0].value + "</p>";
+    
+    // Método 4: Acceso combinado por ID del formulario y nombre del elemento
+    contenido += "<p><b>Método 4 - Por ID form y name elemento:</b><br>";
+    contenido += "Sintaxis: document.getElementById('idformulario').name_control.value<br>";
+    contenido += "Valor: " + document.getElementById("idformulario").name_control.value + "</p>";
+    
+    document.getElementById("Ejercicio7").innerHTML = contenido;
+    
+</script>
+
+</body>
+</html>

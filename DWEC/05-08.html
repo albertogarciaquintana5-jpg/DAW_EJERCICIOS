@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios Cookies</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+        .ejercicio {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+        }
+        input, select {
+            padding: 8px;
+            margin: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .resultado {
+            background-color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ALberto Garcia Quintana</h1>
+
+    <div class="ejercicio">
+        <h2>Ejercicio 1</h2>
+        <p>Guardar datos del texto en cookies</p>
+        <input type="text" id="texto1" placeholder="Introduce texto">
+        <button onclick="guardarCookie()">Guardar en Cookie</button>
+        <div id="resultado1" class="resultado"></div>
+    </div>
+
+    <div class="ejercicio">
+        <h2>Ejercicio 2</h2>
+        <p>Mostrar contenido de las cookies como lista</p>
+        <button onclick="mostrarCookies()">Mostrar Cookies</button>
+        <div id="resultado2" class="resultado"></div>
+    </div>
+
+    <div class="ejercicio">
+        <h2>Ejercicio 3</h2>
+        <p>Añadir cada cookie a un select cuando se crea</p>
+        <input type="text" id="texto3" placeholder="Introduce texto">
+        <button onclick="guardarCookieSelect()">Guardar Cookie</button>
+        <p>Cookies creadas:</p>
+        <select id="selectCookies">
+            <option value="">Selecciona una cookie</option>
+        </select>
+        <div id="resultado3" class="resultado"></div>
+    </div>
+
+    <div class="ejercicio">
+        <h2>Ejercicio 4</h2>
+        <p>Botón para borrar la última cookie añadida</p>
+        <button onclick="borrarUltimaCookie()">Borrar última cookie</button>
+        <div id="resultado4" class="resultado"></div>
+    </div>
+
+    <div class="ejercicio">
+        <h2>Ejercicio 5</h2>
+        <p>Añadir una cookie con expiración de un mes</p>
+        <input type="text" id="texto5" placeholder="Introduce texto">
+        <button onclick="guardarCookieUnMes()">Guardar (1 mes)</button>
+        <div id="resultado5" class="resultado"></div>
+    </div>
+
+    <div class="ejercicio">
+        <h2>Ejercicio 6</h2>
+        <p>Botón que elimina la cookie seleccionada en el select</p>
+        <select id="selectEliminar">
+            <option value="">Selecciona una cookie para eliminar</option>
+        </select>
+        <button onclick="eliminarCookieSelect()">Eliminar Cookie</button>
+        <div id="resultado6" class="resultado"></div>
+    </div>
+
+    <div class="ejercicio">
+        <h2>Ejercicio 7</h2>
+        <p>Mostrar cookies considerando atributos (expires, max-age, domain, path)</p>
+        <button onclick="mostrarCookiesDetalle()">Ver detalle cookies</button>
+        <div id="resultado7" class="resultado"></div>
+    </div>
+
+    <div class="ejercicio">
+        <h2>Ejercicio 8</h2>
+        <p>Usar librería js-cookie</p>
+        <input type="text" id="nombreCookie" placeholder="Nombre">
+        <input type="text" id="valorCookie" placeholder="Valor">
+        <button onclick="crearConLibreria()">Crear Cookie</button>
+        <button onclick="leerTodas()">Leer Todas</button>
+        <button onclick="leerUnaCookie()">Leer Una</button>
+        <button onclick="borrarConLibreria()">Borrar Una</button>
+        <button onclick="borrarTodas()">Borrar Todas</button>
+        <div id="resultado8" class="resultado"></div>
+    </div>
+
+    <script>
+
+        // EJERCICIO 1
+        function guardarCookie() {
+            var texto = document.getElementById('texto1').value;
+            if (texto == "") {
+                alert("Debes introducir algo");
+                return;
+            }
+            var nombreCookie = "datos_" + Date.now();
+            document.cookie = nombreCookie + "=" + encodeURIComponent(texto) + ";path=/";
+            document.getElementById('resultado1').innerHTML = "Cookie guardada: " + nombreCookie;
+            document.getElementById('texto1').value = "";
+        }
+
+        // EJERCICIO 2
+        function mostrarCookies() {
+            var cadenaCookies = document.cookie;
+            if (cadenaCookies == "") {
+                document.getElementById('resultado2').innerHTML = "No hay cookies";
+                return;
+            }
+            var arrayCookies = cadenaCookies.split(';');
+            var html = "<ul>";
+            for (var i = 0; i < arrayCookies.length; i++) {
+                var partes = arrayCookies[i].trim().split('=');
+                if (partes.length >= 2) {
+                    html += "<li>" + partes[0] + " = " + decodeURIComponent(partes[1]) + "</li>";
+                }
+            }
+            html += "</ul>";
+            document.getElementById('resultado2').innerHTML = html;
+        }
+
+        // EJERCICIO 3
+        function guardarCookieSelect() {
+            var texto = document.getElementById('texto3').value;
+            if (texto == "") {
+                alert("Debes introducir algo");
+                return;
+            }
+            var nombreCookie = "cookie_" + Date.now();
+            document.cookie = nombreCookie + "=" + encodeURIComponent(texto) + ";path=/";
+            
+            // Añadir al select
+            var select = document.getElementById('selectCookies');
+            var opt = document.createElement('option');
+            opt.value = nombreCookie;
+            opt.innerHTML = nombreCookie + " = " + texto;
+            select.appendChild(opt);
+            
+            document.getElementById('resultado3').innerHTML = "Cookie añadida: " + nombreCookie;
+            document.getElementById('texto3').value = "";
+            actualizarSelectEliminar();
+        }
+
+        // EJERCICIO 4
+        function borrarUltimaCookie() {
+            var cadenaCookies = document.cookie;
+            if (cadenaCookies == "") {
+                document.getElementById('resultado4').innerHTML = "No hay cookies para borrar";
+                return;
+            }
+            var arrayCookies = cadenaCookies.split(';');
+            var cookie = arrayCookies[0];
+            var nombreCookie = cookie.trim().split('=')[0];
+            var fechaCookieOld = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            document.cookie = nombreCookie + "=;" + fechaCookieOld + ";";
+            
+            // Eliminar también del select de cookies
+            var selectCookies = document.getElementById('selectCookies');
+            for (var i = 0; i < selectCookies.options.length; i++) {
+                if (selectCookies.options[i].value == nombreCookie) {
+                    selectCookies.remove(i);
+                    break;
+                }
+            }
+            
+            document.getElementById('resultado4').innerHTML = "Cookie eliminada: " + nombreCookie;
+            actualizarSelectEliminar();
+        }
+
+        // EJERCICIO 5
+        function guardarCookieUnMes() {
+            var texto = document.getElementById('texto5').value;
+            if (texto == "") {
+                alert("Debes introducir algo");
+                return;
+            }
+            var nombreCookie = "cookie_mes_" + Date.now();
+            var d = new Date();
+            d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = nombreCookie + "=" + encodeURIComponent(texto) + ";" + expires + ";path=/";
+            document.getElementById('resultado5').innerHTML = "Cookie guardada (expira en 30 días): " + nombreCookie;
+            document.getElementById('texto5').value = "";
+            actualizarSelectEliminar();
+        }
+
+        // EJERCICIO 6 - Actualizar select
+        function actualizarSelectEliminar() {
+            var select = document.getElementById('selectEliminar');
+            select.innerHTML = '<option value="">Selecciona una cookie para eliminar</option>';
+            var cadenaCookies = document.cookie;
+            if (cadenaCookies == "") {
+                return;
+            }
+            var arrayCookies = cadenaCookies.split(';');
+            for (var i = 0; i < arrayCookies.length; i++) {
+                var partes = arrayCookies[i].trim().split('=');
+                if (partes.length >= 2) {
+                    var opt = document.createElement('option');
+                    opt.value = partes[0];
+                    opt.innerHTML = partes[0] + " = " + decodeURIComponent(partes[1]);
+                    select.appendChild(opt);
+                }
+            }
+        }
+
+        function eliminarCookieSelect() {
+            var opcionSeleccionada = document.getElementById("selectEliminar");
+            var value = opcionSeleccionada.value;
+            if (value == "") {
+                alert("Selecciona una cookie");
+                return;
+            }
+            var cookie = value + "=0";
+            var fechaCookieOld = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            document.cookie = cookie + ";" + fechaCookieOld + ";";
+            
+            // Eliminar del select
+            var selectCookiesObj = document.getElementById('selectEliminar');
+            var opcionseleccionada = selectCookiesObj.selectedIndex;
+            selectCookiesObj.remove(opcionseleccionada);
+            
+            // Eliminar también del select de cookies
+            var selectCookies = document.getElementById('selectCookies');
+            for (var i = 0; i < selectCookies.options.length; i++) {
+                if (selectCookies.options[i].value == value) {
+                    selectCookies.remove(i);
+                    break;
+                }
+            }
+            
+            document.getElementById('resultado6').innerHTML = "Cookie eliminada: " + value;
+            actualizarSelectEliminar();
+        }
+
+        // Actualizar selects al cargar
+        window.onload = function() {
+            actualizarSelectEliminar();
+        }
+
+        // EJERCICIO 7
+        function mostrarCookiesDetalle() {
+            var cadenaCookies = document.cookie;
+            if (cadenaCookies == "") {
+                document.getElementById('resultado7').innerHTML = "No hay cookies";
+                return;
+            }
+            var arrayCookies = cadenaCookies.split(';');
+            var html = "<h3>Detalle de cookies:</h3>";
+            var contador = 1;
+            for (var i = 0; i < arrayCookies.length; i++) {
+                var partes = arrayCookies[i].trim().split('=');
+                if (partes.length >= 2) {
+                    html += "<p><strong>Cookie " + contador + ":</strong><br>";
+                    html += "Nombre: " + partes[0] + "<br>";
+                    html += "Valor: " + decodeURIComponent(partes[1]) + "<br>";
+                    html += "Path: /<br>";
+                    html += "Domain: (por defecto)<br>";
+                    html += "Max-Age: (sesión)<br>";
+                    html += "</p>";
+                    contador++;
+                }
+            }
+            document.getElementById('resultado7').innerHTML = html;
+        }
+
+        // EJERCICIO 8 - js-cookie
+        function crearConLibreria() {
+            var nombre = document.getElementById('nombreCookie').value;
+            var valor = document.getElementById('valorCookie').value;
+            if (nombre == "" || valor == "") {
+                alert("Rellena nombre y valor");
+                return;
+            }
+            Cookies.set(nombre, valor, { expires: 7 });
+            document.getElementById('resultado8').innerHTML = "Cookie creada: " + nombre + " = " + valor;
+            document.getElementById('nombreCookie').value = "";
+            document.getElementById('valorCookie').value = "";
+        }
+
+        function leerTodas() {
+            var todas = Cookies.get();
+            var html = "<p><strong>Todas las cookies:</strong><br>";
+            var count = 0;
+            for (var key in todas) {
+                html += key + " = " + todas[key] + "<br>";
+                count++;
+            }
+            if (count == 0) {
+                html = "No hay cookies";
+            }
+            document.getElementById('resultado8').innerHTML = html;
+        }
+
+        function leerUnaCookie() {
+            var nombre = prompt("¿Qué cookie quieres leer?");
+            if (nombre == null) {
+                return;
+            }
+            var valor = Cookies.get(nombre);
+            if (valor == undefined) {
+                document.getElementById('resultado8').innerHTML = "Cookie no encontrada: " + nombre;
+            } else {
+                document.getElementById('resultado8').innerHTML = nombre + " = " + valor;
+            }
+        }
+
+        function borrarConLibreria() {
+            var nombre = prompt("¿Qué cookie quieres borrar?");
+            if (nombre == null) {
+                return;
+            }
+            Cookies.remove(nombre);
+            document.getElementById('resultado8').innerHTML = "Cookie eliminada: " + nombre;
+        }
+
+        function borrarTodas() {
+            if (confirm("¿Seguro que quieres borrar TODAS las cookies?")) {
+                var todas = Cookies.get();
+                for (var key in todas) {
+                    Cookies.remove(key);
+                }
+                document.getElementById('resultado8').innerHTML = "Todas las cookies borradas";
+            }
+        }
+
+    </script>
+
+</body>
+</html>
