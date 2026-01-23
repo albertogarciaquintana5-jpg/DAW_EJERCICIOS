@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios Eventos 2</title>
+</head>
+<body>
+
+<h1>Ejercicios de Eventos 2</h1>
+
+<h2>Ejercicio 1: Ejemplo de Bubbling</h2>
+<div id="abuelo" style="padding: 20px; border: 1px solid black;">
+    Abuelo
+    <div id="padre" style="padding: 20px; border: 1px solid blue;">
+        Padre
+        <div id="hijo" style="padding: 20px; border: 1px solid red;">
+            Hijo (haz click aqui)
+        </div>
+    </div>
+</div>
+<div id="log"></div>
+<script>
+document.getElementById('hijo').addEventListener('click', function() {
+    document.getElementById('log').innerHTML += 'Hijo clickeado<br>';
+});
+document.getElementById('padre').addEventListener('click', function() {
+    document.getElementById('log').innerHTML += 'Padre clickeado<br>';
+});
+document.getElementById('abuelo').addEventListener('click', function() {
+    document.getElementById('log').innerHTML += 'Abuelo clickeado<br>';
+});
+</script>
+
+<h2>Ejercicio 2: Input con onblur</h2>
+<input type="text" id="inputBlur">
+<script>
+document.getElementById('inputBlur').addEventListener('blur', function() {
+    alert('Perdio el foco');
+});
+</script>
+
+<h2>Ejercicio 3: Input con onfocus y onblur</h2>
+<input type="text" id="inputFocus">
+<script>
+document.getElementById('inputFocus').addEventListener('focus', function() {
+    alert('Gano el foco');
+});
+document.getElementById('inputFocus').addEventListener('blur', function() {
+    alert('Perdio el foco');
+});
+</script>
+
+<h2>Ejercicio 4: Imagen con onload</h2>
+<img id="imgLoad" src="https://via.placeholder.com/100" alt="imagen">
+<script>
+document.getElementById('imgLoad').addEventListener('load', function() {
+    alert('Imagen cargada bien');
+});
+</script>
+
+<h2>Ejercicio 5: Imagen con onclick para achicar</h2>
+<img id="imgClick" src="https://via.placeholder.com/100" alt="imagen" style="width: 100px;">
+<script>
+document.getElementById('imgClick').addEventListener('click', function() {
+    this.style.width = (parseInt(this.style.width) * 0.85) + 'px';
+});
+</script>
+
+<h2>Ejercicio 6: Imagen con click y dblclick</h2>
+<img id="imgDbl" src="https://via.placeholder.com/100" alt="imagen" style="width: 100px;">
+<script>
+document.getElementById('imgDbl').addEventListener('click', function() {
+    this.style.width = (parseInt(this.style.width) * 0.85) + 'px';
+});
+document.getElementById('imgDbl').addEventListener('dblclick', function() {
+    this.style.width = (parseInt(this.style.width) * 1.15) + 'px';
+});
+</script>
+
+<h2>Ejercicio 7: Imagen con error</h2>
+<img id="imgError" src="imagen_que_no_existe.jpg" alt="imagen">
+<script>
+document.getElementById('imgError').addEventListener('error', function() {
+    alert('Error al cargar la imagen');
+});
+</script>
+
+<h2>Ejercicio 8: Input con onchange</h2>
+<input type="text" id="inputChange">
+<div id="divChange"></div>
+<script>
+document.getElementById('inputChange').addEventListener('change', function() {
+    document.getElementById('divChange').textContent = this.value;
+});
+</script>
+
+<h2>Ejercicio 9: Input con keydown, keyup, keypress</h2>
+<input type="text" id="inputKey">
+<div id="divKey"></div>
+<script>
+document.getElementById('inputKey').addEventListener('keydown', function() {
+    document.getElementById('divKey').textContent = 'keydown: ' + this.value;
+});
+document.getElementById('inputKey').addEventListener('keyup', function() {
+    document.getElementById('divKey').textContent = 'keyup: ' + this.value;
+});
+document.getElementById('inputKey').addEventListener('keypress', function() {
+    document.getElementById('divKey').textContent = 'keypress: ' + this.value;
+});
+</script>
+
+<h2>Ejercicio 10: Input con select</h2>
+<input type="text" id="inputSelect" value="Selecciona parte de este texto">
+<div id="divSelect"></div>
+<script>
+document.getElementById('inputSelect').addEventListener('select', function() {
+    var start = this.selectionStart;
+    var end = this.selectionEnd;
+    var selected = this.value.substring(start, end);
+    document.getElementById('divSelect').textContent = 'Seleccionado: ' + selected;
+});
+</script>
+
+<h2>Ejercicio 11: Imagen con eventos de raton</h2>
+<img id="imgMouse" src="https://via.placeholder.com/100" alt="imagen" style="width: 100px; position: absolute;">
+<script>
+var originalSrc = document.getElementById('imgMouse').src;
+document.getElementById('imgMouse').addEventListener('mousedown', function() {
+    this.src = 'https://via.placeholder.com/100/ff0000';
+});
+document.getElementById('imgMouse').addEventListener('mouseup', function() {
+    this.src = originalSrc;
+});
+document.getElementById('imgMouse').addEventListener('mousemove', function(e) {
+    this.style.left = e.clientX + 'px';
+    this.style.top = e.clientY + 'px';
+});
+document.getElementById('imgMouse').addEventListener('mouseout', function() {
+    this.style.width = (parseInt(this.style.width) * 0.9) + 'px';
+});
+document.getElementById('imgMouse').addEventListener('mouseover', function() {
+    this.style.width = (parseInt(this.style.width) * 1.05) + 'px';
+});
+</script>
+
+<h2>Ejercicio 12: Eventos resize y unload</h2>
+<script>
+window.addEventListener('resize', function() {
+    alert('Ventana redimensionada');
+});
+window.addEventListener('unload', function() {
+    alert('Pagina descargandose');
+});
+</script>
+
+</body>
+</html>
