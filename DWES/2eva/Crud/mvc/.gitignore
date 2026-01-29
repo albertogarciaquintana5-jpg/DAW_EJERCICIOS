@@ -1,9 +1,0 @@
-# Ignore common files
-/vendor/
-/.env
-/.idea/
-/.vscode/
-/.DS_Store
-
-# Ignore database dumps that might contain secrets
-/*.sql
