@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios Eventos JS</title>
+</head>
+<body onload="cambiarFondoAleatorio()">
+
+<h1>ALberto Garcia Quintana</h1>
+
+<h2>Ejercicio 1</h2>
+<p>Los tres tipos de modelos de eventos en JS son:</p>
+<ul>
+    <li>Tradicional: onclick en html</li>
+    <li>Estándar: addEventListener</li>
+    <li>IE: attachEvent</li>
+</ul>
+
+<h2>Ejercicio 2</h2>
+<p>El burbujeo es cuando un evento en un elemento hijo sube a los padres. Por ejemplo, click en un button dentro de un div, el evento va del button al div al body, etc.</p>
+<p>Aqui va una imagen del burbujeo</p>
+
+<h2>Ejercicio 3</h2>
+<a href="pagina.html" onclick="alertar(); return false">Pulsa aqui</a>
+<script>
+function alertar() {
+    alert("bloqueado");
+}
+</script>
+
+<h2>Ejercicio 4</h2>
+<p>Fondo random al cargar</p>
+<script>
+function cambiarFondoAleatorio() {
+    var r = Math.floor(Math.random()*256);
+    var g = Math.floor(Math.random()*256);
+    var b = Math.floor(Math.random()*256);
+    document.body.style.backgroundColor = 'rgb('+r+','+g+','+b+')';
+}
+</script>
+
+<h2>Ejercicio 5</h2>
+<input type="text" id="textoInput" onchange="ponerEnGrande(this)">
+<h1 id="tituloGrande"></h1>
+<script>
+function ponerEnGrande(elemento) {
+    document.getElementById('tituloGrande').textContent = elemento.value;
+}
+</script>
+
+<h2>Ejercicio 6</h2>
+<input type="number" id="num1">
+<input type="number" id="num2">
+<select id="operador">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+</select>
+<button id="btnOperar">Operar</button>
+<h1 id="resultado"></h1>
+<script>
+document.getElementById('btnOperar').onclick = function() {
+    var n1 = parseFloat(document.getElementById('num1').value) || 0;
+    var n2 = parseFloat(document.getElementById('num2').value) || 0;
+    var op = document.getElementById('operador').value;
+    var res;
+    if (op === '+') res = n1 + n2;
+    else if (op === '-') res = n1 - n2;
+    else if (op === '*') res = n1 * n2;
+    else if (op === '/') res = n1 / n2;
+    document.getElementById('resultado').textContent = res;
+};
+</script>
+
+<h2>Ejercicio 7</h2>
+<input type="number" id="num1b">
+<input type="number" id="num2b">
+<select id="operadorb">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+</select>
+<button id="btnOperarb">Operar</button>
+<h1 id="resultadob"></h1>
+<script>
+document.getElementById('btnOperarb').addEventListener('click', function() {
+    var n1 = parseFloat(document.getElementById('num1b').value) || 0;
+    var n2 = parseFloat(document.getElementById('num2b').value) || 0;
+    var op = document.getElementById('operadorb').value;
+    var res;
+    if (op === '+') res = n1 + n2;
+    else if (op === '-') res = n1 - n2;
+    else if (op === '*') res = n1 * n2;
+    else if (op === '/') res = n1 / n2;
+    document.getElementById('resultadob').textContent = res;
+});
+</script>
+
+<h2>Ejercicio 8</h2>
+<input type="number" id="num1c">
+<input type="number" id="num2c">
+<select id="operadorc">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+</select>
+<button id="btnOperarc">Operar</button>
+<button id="btnInhabilitar">Quitar evento</button>
+<h1 id="resultadoc"></h1>
+<script>
+function operar() {
+    var n1 = parseFloat(document.getElementById('num1c').value) || 0;
+    var n2 = parseFloat(document.getElementById('num2c').value) || 0;
+    var op = document.getElementById('operadorc').value;
+    var res;
+    if (op === '+') res = n1 + n2;
+    else if (op === '-') res = n1 - n2;
+    else if (op === '*') res = n1 * n2;
+    else if (op === '/') res = n1 / n2;
+    document.getElementById('resultadoc').textContent = res;
+}
+document.getElementById('btnOperarc').addEventListener('click', operar);
+document.getElementById('btnInhabilitar').addEventListener('click', function() {
+    document.getElementById('btnOperarc').removeEventListener('click', operar);
+    alert('quitado');
+});
+</script>
+
+<h2>Ejercicio 9</h2>
+<button id="b1"> cambia de color</button>
+<script >
+document.getElementById("b1").addEventListener('click', () => {
+var r=Math.floor(Math.random()*256);
+var g=Math.floor(Math.random()*256);
+var b=Math.floor(Math.random()*256);
+var color="rgb("+r+","+g+","+b+")";
+document.body.style.backgroundColor = color; },true);
+</script>
+
+<h2>Ejercicio 10</h2>
+<button id="b2">Cambiar color</button>
+<script>
+var colores = ['red', 'green', 'blue'];
+var indice = 0;
+document.getElementById("b2").addEventListener('click', () => {
+    document.body.style.backgroundColor = colores[indice];
+    indice = (indice + 1) % colores.length;
+});
+</script>
+
+<h2>Ejercicio 11</h2>
+<input type="text" id="textoInput2" onchange="ponerEnGrande2(this)">
+<h1 id="tituloGrande2"></h1>
+<script>
+function ponerEnGrande2(elemento) {
+    document.getElementById('tituloGrande2').textContent = elemento.value;
+}
+var elem = document.getElementById('textoInput2');
+if (elem.attachEvent) {
+    elem.attachEvent('onchange', function() { ponerEnGrande2(elem); });
+} else {
+    elem.addEventListener('change', function() { ponerEnGrande2(elem); });
+}
+</script>
+
+</body>
+</html>

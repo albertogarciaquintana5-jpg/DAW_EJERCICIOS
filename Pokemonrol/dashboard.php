@@ -244,6 +244,7 @@ foreach ($team as $t) {
                       <?php endif; ?>
                       <button class="btn btn-sm btn-outline-secondary" onclick="showSendItemModal(<?= (int)$pb['id'] ?>)">Enviar</button>
                       <button class="btn btn-sm btn-outline-info" onclick="markAsSeen(<?= (int)$pb['species_id'] ?>)">Marcar Pokédex</button>
+                      <button class="btn btn-sm btn-outline-warning pokemon-info-btn" onclick="showPokemonInfo(<?= (int)$pb['id'] ?>)">ℹ️ Info</button>
                     </div>
                   </div>
                   <?php endforeach; endif; ?>
@@ -278,6 +279,7 @@ foreach ($team as $t) {
                     <div class="item-actions">
                       <?php if ($slot): ?>
                       <button class="btn btn-sm btn-outline-danger" onclick="unequip(<?= $s ?>)">Desequipar</button>
+                      <button class="btn btn-sm btn-outline-warning pokemon-info-btn" onclick="showPokemonInfo(<?= (int)$slot['box_id'] ?>)">ℹ️ Info</button>
                       <?php else: ?>
                       <button class="btn btn-sm btn-outline-primary" onclick="showEquipModal(null, <?= $s ?>)">Equipar</button>
                       <?php endif; ?>
@@ -398,6 +400,27 @@ foreach ($team as $t) {
       </div>
     </div>
   </div>
+
+  <!-- MODAL: Información detallada del Pokémon -->
+  <div class="modal fade" id="pokemonInfoModal" tabindex="-1" aria-labelledby="pokemonInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header pokemon-info-header" style="margin: 0;">
+          <h3 class="modal-title" id="pokemonInfoModalLabel" style="flex:1; text-align:center;">Información Pokémon</h3>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar" style="position: absolute; right: 10px; top: 10px;"></button>
+        </div>
+        <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+          <div id="pokemonInfoContent" class="pokemon-info-content">
+            <!-- Content loaded by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
       </main>
     </div>
   </div>
@@ -873,6 +896,7 @@ try {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="scripts/pokemon-info.js"></script>
   <script>
     // Restaurar pestaña activa guardada en localStorage (se ejecuta después de cargar Bootstrap)
     (function(){

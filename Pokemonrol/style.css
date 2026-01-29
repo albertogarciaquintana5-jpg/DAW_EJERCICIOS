@@ -137,4 +137,427 @@ h3.title {
   .pokemon-avatar { width:56px; height:56px; }
 }
 
+/* ========================================
+   POKEMON INFO MODAL & STATS DISPLAY
+   ======================================== */
+
+.pokemon-info-btn {
+  padding: .35rem .6rem;
+  font-size: .85rem;
+  margin-left: .25rem;
+}
+
+/* Modal header con sprite grande */
+.pokemon-info-header {
+  text-align: center;
+  padding: 1.5rem 0;
+  background: linear-gradient(135deg, #ffcb05 0%, #ff9800 100%);
+  border-radius: .75rem .75rem 0 0;
+  color: white;
+  margin: -1rem -1rem 1rem -1rem;
+}
+
+.pokemon-info-header h3 {
+  margin: 0;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.pokemon-info-sprite {
+  width: 120px;
+  height: 120px;
+  margin: 0.5rem auto;
+  background: rgba(255,255,255,0.3);
+  border-radius: .5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  overflow: hidden;
+}
+
+.pokemon-info-sprite img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.pokemon-info-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.pokemon-info-meta-item {
+  background: rgba(255,255,255,0.1);
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  color: white;
+}
+
+.pokemon-info-meta-item strong {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* ========================================
+   STATS DIAMOND (ROMBO)
+   ======================================== */
+
+.stats-diamond-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  min-height: 240px;
+}
+
+.stats-diamond {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+/* Centro del rombo */
+.stats-diamond-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  border: 3px solid #ffcb05;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  z-index: 10;
+}
+
+/* Líneas del rombo (ejes) */
+.stats-diamond-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.stats-diamond-grid line {
+  stroke: #ddd;
+  stroke-width: 1;
+}
+
+/* Área rellena del rombo */
+.stats-diamond-fill {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+.stats-diamond-polygon {
+  fill: rgba(255, 203, 5, 0.2);
+  stroke: #ffcb05;
+  stroke-width: 2;
+}
+
+/* Puntos en los vértices */
+.stats-point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border: 3px solid #ffcb05;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.stats-point:hover {
+  transform: scale(1.3);
+  background: #ffcb05;
+}
+
+.stats-point.ataque { top: 0; left: 50%; transform: translateX(-50%) translateY(-50%); }
+.stats-point.defensa { top: 50%; left: 100%; transform: translateX(-50%) translateY(-50%); }
+.stats-point.velocidad { bottom: 0; left: 50%; transform: translateX(-50%) translateY(50%); }
+.stats-point.sp_defensa { top: 50%; left: 0; transform: translateX(-50%) translateY(-50%); }
+.stats-point.sp_ataque { top: 25%; left: 75%; transform: translateX(-50%) translateY(-50%); }
+.stats-point.hp { top: 25%; right: 0; left: auto; transform: translateX(-50%) translateY(-50%); }
+
+/* Tooltip para stats */
+.stats-tooltip {
+  position: absolute;
+  background: rgba(0,0,0,0.9);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.3rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 20;
+  display: none;
+}
+
+.stats-point:hover + .stats-tooltip,
+.stats-tooltip:hover {
+  display: block;
+}
+
+.stats-labels {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.stat-label {
+  position: absolute;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-label-name {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.stat-label-value {
+  font-size: 0.9rem;
+  color: #ffcb05;
+}
+
+/* Posiciones de los labels */
+.stat-label.hp { top: -5%; right: 12%; }
+.stat-label.ataque { top: -8%; left: 50%; transform: translateX(-50%); }
+.stat-label.defensa { top: 35%; right: -8%; }
+.stat-label.sp_ataque { bottom: 35%; right: -8%; }
+.stat-label.velocidad { bottom: -8%; left: 50%; transform: translateX(-50%); }
+.stat-label.sp_defensa { top: 35%; left: -8%; }
+
+/* Sección de naturaleza y habilidad */
+.pokemon-nature-ability {
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: .6rem;
+  margin: 1rem 0;
+}
+
+.pokemon-nature-ability-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.pokemon-nature-section,
+.pokemon-ability-section {
+  margin-bottom: 0.75rem;
+}
+
+.pokemon-nature-section:last-child,
+.pokemon-ability-section:last-child {
+  margin-bottom: 0;
+}
+
+.pokemon-nature-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.pokemon-nature-effect {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.pokemon-ability-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.pokemon-ability-desc {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Sección de movimientos */
+.pokemon-moves-section {
+  margin-top: 1.5rem;
+}
+
+.pokemon-moves-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pokemon-moves-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.move-card {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: .5rem;
+  font-size: 0.9rem;
+}
+
+.move-slot-badge {
+  background: #ffcb05;
+  color: #333;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  min-width: 28px;
+  text-align: center;
+}
+
+.move-type-badge {
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.4rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: white;
+  min-width: 60px;
+  text-align: center;
+}
+
+.move-info {
+  flex: 1;
+}
+
+.move-name {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.move-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.move-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.move-stat-item strong {
+  color: #333;
+}
+
+.move-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.move-actions .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.move-pp {
+  text-align: right;
+}
+
+.move-pp-bar {
+  width: 60px;
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+
+.move-pp-fill {
+  height: 100%;
+  background: #4caf50;
+  width: 100%;
+}
+
+/* Tab para movimientos disponibles */
+.learn-moves-section {
+  margin-top: 1.5rem;
+  border-top: 2px solid #f0f0f0;
+  padding-top: 1rem;
+}
+
+.learn-moves-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.learn-moves-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.available-move-card {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f9f9f9;
+  border: 1px dashed rgba(255, 203, 5, 0.5);
+  border-radius: .5rem;
+  font-size: 0.9rem;
+}
+
+.available-move-card:hover {
+  background: #fffbf0;
+  border-color: #ffcb05;
+}
+
+.available-move-name {
+  font-weight: 600;
+  flex: 1;
+}
+
+.available-move-level {
+  font-size: 0.8rem;
+  color: #666;
+  background: rgba(255,203,5,0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+
+.available-move-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+
 

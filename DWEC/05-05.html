@@ -8,14 +8,101 @@
 <body>
     <h1 style="color: brown;">ALberto Garcia Quintana_DWEC_19/1/2026</h1>
     <br><br><br>
-    <h2>¿Que es una expresion  y para que sirve?</h2>
-    <p>Una expresion regular es una secuencia de caracteres que forma un patron de busqueda para encontrar caracteres o frases muy especificas. Se utiliza principalmente para la busqueda de patrones dentro de cadenas de texto, la extraccion de informacion especifica, y la manipulacion de cadenas (como reemplazos o divisiones).</p>
+    <h2>¿Que es una expresion regular y para que sirve?</h2>
+    <p>Una expresión regular es una secuencia de caracteres que forma un patrón de búsqueda para encontrar caracteres o frases muy específicas. Se utiliza principalmente para la búsqueda de patrones dentro de cadenas de texto, la extracción de información específica, y la manipulación de cadenas (como reemplazos o divisiones).</p>
 
     <h2>Explica que es una Expresion regular realizada con literales.</h2>
+    <p>Una expresión regular realizada con literales es aquella que utiliza caracteres específicos para buscar coincidencias exactas en una cadena de texto. En el ejemplo proporcionado, la expresión regular /b+ca/ busca una secuencia donde haya una o más letras 'b' seguidas por las letras 'c' y 'a'. Al ejecutar el código, se buscará esta secuencia en la cadena 'acbbbcabaabbbceee'.</p>
+    <script> var re = /b+ca/; re.exec('acbbbcabaabbbceee'); </script>
 
-    <p>Una expresion regular realizada con literales es aquella que utiliza caracteres especificos para buscar coincidencias exactas en una cadena de texto. En el ejemplo proporcionado, la expresion regular /b+ca/ busca una secuencia donde haya una o mas letras 'b' seguidas por las letras 'c' y 'a'. Al ejecutar el codigo, se buscara esta secuencia en la cadena 'acbbbcabaabbbceee'.</p>
-    <br>
-    <script>  let re = /b+ca/;  re.exec('acbbbcabaabbbceee');  </script> 
-    
+    <h2>Explica que es una Expresion regular realizada con constructor Tras la explicación ejecuta el siguiente código</h2>
+    <p>Una expresión regular con constructor se crea con new RegExp(string). Es buena para expresiones dinámicas. En el ejemplo, busca 'ab' seguido de una o más 'c'.</p>
+    <script> var re = new RegExp('ab+c'); re.exec('ababaabbbceee'); </script>
+
+    <h2>Ejecuta el ejemplo 2 del codigo entregado para ver que pasa entre los dos tipos de Expresion regular</h2>
+    <p>Ejemplo comparando literales y constructor.</p>
+    <script> var re1 = /abc/; var re2 = new RegExp('abc'); console.log(re1.exec('abcdef')); console.log(re2.exec('abcdef')); </script>
+
+    <h2>¿Que diferencias hay entre ambas?</h2>
+    <p>Literales son estáticas y más rápidas. Constructor permite strings variables.</p>
+
+    <h2>¿Que son Patrones simples?</h2>
+    <p>Patrones básicos como letras o palabras exactas.</p>
+
+    <h2>¿Que son Caracteres especiales?</h2>
+    <p>Símbolos con funciones especiales como . * + etc.</p>
+
+    <h2>¿Que son Caracteres especiales?</h2>
+    <p>Igual que arriba.</p>
+
+    <h2>Describe que son patrones compuestos y que significan brevemente estos valores Caracteres Especiales Aserciones Grupos y rangos Cuantificadores Escapes de propiedades Unicode</h2>
+    <p>Patrones compuestos combinan elementos. Caracteres Especiales: símbolos con significado. Aserciones: posiciones como inicio ^ fin $. Grupos y rangos: () para capturar, [] para opciones. Cuantificadores: * + ? para cantidad. Escapes Unicode: \u para unicode.</p>
+
+    <h2>¿Que son Caracteres de escape ?</h2>
+    <p>\ para buscar caracteres literales que son especiales.</p>
+
+    <h2>Ejecuta el ejemplo 4 del codigo entregado para ver que pasa entre los dos tipos de Expresion regular</h2>
+    <p>Ejemplo con dígitos.</p>
+    <script> var re = /\d+/; console.log(re.exec('abc123def')); </script>
+
+    <h2>Como son las dos formas de ejecutar una expresion regular?</h2>
+    <p>Con métodos del objeto RegExp o del string.</p>
+
+    <h2>Crea la siguiente tabla rellena en tu html Método Devuelve Descripción RegExp.exec(String) RegExp.test(String) String.match(RegExp) String.matchAll(RegExp) String.search(RegExp) String.replace(RegExp) String.replaceAll(RegExp) String.split(RegExp)</h2>
+    <table border="1">
+        <tr><th>Método</th><th>Devuelve</th><th>Descripción</th></tr>
+        <tr><td>RegExp.exec(String)</td><td>Array o null</td><td>Ejecuta búsqueda</td></tr>
+        <tr><td>RegExp.test(String)</td><td>Boolean</td><td>Prueba coincidencia</td></tr>
+        <tr><td>String.match(RegExp)</td><td>Array o null</td><td>Encuentra coincidencias</td></tr>
+        <tr><td>String.matchAll(RegExp)</td><td>Iterator</td><td>Todas las coincidencias</td></tr>
+        <tr><td>String.search(RegExp)</td><td>Number</td><td>Posición</td></tr>
+        <tr><td>String.replace(RegExp)</td><td>String</td><td>Reemplaza</td></tr>
+        <tr><td>String.replaceAll(RegExp)</td><td>String</td><td>Reemplaza todas</td></tr>
+        <tr><td>String.split(RegExp)</td><td>Array</td><td>Divide</td></tr>
+    </table>
+
+    <h2>Ejecuta el siguiente codigo para entender el matchAll const regexp = /t(e)(st(\d?))/g; const str = 'test1test2'; const array = [...str.matchAll(regexp)]; console.log(array[0]); // expected output: Array ["test1", "e", "st1", "1"] console.log(array[1]); // expected output: Array ["test2", "e", "st2", "2"]</h2>
+    <script>
+    var regexp = /t(e)(st(\d?))/g; var str = 'test1test2';
+    var array = [...str.matchAll(regexp)];
+    console.log(array[0]);
+    console.log(array[1]);
+    </script>
+
+    <h2>Ejecuta el siguiente codigo para entender el match const paragraph = 'The quick brown fox jumps over the lazy dog. It barked.'; const regex = /[A-Z]/g; const found = paragraph.match(regex); console.log(found); // expected output: Array ["T", "I"] const regex = /[A-Z]/; const found = paragraph.match(regex); console.log(found); // expected output: Array ["T"]</h2>
+    <script>
+    var paragraph = 'The quick brown fox jumps over the lazy dog. It barked.';
+    var regex = /[A-Z]/g;
+    var found = paragraph.match(regex);
+    console.log(found);
+    var regex2 = /[A-Z]/;
+    var found2 = paragraph.match(regex2);
+    console.log(found2);
+    </script>
+
+    <h2>Ejecuta el ejemplo 4 del codigo entregado para ver que pasa con match y matchAll https://blog.tildeloop.com/posts/javascript-the-difference-between-match-and-matchall</h2>
+    <p>match devuelve array, matchAll iterator con detalles.</p>
+
+    <h2>¿que hacen las banderas o flags ?</h2>
+    <p>Cambian cómo funciona la regex, como global o case.</p>
+
+    <h2>¿ donde se ponen en la expresion Regular?</h2>
+    <p>Al final, después de la / o en el constructor.</p>
+
+    <h2>Crea esta tabla en tu documento que sirven las banderas siguientes Bandera Descripción d g i</h2>
+    <table border="1">
+        <tr><th>Bandera</th><th>Descripción</th></tr>
+        <tr><td>d</td><td>Índices de substrings</td></tr>
+        <tr><td>g</td><td>Global</td></tr>
+        <tr><td>i</td><td>Case insensitive</td></tr>
+    </table>
+
+    <h2>Ejecuta el ejemplo 5 del codigo entregado para ver que pasa con las flags</h2>
+    <script>
+    var str = 'Hello World';
+    console.log(str.match(/o/g));
+    console.log(str.match(/H/i));
+    </script>
+
 </body>
 </html>
