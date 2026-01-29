@@ -1,0 +1,24 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<h1>Personajes de Rick and Morty</h1>
+<ul id="personajes"></ul>
+
+<script>
+$.ajax({
+  url: "https://rickandmortyapi.com/api/character",
+  method: "GET",
+  success: function(data) {
+    data.results.forEach(personaje => {
+      $("#personajes").append(`
+        <li>
+          <h3>${personaje.name}</h3>
+          <img src="${personaje.image}" alt="${personaje.name}" width="150">
+        </li>
+      `);
+    });
+  },
+  error: function(err) {
+    console.error("Error:", err);
+  }
+});
+</script>
