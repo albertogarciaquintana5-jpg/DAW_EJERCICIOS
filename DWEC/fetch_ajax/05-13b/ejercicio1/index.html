@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ejemplo Fetch Ajax</title>
+<script>
+function hacerpromesa (){
+fetch("hola.txt")
+.then(response => {
+if (response.ok)
+return response.text()
+else
+throw new Error(response.status);
+})
+.then(data => {
+document.getElementById("cosas").innerHTML +=
+"solicitada descarga <br>" + data;
+})
+.catch(err => {
+console.error("ERROR: ", err.message)
+});
+}
+</script>
+</head>
+<body>
+
+<button onclick="hacerpromesa()"> boton </button>
+<div id="cosas"></div>
+
+</body>
+</html>

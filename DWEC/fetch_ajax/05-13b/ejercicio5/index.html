@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 6</title>
+<script>
+function hacerpromesa() {
+const valor = document.getElementById("i1").value;
+fetch("ajax-ej5.php?valor=" + valor)
+.then(response => response.text())
+.then(data => {
+document.getElementById("cosas").innerHTML +=
+"solicitada descarga <br>" + data + "<br>";
+})
+.catch(err => {
+console.error("ERROR: ", err.message)
+});
+}
+</script>
+</head>
+<body>
+
+<input type="text" id="i1" value="20">
+<button onclick="hacerpromesa()"> boton </button>
+<div id="cosas"></div>
+
+</body>
+</html>

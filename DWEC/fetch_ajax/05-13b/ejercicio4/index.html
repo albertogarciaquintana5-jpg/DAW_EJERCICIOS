@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JSON</title>
+<script>
+function hacerpromesa() {
+fetch("ajax-ej4.php")
+.then(response => response.text())
+.then(data => {
+const jsonData = JSON.parse(data);
+document.getElementById("cosas").innerHTML +=
+"Nombre: " + jsonData.Nombre + "<br>" +
+"Apellido: " + jsonData.Apellido + "<br>" +
+"Cargo: " + jsonData.Cargo + "<br>" +
+"Fecha: " + jsonData.Fecha + "<br>";
+})
+.catch(err => {
+console.error("ERROR: " + err)
+});
+}
+</script>
+</head>
+<body>
+
+<button onclick="hacerpromesa()"> boton </button>
+<div id="cosas"></div>
+
+</body>
+</html>

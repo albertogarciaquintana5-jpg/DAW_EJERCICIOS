@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Async Await</title>
+<script>
+const hacerpromesa = async function(url) {
+const response = await fetch(url);
+if (!response.ok) throw new Error(response.status);
+const data = await response.text();
+return data;
+}
+
+async function LlamarPromesa() {
+const data = await hacerpromesa('hola.php');
+document.getElementById("cosas").innerHTML +=
+"solicitada descarga <br>" + data;
+}
+</script>
+</head>
+<body>
+
+<button onclick="LlamarPromesa()"> boton </button>
+<div id="cosas"></div>
+
+</body>
+</html>
