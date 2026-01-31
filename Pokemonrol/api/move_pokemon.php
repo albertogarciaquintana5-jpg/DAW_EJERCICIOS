@@ -40,7 +40,7 @@ if ($action === 'equip') {
 
         $mysqli->commit();
         // fetch updated team
-        $teamSql = "SELECT t.slot, pb.id AS box_id, ps.nombre AS especie, pb.apodo, pb.nivel, pb.cp FROM team t LEFT JOIN pokemon_box pb ON t.pokemon_box_id = pb.id LEFT JOIN pokemon_species ps ON pb.species_id = ps.id WHERE t.user_id = ? ORDER BY t.slot ASC";
+        $teamSql = "SELECT t.slot, pb.id AS box_id, ps.nombre AS especie, pb.apodo, pb.nivel FROM team t LEFT JOIN pokemon_box pb ON t.pokemon_box_id = pb.id LEFT JOIN pokemon_species ps ON pb.species_id = ps.id WHERE t.user_id = ? ORDER BY t.slot ASC";
         $teamStmt = $mysqli->prepare($teamSql); $teamStmt->bind_param('i', $user_id); $teamStmt->execute(); $teamRes = $teamStmt->get_result(); $teamData = []; while ($row = $teamRes->fetch_assoc()) { $teamData[] = $row; } $teamStmt->close();
         $msg = 'Pokémon equipado.' . (isset($changed['unequipped_slot']) ? ' (Se ha desequipado el slot ' . $changed['unequipped_slot'] . ')' : '');
         echo json_encode(['success' => true, 'message' => $msg, 'team' => $teamData]); exit;
@@ -57,7 +57,7 @@ if ($action === 'unequip') {
     $sql = 'UPDATE team SET pokemon_box_id = NULL WHERE user_id = ? AND slot = ?';
     $stmt = $mysqli->prepare($sql); $stmt->bind_param('ii', $user_id, $slot); if (!$stmt->execute()) { $stmt->close(); http_response_code(500); echo json_encode(['error' => 'Execute failed']); exit; } $stmt->close();
     // return updated team
-    $teamSql = "SELECT t.slot, pb.id AS box_id, ps.nombre AS especie, pb.apodo, pb.nivel, pb.cp FROM team t LEFT JOIN pokemon_box pb ON t.pokemon_box_id = pb.id LEFT JOIN pokemon_species ps ON pb.species_id = ps.id WHERE t.user_id = ? ORDER BY t.slot ASC";
+    $teamSql = "SELECT t.slot, pb.id AS box_id, ps.nombre AS especie, pb.apodo, pb.nivel FROM team t LEFT JOIN pokemon_box pb ON t.pokemon_box_id = pb.id LEFT JOIN pokemon_species ps ON pb.species_id = ps.id WHERE t.user_id = ? ORDER BY t.slot ASC";
     $teamStmt = $mysqli->prepare($teamSql); $teamStmt->bind_param('i', $user_id); $teamStmt->execute(); $teamRes = $teamStmt->get_result(); $teamData = []; while ($row = $teamRes->fetch_assoc()) { $teamData[] = $row; } $teamStmt->close();
     echo json_encode(['success' => true, 'message' => 'Slot desequipado.', 'team' => $teamData]); exit;
 }

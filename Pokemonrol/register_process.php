@@ -95,8 +95,8 @@ if ($pokemonStmt) {
             $pokedexStmt->close();
         }
         
-        // Añadir a pokemon_box
-        $boxSql = "INSERT INTO pokemon_box (user_id, species_id, nivel, cp, hp) VALUES (?, ?, 5, 50, 30)";
+        // Añadir a pokemon_box (sin CP)
+        $boxSql = "INSERT INTO pokemon_box (user_id, species_id, nivel, hp) VALUES (?, ?, 5, 30)";
         $boxStmt = $mysqli->prepare($boxSql);
         if ($boxStmt) {
             $boxStmt->bind_param('ii', $new_user_id, $species_id);

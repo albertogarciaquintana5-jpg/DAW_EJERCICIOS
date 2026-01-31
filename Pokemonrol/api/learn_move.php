@@ -36,7 +36,8 @@ if ($pokemon_box_id <= 0) {
     exit;
 }
 
-if ($movimiento_id <= 0) {
+// Para 'add' se necesita movimiento_id válido. Para 'remove' no es necesario (solo slot)
+if ($action === 'add' && $movimiento_id <= 0) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid movimiento_id']);
     exit;
@@ -67,30 +68,12 @@ if ($check_res->num_rows === 0) {
 }
 $check_stmt->close();
 
-// Verificar que el movimiento existe
-$move_check = "SELECT id FROM movimientos WHERE id = ? LIMIT 1";
-if (!$move_stmt = $mysqli->prepare($move_check)) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Prepare failed']);
-    exit;
-}
-
-$move_stmt->bind_param('i', $movimiento_id);
-$move_stmt->execute();
-$move_res = $move_stmt->get_result();
-if ($move_res->num_rows === 0) {
-    $move_stmt->close();
-    http_response_code(404);
-    echo json_encode(['error' => 'Movimiento no encontrado']);
-    exit;
-}
-$move_stmt->close();
 
 // Transacción para operación segura
 $mysqli->begin_transaction();
 try {
     if ($action === 'add') {
-        // Obtener PP máximo del movimiento
+        // Verificar que el movimiento existe y obtener PP máximo
         $pp_sql = "SELECT pp FROM movimientos WHERE id = ? LIMIT 1";
         $pp_stmt = $mysqli->prepare($pp_sql);
         if (!$pp_stmt) throw new Exception('Prepare failed');
@@ -100,16 +83,45 @@ try {
         $pp_row = $pp_res->fetch_assoc();
         $pp_stmt->close();
         
-        if (!$pp_row) throw new Exception('PP no encontrado');
+        if (!$pp_row) throw new Exception('Movimiento no encontrado');
         $pp_max = (int)$pp_row['pp'];
 
-        // Insertar o actualizar movimiento
+        // Comprobar si el Pokémon ya conoce este movimiento en otro slot
+        $exists_sql = "SELECT slot FROM pokemon_movimiento WHERE pokemon_box_id = ? AND movimiento_id = ? LIMIT 1";
+        $exists_stmt = $mysqli->prepare($exists_sql);
+        if (!$exists_stmt) throw new Exception('Prepare failed');
+        $exists_stmt->bind_param('ii', $pokemon_box_id, $movimiento_id);
+        $exists_stmt->execute();
+        $exists_res = $exists_stmt->get_result();
+        if ($exists_res && $exists_res->num_rows > 0) {
+            $row = $exists_res->fetch_assoc();
+            $exists_stmt->close();
+            if ((int)$row['slot'] !== $slot) {
+                $exists_stmt->close();
+                $mysqli->rollback();
+                http_response_code(409); // Conflict: movimiento duplicado
+                echo json_encode(['error' => 'El Pokémon ya conoce ese movimiento']);
+                exit;
+            }
+            // Si es el mismo slot y la misma move, seguimos y actualizamos PP
+        } else {
+            $exists_stmt->close();
+        }
+
+        // Si hay otro movimiento en el slot objetivo, lo reemplazamos (asegurando unicidad por slot)
+        $del_slot_sql = "DELETE FROM pokemon_movimiento WHERE pokemon_box_id = ? AND slot = ?";
+        $del_slot_stmt = $mysqli->prepare($del_slot_sql);
+        if (!$del_slot_stmt) throw new Exception('Prepare delete slot failed');
+        $del_slot_stmt->bind_param('ii', $pokemon_box_id, $slot);
+        if (!$del_slot_stmt->execute()) throw new Exception('Execute delete slot failed');
+        $del_slot_stmt->close();
+
+        // Insertar el nuevo movimiento en el slot
         $insert_sql = "INSERT INTO pokemon_movimiento (pokemon_box_id, movimiento_id, slot, pp_actual) 
-                       VALUES (?, ?, ?, ?)
-                       ON DUPLICATE KEY UPDATE pp_actual = ?";
+                       VALUES (?, ?, ?, ?)";
         $insert_stmt = $mysqli->prepare($insert_sql);
         if (!$insert_stmt) throw new Exception('Prepare insert failed');
-        $insert_stmt->bind_param('iiiii', $pokemon_box_id, $movimiento_id, $slot, $pp_max, $pp_max);
+        $insert_stmt->bind_param('iiii', $pokemon_box_id, $movimiento_id, $slot, $pp_max);
         if (!$insert_stmt->execute()) throw new Exception('Execute insert failed');
         $insert_stmt->close();
 

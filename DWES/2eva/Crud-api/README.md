@@ -79,7 +79,7 @@ mysql -u TU_USUARIO -p crud_api < migrations\ejecutarsql.sql
 
 ---
 
-## Endpoints principales (ejemplos)
+## Endpoints principales ejemplos
 
 - Registrar un usuario (POST): `/auth/register`
   - Body JSON: `{ "nombre":"Ana", "apellido":"Pérez", "email":"ana@mail.com", "password":"P4ss!", "telefono":"600123456" }`
@@ -98,23 +98,6 @@ curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json
 curl http://127.0.0.1:8000/users -H "Authorization: Bearer <TOKEN>"
 ```
 
----
-
-## Notas importantes
-
-- Cambia `JWT_SECRET` por un valor largo y seguro antes de entregar el trabajo.
-- No subas el fichero `.env` al repositorio (está en `.gitignore`).
-- Este proyecto es una práctica de aprendizaje, NO está listo para producción.
-
----
-
-## Buenas prácticas aplicadas
-
-- Uso de PDO con sentencias preparadas para evitar inyecciones SQL.
-- Contraseñas almacenadas con `password_hash()` y comprobadas con `password_verify()`.
-- Autenticación por tokens JWT para las rutas de la API.
-
----
 
 ## Autor
 

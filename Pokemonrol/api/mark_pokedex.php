@@ -14,9 +14,21 @@ if ($species_id <= 0) { http_response_code(400); echo json_encode(['error'=>'Inv
 // Upsert into pokedex
 $stmt = $mysqli->prepare('INSERT INTO pokedex (user_id, species_id, visto, capturado, veces_visto, first_seen_at) VALUES (?, ?, ?, ?, ?, NOW()) ON DUPLICATE KEY UPDATE visto = GREATEST(visto, VALUES(visto)), capturado = GREATEST(capturado, VALUES(capturado)), veces_visto = veces_visto + VALUES(veces_visto)');
 $vistas = $visto ? 1 : 0; $capt = $capturado ? 1 : 0;
-$stmt->bind_param('iiiis', $user_id, $species_id, $vistas, $capt, $vistas);
+$stmt->bind_param('iiiii', $user_id, $species_id, $vistas, $capt, $vistas);
 if (!$stmt->execute()) { http_response_code(500); echo json_encode(['error'=>'execute failed']); exit; }
 $stmt->close();
+
+// Devolver información actualizada de la especie marcada
+$info_stmt = $mysqli->prepare('SELECT p.visto, p.capturado, ps.nombre, ps.sprite FROM pokedex p JOIN pokemon_species ps ON p.species_id = ps.id WHERE p.user_id = ? AND p.species_id = ? LIMIT 1');
+if ($info_stmt) {
+    $info_stmt->bind_param('ii', $user_id, $species_id);
+    $info_stmt->execute();
+    $info_res = $info_stmt->get_result();
+    $info = $info_res->fetch_assoc();
+    $info_stmt->close();
+    echo json_encode(['success'=>true, 'message'=>'Pokedex actualizada', 'entry' => $info]);
+    exit;
+}
 
 echo json_encode(['success'=>true, 'message'=>'Pokedex actualizada']);
 exit;

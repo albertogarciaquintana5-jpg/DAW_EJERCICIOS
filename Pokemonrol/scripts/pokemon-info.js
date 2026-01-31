@@ -28,8 +28,20 @@ async function showPokemonInfo(boxId) {
     renderPokemonInfoModal(data);
 
     // Mostrar modal
-    const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('pokemonInfoModal'));
+    const modalEl = document.getElementById('pokemonInfoModal');
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
     modal.show();
+    // Animación de entrada para el contenido del modal
+    setTimeout(() => {
+      const content = modalEl.querySelector('.modal-content');
+      if (content) content.classList.add('modal-content-animate');
+    }, 10);
+    // Limpiar clase al cerrar para futuras aperturas
+    modalEl.addEventListener('hidden.bs.modal', function handler() {
+      const content = modalEl.querySelector('.modal-content');
+      if (content) content.classList.remove('modal-content-animate');
+      modalEl.removeEventListener('hidden.bs.modal', handler);
+    });
 
   } catch (e) {
     console.error('Error cargando info:', e);
@@ -44,8 +56,20 @@ function renderPokemonInfoModal(data) {
   const pokemon = data.pokemon;
   const stats = data.stats;
   const statsBase = data.stats_base;
-  const movimientos = data.movimientos || [];
+  let movimientos = data.movimientos || [];
   const movimientosDisponibles = data.movimientos_disponibles || [];
+
+  // Debug: log stats to ensure rendering
+  if (window && window.console && typeof console.debug === 'function') {
+    console.debug('renderPokemonInfoModal - stats', stats, 'statsBase', statsBase, 'movimientos', movimientos);
+  }
+
+  // Ordenar movimientos por slot para una presentación consistente
+  movimientos.sort((a,b) => (Number(a.slot) || 0) - (Number(b.slot) || 0));
+
+  // Computar primer slot libre (1..4). Usado al enseñar un movimiento nuevo
+  const usedSlots = movimientos.map(m => Number(m.slot));
+  const slotAvailable = [1,2,3,4].find(s => !usedSlots.includes(s)) || null;
 
   const container = document.getElementById('pokemonInfoContent');
   
@@ -67,10 +91,7 @@ function renderPokemonInfoModal(data) {
           <strong>Nivel</strong>
           ${pokemon.nivel}
         </div>
-        <div class="pokemon-info-meta-item">
-          <strong>CP</strong>
-          ${pokemon.cp}
-        </div>
+
         <div class="pokemon-info-meta-item">
           <strong>HP</strong>
           ${pokemon.hp_actual}/${pokemon.hp_maximo}
@@ -78,9 +99,9 @@ function renderPokemonInfoModal(data) {
       </div>
     </div>
 
-    <!-- STATS DIAMOND (ROMBO) -->
-    <div class="stats-diamond-container">
-      ${renderStatsDiamond(stats, statsBase)}
+    <!-- STATS (BARRAS HORIZONTALES) -->
+    <div class="stats-bars-container">
+      ${renderStatsBars(stats, statsBase, pokemon.stat_aumentado, pokemon.stat_reducido)}
     </div>
 
     <!-- NATURALEZA Y HABILIDAD -->
@@ -151,8 +172,8 @@ function renderPokemonInfoModal(data) {
           <div class="available-move-card">
             <div class="available-move-name">${escapeHtml(move.nombre)}</div>
             <div class="available-move-level">Nv. ${move.nivel_aprendizaje}</div>
-            ${movimientos.length < 4 ? `
-              <button class="btn btn-sm btn-primary" onclick="learnMove(${pokemon.id}, ${move.id}, ${movimientos.length + 1})">
+            ${slotAvailable ? `
+              <button class="btn btn-sm btn-primary" onclick="learnMove(${pokemon.id}, ${move.id}, ${slotAvailable})">
                 Enseñar
               </button>
             ` : ''}
@@ -163,105 +184,63 @@ function renderPokemonInfoModal(data) {
   `;
 
   container.innerHTML = html;
+  // Animar barras de stats tras render
+  animateStatsBars();
 }
 
-/**
- * Renderiza el rombo de estadísticas
- */
-function renderStatsDiamond(stats, statsBase) {
-  const stats_order = ['hp', 'ataque', 'defensa', 'sp_ataque', 'sp_defensa', 'velocidad'];
-  const stat_labels_es = {
-    'hp': 'HP',
-    'ataque': 'ATQ',
-    'defensa': 'DEF',
-    'sp_ataque': 'ESP.ATQ',
-    'sp_defensa': 'ESP.DEF',
-    'velocidad': 'VEL'
-  };
+function renderStatsBars(stats, statsBase, statUp, statDown) {
+  const order = ['hp','ataque','defensa','sp_ataque','sp_defensa','velocidad'];
+  if (window && window.console && typeof console.debug === 'function') console.debug('renderStatsBars', {stats, statsBase, statUp, statDown});
+  const labelMap = { 'hp':'HP','ataque':'ATQ','defensa':'DEF','sp_ataque':'ESP.ATQ','sp_defensa':'ESP.DEF','velocidad':'VEL' };
 
-  // Encontrar el valor máximo para normalizar
-  const maxValue = Math.max(...Object.values(stats));
-  const radius = 80;
+  // Escala: basamos la anchura en la stat base máxima (con margen)
+  const baseMax = Math.max(...Object.values(statsBase), 1);
+  const maxScale = baseMax * 1.2;
 
-  // Calcular puntos del rombo (posiciones normalizadas)
-  const points = {};
-  const angles = {
-    'hp': -90,          // Arriba derecha
-    'ataque': -30,       // Arriba
-    'defensa': 30,       // Derecha
-    'sp_ataque': 90,     // Abajo derecha
-    'velocidad': 150,    // Abajo
-    'sp_defensa': -150   // Izquierda
-  };
-
-  Object.keys(angles).forEach(stat => {
-    const angle = angles[stat] * Math.PI / 180;
-    const ratio = stats[stat] / maxValue;
-    const r = radius * ratio;
-    points[stat] = {
-      x: 100 + r * Math.cos(angle),
-      y: 100 + r * Math.sin(angle),
-      angle: angle
-    };
+  const rows = order.map(k => {
+    const val = stats[k] || 0;
+    const pct = Math.max(0, Math.min(100, Math.round((val / maxScale) * 100)));
+    const isUp = statUp === k;
+    const isDown = statDown === k;
+    return { key: k, label: labelMap[k], val, pct, isUp, isDown, base: statsBase[k] || 0 };
   });
 
-  // Crear SVG con el polígono del rombo
-  let svg = `
-    <svg width="200" height="200" viewBox="0 0 200 200" style="position: relative;">
-      <!-- Grid lines -->
-      <line x1="100" y1="20" x2="100" y2="180" stroke="#ddd" stroke-width="1"/>
-      <line x1="20" y1="100" x2="180" y2="100" stroke="#ddd" stroke-width="1"/>
-      
-      <!-- Polygon fill -->
-      <polygon points="${stats_order.map(s => `${points[s].x},${points[s].y}`).join(' ')}" 
-               fill="rgba(255, 203, 5, 0.2)" 
-               stroke="#ffcb05" 
-               stroke-width="2"/>
-      
-      <!-- Grid circles (opcional) -->
-      ${[0.25, 0.5, 0.75, 1].map(r => `
-        <circle cx="100" cy="100" r="${radius * r}" fill="none" stroke="#eee" stroke-width="0.5" stroke-dasharray="2,2"/>
-      `).join('')}
-    </svg>
-  `;
-
-  // HTML del rombo con labels
-  let html = `
-    <div class="stats-diamond" style="position: relative;">
-      ${svg}
-      
-      <!-- Centro -->
-      <div class="stats-diamond-center">${stats.velocidad}</div>
-      
-      <!-- Labels de stats -->
-      <div class="stat-label hp">
-        <div class="stat-label-value">${stats.hp}</div>
-        <div class="stat-label-name">HP</div>
+  const rowsHtml = rows.map(r => `
+    <div class="stat-row" role="group" aria-label="${r.label}">
+      <div class="stat-row-left">
+        <div class="stat-label-name">${r.label}</div>
+        <div class="stat-base">(${r.base})</div>
       </div>
-      <div class="stat-label ataque">
-        <div class="stat-label-value">${stats.ataque}</div>
-        <div class="stat-label-name">ATQ</div>
-      </div>
-      <div class="stat-label defensa">
-        <div class="stat-label-value">${stats.defensa}</div>
-        <div class="stat-label-name">DEF</div>
-      </div>
-      <div class="stat-label sp_ataque">
-        <div class="stat-label-value">${stats.sp_ataque}</div>
-        <div class="stat-label-name">ESP.ATQ</div>
-      </div>
-      <div class="stat-label sp_defensa">
-        <div class="stat-label-value">${stats.sp_defensa}</div>
-        <div class="stat-label-name">ESP.DEF</div>
-      </div>
-      <div class="stat-label velocidad">
-        <div class="stat-label-value">${stats.velocidad}</div>
-        <div class="stat-label-name">VEL</div>
+      <div class="stat-row-right">
+        <div class="stat-bar" aria-hidden="true">
+          <div class="stat-bar-fill" data-target="${r.pct}" style="width:0%;"></div>
+        </div>
+        <div class="stat-value">${r.val} ${r.isUp?'<span class="nature up">↑</span>':''}${r.isDown?'<span class="nature down">↓</span>':''}</div>
       </div>
     </div>
-  `;
+  `).join('');
 
+  const html = `
+    <div class="stats-bars">
+      ${rowsHtml}
+      <div class="small-muted mt-2">Escala basada en base máxima: ${Math.round(maxScale)}</div>
+    </div>
+  `;
   return html;
+}
+
+function animateStatsBars() {
+  const container = document.querySelector('.stats-bars');
+  if (!container) return;
+  container.classList.add('visible');
+  const fills = Array.from(container.querySelectorAll('.stat-bar-fill'));
+  fills.forEach((el, idx) => {
+    const tgt = el.getAttribute('data-target') || '0';
+    el.style.transition = 'width 700ms cubic-bezier(0.2,0.9,0.2,1)';
+    el.style.transitionDelay = (idx * 90) + 'ms';
+    void el.offsetWidth;
+    setTimeout(() => { el.style.width = tgt + '%'; }, 20);
+  });
 }
 
 /**
@@ -281,6 +260,11 @@ async function learnMove(pokemonId, moveId, slot) {
     });
 
     const data = await res.json();
+    if (res.status === 409) {
+      showToast(data.error || 'El Pokémon ya conoce ese movimiento', 'warning');
+      return;
+    }
+
     if (!data.success) {
       showToast(data.error || 'Error enseñando movimiento', 'danger');
       return;

@@ -37,7 +37,6 @@ $sql = "SELECT
             pb.id,
             pb.apodo,
             pb.nivel,
-            pb.cp,
             pb.hp,
             pb.max_hp,
             pb.status,
@@ -90,6 +89,11 @@ function calcular_stat($base, $nivel, $iv = 31, $ev = 0, $modificador = 1.0) {
     return floor(((2 * $base + $iv + ($ev / 4)) * $nivel / 100 + 5) * $modificador);
 }
 
+// Fórmula correcta para HP (diferente del resto de stats)
+function calcular_hp($base, $nivel, $iv = 31, $ev = 0) {
+    return floor(((2 * $base + $iv + ($ev / 4)) * $nivel / 100) + $nivel + 10);
+}
+
 $nivel = (int)$pokemon['nivel'];
 $modificador_aumentado = 1.1;   // 10% boost
 $modificador_reducido = 0.9;    // 10% reduction
@@ -124,7 +128,8 @@ if (!empty($pokemon['stat_reducido'])) {
 
 // Calcular stats (sin IVs/EVs por ahora, usar base=31, ev=0)
 $stats = [
-    'hp' => calcular_stat((int)$pokemon['base_hp'], $nivel),
+    // Usamos la fórmula de HP específica
+    'hp' => calcular_hp((int)$pokemon['base_hp'], $nivel),
     'ataque' => floor(calcular_stat((int)$pokemon['base_ataque'], $nivel) * $mod_ataque),
     'defensa' => floor(calcular_stat((int)$pokemon['base_defensa'], $nivel) * $mod_defensa),
     'sp_ataque' => floor(calcular_stat((int)$pokemon['base_sp_ataque'], $nivel) * $mod_sp_ataque),
@@ -207,7 +212,6 @@ $response = [
         'species_id' => (int)$pokemon['species_id'],
         'sprite' => $pokemon['sprite'],
         'nivel' => $nivel,
-        'cp' => (int)$pokemon['cp'],
         'hp_actual' => (int)$pokemon['hp'],
         'hp_maximo' => (int)($pokemon['max_hp'] ?? $stats['hp']),
         'status' => $pokemon['status'],
