@@ -84,7 +84,7 @@ Esto crea:
 ### Sección Superior (Amarilla)
 - Nombre/Apodo del Pokémon
 - Sprite grande
-- Nivel, CP, HP
+- Nivel, HP
 
 ### Rombo de Stats (Centro)
 - Hexágono con 6 puntas

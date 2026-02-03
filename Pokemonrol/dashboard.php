@@ -22,7 +22,7 @@ if ($user_id > 0) {
   $sql = "SELECT pb.*, ps.nombre AS especie, ps.sprite AS sprite FROM pokemon_box pb JOIN pokemon_species ps ON ps.id = pb.species_id WHERE pb.user_id = ? ORDER BY pb.created_at DESC";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->bind_param('i', $user_id); $stmt->execute(); $res = $stmt->get_result(); while ($r = $res->fetch_assoc()) $box[] = $r; $stmt->close(); }
 
-  $sql = "SELECT t.slot, pb.id AS box_id, ps.nombre AS especie, ps.sprite AS sprite, pb.apodo, pb.nivel, pb.cp FROM team t LEFT JOIN pokemon_box pb ON t.pokemon_box_id = pb.id LEFT JOIN pokemon_species ps ON pb.species_id = ps.id WHERE t.user_id = ? ORDER BY t.slot ASC";
+  $sql = "SELECT t.slot, pb.id AS box_id, ps.nombre AS especie, ps.sprite AS sprite, pb.apodo, pb.nivel FROM team t LEFT JOIN pokemon_box pb ON t.pokemon_box_id = pb.id LEFT JOIN pokemon_species ps ON pb.species_id = ps.id WHERE t.user_id = ? ORDER BY t.slot ASC";
   if ($stmt = $mysqli->prepare($sql)) { $stmt->bind_param('i', $user_id); $stmt->execute(); $res = $stmt->get_result(); while ($r = $res->fetch_assoc()) $team[] = $r; $stmt->close(); }
 
   $sql = "SELECT p.species_id, ps.nombre, p.visto, p.capturado, p.veces_visto, p.first_seen_at FROM pokedex p JOIN pokemon_species ps ON p.species_id = ps.id WHERE p.user_id = ?";
@@ -223,7 +223,7 @@ foreach ($team as $t) {
                   <div class="small-muted">No hay pokémon en la caja.</div>
                   <?php else: foreach($box as $pb): ?>
                   <?php $equippedSlot = isset($equippedBoxMap[$pb['id']]) ? (int)$equippedBoxMap[$pb['id']] : null; ?>
-                  <div class="pokemon-card" data-box-id="<?= (int)$pb['id'] ?>">
+                  <div class="pokemon-card" data-box-id="<?= (int)$pb['id'] ?>" data-species-id="<?= (int)$pb['species_id'] ?>">
                     <div class="pokemon-avatar">
                       <?php if (!empty($pb['sprite'])): ?>
                         <img src="img/pokemon/<?= htmlspecialchars($pb['sprite']) ?>" class="pokemon-img" alt="<?= htmlspecialchars($pb['apodo'] ?? $pb['especie'] ?? 'Pokémon') ?>">
@@ -233,7 +233,7 @@ foreach ($team as $t) {
                     </div>
                     <div class="pokemon-meta">
                       <h5><?= htmlspecialchars($pb['apodo'] ?? $pb['especie']); ?></h5>
-                      <small>Nivel <?= (int)($pb['nivel'] ?? 0) ?> · CP <?= (int)($pb['cp'] ?? 0) ?><?php if ($pb['hp'] !== null): ?> · HP <?= (int)$pb['hp'] ?><?php endif; ?></small>
+                      <small>Nivel <?= (int)($pb['nivel'] ?? 0) ?><?php if ($pb['hp'] !== null): ?> · HP <?= (int)$pb['hp'] ?><?php endif; ?></small>
                     </div>
                     <div class="item-actions">
                       <?php if ($equippedSlot): ?>
@@ -306,7 +306,7 @@ foreach ($team as $t) {
                         $entry = $pokedex[$sp['id']] ?? null;
                         $seen = $entry && (int)$entry['visto'] === 1;
                       ?>
-                      <div class="unknown-item">
+                      <div class="unknown-item" data-species-id="<?= $sp['id'] ?>" data-seen="<?= $seen ? '1' : '0' ?>">
                         <div class="unknown-avatar">
                           <?php if ($seen && !empty($sp['sprite'])): ?>
                             <img src="img/pokemon/<?= htmlspecialchars($sp['sprite']) ?>" class="pokemon-img" alt="<?= htmlspecialchars($sp['nombre']) ?>">
@@ -603,7 +603,7 @@ try {
         }
         title.textContent = (t.apodo && t.apodo.trim() !== '') ? t.apodo : (t.especie || '');
         sub.textContent = 'Nivel ' + (t.nivel || 0);
-        actions.innerHTML = '<button class="btn btn-sm btn-outline-danger" onclick="unequip(' + s + ')">Desequipar</button>';
+        actions.innerHTML = '<button class="btn btn-sm btn-outline-danger" onclick="unequip(' + s + ')">Desequipar</button> <button class="btn btn-sm btn-outline-warning pokemon-info-btn" onclick="showPokemonInfo(' + t.box_id + ')">ℹ️ Info</button>';
       } else {
         avatar.innerHTML = '✨';
         title.textContent = 'Libre';
@@ -618,11 +618,12 @@ try {
     for (let t of teamData) if (t.box_id) map[parseInt(t.box_id)] = t.slot;
     document.querySelectorAll('.pokemon-card[data-box-id]').forEach(el => {
       const bId = parseInt(el.dataset.boxId);
+      const speciesId = el.dataset.speciesId || '';
       const actions = el.querySelector('.item-actions');
       if (map[bId]) {
-        actions.innerHTML = '<button class="btn btn-sm btn-outline-success" disabled>Equipado (' + map[bId] + ')</button> <button class="btn btn-sm btn-outline-primary" onclick="showEquipModal(' + bId + ')">Mover</button>';
+        actions.innerHTML = '<button class="btn btn-sm btn-outline-success" disabled>Equipado (' + map[bId] + ')</button> <button class="btn btn-sm btn-outline-primary" onclick="showEquipModal(' + bId + ')">Mover</button> <button class="btn btn-sm btn-outline-secondary" onclick="showSendItemModal(' + bId + ')">Enviar</button> <button class="btn btn-sm btn-outline-info" onclick="markAsSeen(' + speciesId + ')">Marcar Pokédex</button> <button class="btn btn-sm btn-outline-warning pokemon-info-btn" onclick="showPokemonInfo(' + bId + ')">ℹ️ Info</button>';
       } else {
-        actions.innerHTML = '<button class="btn btn-sm btn-outline-primary" onclick="showEquipModal(' + bId + ')">Mover</button>';
+        actions.innerHTML = '<button class="btn btn-sm btn-outline-primary" onclick="showEquipModal(' + bId + ')">Mover</button> <button class="btn btn-sm btn-outline-secondary" onclick="showSendItemModal(' + bId + ')">Enviar</button> <button class="btn btn-sm btn-outline-info" onclick="markAsSeen(' + speciesId + ')">Marcar Pokédex</button> <button class="btn btn-sm btn-outline-warning pokemon-info-btn" onclick="showPokemonInfo(' + bId + ')">ℹ️ Info</button>';
       }
     });
   }
@@ -725,6 +726,39 @@ try {
       finally { btn.disabled = false; btn.textContent = 'Enviar'; modal.hide(); }
     };
     modal.show();
+  }
+
+  async function markAsSeen(speciesId) {
+    try {
+      const res = await fetch('api/mark_pokedex.php', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ species_id: speciesId }) });
+      const j = await res.json();
+      if (!j.success) { showToast(j.error || 'Error marcando en Pokedex', 'danger'); return; }
+      showToast(j.message || 'Pokédex actualizada', 'success');
+
+      // Actualizar la UI de la Pokédex si está visible
+      try {
+        const entry = j.entry || null;
+        const el = document.querySelector('.unknown-item[data-species-id="' + speciesId + '"]');
+        if (el && entry) {
+          el.setAttribute('data-seen', entry.visto ? '1' : '0');
+          const avatar = el.querySelector('.unknown-avatar');
+          const nameEl = el.querySelector('.fw-bold');
+          const smallEl = el.querySelector('.small-muted');
+          if (entry.visto) {
+            if (entry.sprite) {
+              avatar.innerHTML = '<img src="img/pokemon/' + entry.sprite + '" class="pokemon-img">';
+            } else {
+              avatar.textContent = '🐾';
+            }
+            nameEl.textContent = entry.nombre;
+            smallEl.textContent = 'Especie';
+          }
+        }
+      } catch (e) {
+        // ignore UI update errors
+      }
+
+    } catch (e) { showToast('Error de red', 'danger'); }
   }
 
   window.__initial_team = <?php echo json_encode(array_values($team)); ?>;
@@ -838,65 +872,8 @@ try {
   try { document.addEventListener('DOMContentLoaded', initD100History); } catch(e) { initD100History(); }
 </script>
 
-  <div class="modal fade" id="equipModal" tabindex="-1" aria-labelledby="equipModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="equipModalLabel">Equipar Pokémon</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <div id="equipModalPokemonInfo" class="mb-2"></div>
-          <div class="d-grid gap-2">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="equipConfirmBtn">Confirmar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="sendItemModal" tabindex="-1" aria-labelledby="sendItemModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="sendItemModalLabel">Enviar Item</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <div id="sendItemModalInfo" class="mb-2">Introduce el correo del destinatario</div>
-          <input type="email" id="sendRecipientEmail" class="form-control mb-2" placeholder="correo@ejemplo.com">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="sendItemConfirmBtn">Enviar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="useItemModal" tabindex="-1" aria-labelledby="useItemModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="useItemModalLabel">Usar Item</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <div id="useItemModalInfo" class="mb-2">Selecciona el Pokémon objetivo</div>
-          <div id="useItemModalGrid" class="d-grid gap-2"></div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="scripts/pokemon-info.js"></script>
+  <script src="scripts/pokemon-info.js?v=2"></script>
   <script>
     // Restaurar pestaña activa guardada en localStorage (se ejecuta después de cargar Bootstrap)
     (function(){

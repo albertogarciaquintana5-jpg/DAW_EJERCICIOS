@@ -139,10 +139,10 @@ if (t.sprite) {
 **Cambios en la consulta (línea ~10):**
 ```php
 // ANTES
-$cols = ['t.slot', 'pb.id AS box_id', 'ps.nombre AS especie', 'pb.apodo', 'pb.nivel', 'pb.cp'];
+$cols = ['t.slot', 'pb.id AS box_id', 'ps.nombre AS especie', 'pb.apodo', 'pb.nivel'];
 
 // DESPUÉS
-$cols = ['t.slot', 'pb.id AS box_id', 'ps.nombre AS especie', 'ps.sprite AS sprite', 'pb.apodo', 'pb.nivel', 'pb.cp'];
+$cols = ['t.slot', 'pb.id AS box_id', 'ps.nombre AS especie', 'ps.sprite AS sprite', 'pb.apodo', 'pb.nivel'];
 ```
 
 ---

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Sombras CSS</title>
+
+<style type="text/css">
+
+
+h1{
+    font-family: Georgia;
+    font-size: 50px;
+    text-align: center;
+    line-height: 1.5em;
+}
+
+/* --------- EJERCICIO 2 --------- */
+/* Sombra */
+.text1{
+    text-shadow: 10px 5px 2px #999;
+}
+
+/* Sombra negativa */
+.text1negativo{
+    text-shadow: -10px -5px 2px #999;
+}
+
+/* Sombra roja */
+.text2{
+    text-shadow: 8px 8px 2px red;
+}
+
+/* Sombra roja negativa */
+.text2negativo{
+    text-shadow: -8px -8px 2px red;
+}
+
+/* Verde con blur */
+.text3{
+    text-shadow: 0px 0px 8px green;
+}
+
+/* Púrpura con blur */
+.text4{
+    text-shadow: 0px 0px 10px purple;
+}
+
+/* Azul y rojo */
+.text5{
+    text-shadow: 6px 6px 4px blue, -6px -6px 4px red;
+}
+
+/* Intercambio rojo y azul */
+.text6{
+    text-shadow: 6px 6px 4px red, -6px -6px 4px blue;
+}
+
+/* --------- EJERCICIO 4 (RELIEVE VERDE) --------- */
+.relieve{
+    color: #0a5;
+    text-shadow:
+        1px 1px 0 #0f0,
+        -1px -1px 0 #050;
+}
+
+/* --------- EJERCICIO 5 --------- */
+.cajasombra{
+    box-shadow: 5px 5px 10px 3px #444;
+    background-color: #ddd;
+    width: 100px;
+    height: 100px;
+}
+
+.cajasombra2{
+    box-shadow: -5px 5px 15px 0px blue;
+    background-color: #ddd;
+    width: 100px;
+    height: 100px;
+}
+
+.cajasombrainterior{
+    box-shadow: inset 0px 0px 10px green;
+    background-color: #ddd;
+    width: 100px;
+    height: 100px;
+}
+
+/* --------- EJERCICIO 6 --------- */
+.cajasombra:hover{
+    box-shadow: 5px 5px 10px red;
+}
+.cajasombra2:hover{
+    box-shadow: -5px 5px 15px purple;
+}
+.cajasombrainterior:hover{
+    box-shadow: inset 0px 0px 10px orange;
+}
+
+/* --------- EJERCICIO 7 (DISEÑO EXTRA) --------- */
+.gradiente{
+    width: 300px;
+    height: 100px;
+    background: linear-gradient(45deg, #00f, #0f0, #f00);
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
+    margin: auto;
+}
+
+</style>
+</head>
+
+<body>
+<h1 class="text1negativo">ALberto Garcia Quintana</h1>
+<br><br>
+<!-- EJERCICIO 2 -->
+<h1 class="text1">!!! Sombra ¡¡¡</h1>
+<h1 class="text1negativo">!!! Sombra negativa ¡¡¡</h1>
+<h1 class="text2">!!! Sombra Roja ¡¡¡</h1>
+<h1 class="text2negativo">!!! Sombra Roja negativa ¡¡¡</h1>
+<h1 class="text3">!!! Verde con blur ¡¡¡</h1>
+<h1 class="text4">!!! Púrpura con blur ¡¡¡</h1>
+
+<!-- EJERCICIO 3 -->
+<h1 id="cambio" class="text5"
+    onmouseenter="cambiorojo()"
+    onmouseleave="cambioclase()">
+    !!! Azul y rojo ¡¡¡
+</h1>
+
+<!-- EJERCICIO 4 -->
+<h1 class="relieve">!!! Texto en relieve verde ¡¡¡</h1>
+
+<!-- EJERCICIO 5 y 6 -->
+<div class="cajasombra">Caja 1</div><br><br>
+<div class="cajasombra2">Caja 2</div><br><br>
+<div class="cajasombrainterior">Interior</div><br><br>
+
+<!-- EJERCICIO 7 -->
+<div class="gradiente"></div>
+
+<script>
+/* --------- EJERCICIO 3 --------- */
+/* El hover no funciona con text-shadow, por eso usamos JS */
+
+function cambiorojo(){
+    document.getElementById("cambio").className = "text6";
+}
+
+function cambioclase(){
+    document.getElementById("cambio").className = "text5";
+}
+</script>
+
+</body>
+</html>

@@ -225,7 +225,7 @@ Al hacer click abre un modal grande con:
 #### Sección superior:
 - Nombre/apodo del Pokémon
 - Sprite grande
-- Nivel, CP, HP actual/máximo
+- Nivel, HP actual/máximo
 
 #### Rombo de Stats:
 - Visualización hexagonal en rombo
@@ -289,7 +289,7 @@ INSERT INTO pokemon_species_movimiento (species_id, movimiento_id, nivel) VALUES
 ### Ver todos los datos de un Pokémon capturado:
 ```sql
 SELECT 
-  pb.id, pb.apodo, pb.nivel, pb.cp,
+  pb.id, pb.apodo, pb.nivel,
   ps.nombre, n.nombre AS naturaleza, h.nombre AS habilidad
 FROM pokemon_box pb
 JOIN pokemon_species ps ON pb.species_id = ps.id

@@ -6,7 +6,7 @@ if (!isset($_SESSION['user']['id'])) { http_response_code(403); echo json_encode
 $user_id = (int)$_SESSION['user']['id'];
 
 $colStmt = $mysqli->prepare('SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?');
-$cols = ['t.slot', 'pb.id AS box_id', 'ps.nombre AS especie', 'ps.sprite AS sprite', 'pb.apodo', 'pb.nivel', 'pb.cp'];
+$cols = ['t.slot', 'pb.id AS box_id', 'ps.nombre AS especie', 'ps.sprite AS sprite', 'pb.apodo', 'pb.nivel'];
 $optCols = [];
 if ($colStmt) {
 	$tbl = 'pokemon_box';
@@ -16,6 +16,7 @@ if ($colStmt) {
 	while ($c = $cres->fetch_assoc()) { $optCols[$c['COLUMN_NAME']] = true; }
 	$colStmt->close();
 }
+if (isset($optCols['cp'])) $cols[] = 'pb.cp';
 if (isset($optCols['hp'])) $cols[] = 'pb.hp';
 if (isset($optCols['max_hp'])) $cols[] = 'pb.max_hp';
 if (isset($optCols['status'])) $cols[] = 'pb.status';

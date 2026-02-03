@@ -88,7 +88,7 @@ mysql -u TU_USUARIO -p crud_api < migrations\ejecutarsql.sql
 ```
 ---
 
-## Endpoints principales (ejemplos)
+## Endpoints principales ejemplos
 
 - Registrar un usuario (POST): `/auth/register`
   - Body JSON: `{ "nombre":"Ana", "apellido":"Pérez", "email":"ana@mail.com", "password":"P4ss!", "telefono":"600123456" }`
