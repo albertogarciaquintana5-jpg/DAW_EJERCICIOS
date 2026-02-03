@@ -42,41 +42,50 @@ php scripts/seed.php
 
 4. Arrancar el servidor de desarrollo:
 
+**IMPORTANTE: Abre PowerShell para este paso y los siguientes. NO uses cmd.exe**
+
 ```powershell
 php -S 127.0.0.1:8000 -t public
 ```
 
-5. Probar la API (registro/login/usuarios):
+5. Probar la API (en otra ventana de PowerShell):
 
-- Hacer login con el usuario de prueba (Pilar):
+**Paso 1: Hacer login con el usuario de prueba (Pilar)**
+
+Copia y ejecuta esto en **PowerShell**:
 
 ```powershell
-# Opción manual (PowerShell):
 $body = @{ email = 'pilar@example.com'; password = '123456' } | ConvertTo-Json
-Invoke-RestMethod -Uri 'http://127.0.0.1:8000/auth/login' -Method POST -Body $body -ContentType 'application/json'
+$response = Invoke-RestMethod -Uri 'http://127.0.0.1:8000/auth/login' -Method POST -Body $body -ContentType 'application/json'
+$response | ConvertTo-Json
 ```
 
-- Llamada a `/users` usando el token devuelto:
+Verás un `token` en la respuesta. **Cópialo**.
+
+**Paso 2: Listar usuarios con el token**
+
+Reemplaza `<TOKEN>` con el token que copiaste:
 
 ```powershell
-Invoke-RestMethod -Uri 'http://127.0.0.1:8000/users' -Method GET -Headers @{ Authorization = "Bearer <TOKEN>" }
+$token = '<TOKEN>'
+Invoke-RestMethod -Uri 'http://127.0.0.1:8000/users' -Method GET -Headers @{ Authorization = "Bearer $token" }
 ```
 
-- Opción rápida: ejecutar el script que hace todo (aplica seed, arranca servidor temporal, hace login y lista usuarios):
+**Opción automática: Ejecuta el script que hace todo**
+
+Ejecuta esto desde la **carpeta raíz del proyecto `Crud-api`** en PowerShell:
 
 ```powershell
 .\scripts\run_all.ps1
 ```
 
+(Este script hace seed, inicia el servidor y prueba la API automáticamente)
 
 6. Si prefieres hacerlo manualmente en SQL, puedes ejecutar:
 
 ```powershell
 mysql -u TU_USUARIO -p crud_api < migrations\ejecutarsql.sql
 ```
-
----
-
 ---
 
 ## Endpoints principales (ejemplos)
@@ -98,23 +107,6 @@ curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json
 curl http://127.0.0.1:8000/users -H "Authorization: Bearer <TOKEN>"
 ```
 
----
-
-## Notas importantes
-
-- Cambia `JWT_SECRET` por un valor largo y seguro antes de entregar el trabajo.
-- No subas el fichero `.env` al repositorio (está en `.gitignore`).
-- Este proyecto es una práctica de aprendizaje, NO está listo para producción.
-
----
-
-## Buenas prácticas aplicadas
-
-- Uso de PDO con sentencias preparadas para evitar inyecciones SQL.
-- Contraseñas almacenadas con `password_hash()` y comprobadas con `password_verify()`.
-- Autenticación por tokens JWT para las rutas de la API.
-
----
 
 ## Autor
 

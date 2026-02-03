@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
+        integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
+
+    <style>
+    .grande{
+        font-size: 30px;
+        color: white;
+        background-color: steelblue;
+        padding: 10px;
+    }
+
+    .borde{
+        border: 3px solid black;
+    }
+
+    </style>
+</head>
+
+<body>
+    <h1>ALberto Garcia Quintana</h1>
+    <br><br><br>
+
+    <h2> Ejercicio1 </h2>
+    <pre> 
+$(function() {     }); </pre> <br> 
+Además es posible pasarle a $(document).ready() una función nombrada en lugar de una anónima:
+Pasar una función nombrada en lugar de una función anónima
+function readyFn() {    // código a ejecutar cuando el documento este listo   }
+$(document).ready(readyFn);
+
+    
+
+
+    <h2> Ejercicio2 </h2>
+    <div id="id2-1"> Original: Mensaje Original</div>
+    <button onclick="copiarEj2()">Copiar aqui el contenido del parrafo superior Ej2 </button>
+    <div id="id2-2">Copia : </div>
+
+    <h2> Ejercicio3 </h2>
+    <div id="id3-1" class="ej31">
+        <ul>
+            <li id='li1'> Elemento1</li>
+            <li id='li2'>Elemento2 </li>
+            <li id='li3'>Elemento3</li>
+            <li id='li4'> Elemento4</li>
+            <li id='li5'> Elemento5</li>
+            <li id='li6'> Elemento6</li>
+        </ul>
+    </div>
+
+    <button onclick="ej3()">Copiar Ej3 L1 primero, segundo y ultimo</button>
+    <div id="id3-2">Copia : </div>
+    <button onclick="ej3b()">mostrar Ej3b todos los Li </button>
+    <div id="id3-3">Copia : </div>
+
+    <button onclick="ej3c()">mostrar Ej3b todos los Li con jquery </button>
+    <div id="id3c">Copia : </div>
+
+    <h2> Ejercicio4 </h2>
+
+    <a href="https://iesplayamar.es/"> iesplayamar <b> hola </b> </a> <br>
+    <a href="https://iesplayamar.es/pasen/ "> pasen <b> hola </b> </a><br>
+    <a href="https://iesplayamar.es/oferta-educativa/"> educativa </a><br>
+    <a href="https://iesplayamar.es/informacion-sobre-el-centro/"> centro <b> hola </b> </a><br>
+    <a href="https://es.wikipedia.org/wiki/Wiki"> Wiki </a><br>
+    <a href="https://es.wikipedia.org/wiki/Localizador_de_recursos_uniforme"> Localizador_de_recursos_uniforme </a><br>
+
+    <button onclick="ej4()"> Ejemplo 4 </button>
+    <div id="id4">Copia : </div>
+
+    <h2> Ejercicio5 </h2>
+    <form action="procesar.php" method="post" id="f1">
+        <fieldset> 
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="i1212" required><br><br>
+        <label for="apellido ">apellido:</label>
+        <input type="text" id="text" name="apellido" value="apellido" required><br><br>
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" name="contrasena" required><br><br>
+
+        <label for="numero">Número:</label>
+        <input type="number" id="numero" name="numero" min="0" max="100" step="1"><br><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha"><br><br>
+
+        <label for="color">Color:</label>
+        <input type="color" id="color" name="color"><br><br>
+
+        <label for="archivo">Subir Archivo:</label>
+        <input type="file" id="archivo" name="archivo"><br><br>
+
+        <label for="seleccion">Selección:</label>
+        <select id="seleccion" name="seleccion">
+            <option value="opcion1">Opción 1</option>
+            <option value="opcion2">Opción 2</option>
+            <option value="opcion3">Opción 3</option>
+        </select><br><br>
+
+        <label for="radio">Opción de Radio:</label>
+        <input type="radio" id="radio1" name="opcion_radio" value="opcion1">
+        <label for="radio1">Opción 1</label>
+        <input type="radio" id="radio2" name="opcion_radio" value="opcion2">
+        <label for="radio2">Opción 2</label><br><br>
+
+        <label for="checkbox">Casilla de Verificación:</label>
+        <input type="checkbox" id="checkbox1" name="casilla1" value="valor1">
+        <label for="checkbox1">Casilla 1</label>
+        <input type="checkbox" id="checkbox2" name="casilla2" value="valor2">
+        <label for="checkbox2">Casilla 2</label><br><br>
+
+        <label for="textarea">Área de Texto:</label><br>
+        <textarea id="textarea" name="comentario" rows="4" cols="50"></textarea><br><br>
+
+        <input type="submit" value="Enviar">
+        </fieldset>
+    </form>
+
+    <button onclick="ej5()"> Ej5 </button>
+    <div id="id5">Ej5 : </div>
+
+    <button onclick="ej6()"> Ej6 </button>
+
+    <button id="botonEventos"> botonEventos </button>
+    <div id="idEventos"> Hola </div>
+
+
+    <script>
+        /*
+        // Ejercicio 1
+        $(document).ready(
+            function () {
+            alert('el documento está preparado');
+        });
+
+        $(    function () { alert('el documento está preparado'); }     );
+        $(() => {
+                alert('el documento está preparado -  Ejercio1');
+        }
+        );
+        */
+
+        // Ejercicio2 
+        function copiarEj2() {
+                let msg = $('#id2-1').prop('innerHTML');
+                $('#id2-2').append(msg + "<br>");
+
+                
+
+                let cadena = "<ol>";
+                msg.split(" ").forEach(element => {
+                    cadena+="<li>" + element + "</li>";
+                });
+                cadena += "</ol>"
+                $('#id2-3').append(cadena + "<br>");
+        }
+
+          //Copiar Ej3 L1 primero, segundo y ultimo
+    
+
+        function ej3() {     
+            
+            let primero = $("#li1").text();
+            let segundo = $("#li2").text();
+            let ultimo = $("#id3-1 li:last").text();
+
+            $("#id3-2").html(
+                "Copia: " + primero + " | " + segundo + " | " + ultimo
+            );
+            }
+        
+    // mostrar Ej3b todos los Li
+    
+
+    
+
+        function ej3b() {    
+
+            let resultado = "";
+
+            $("#id3-1 li").each(function() {
+                resultado += $(this).text() + "<br>";
+            });
+
+            $("#id3-3").html("Copia:<br>" + resultado);
+
+            }
+// mostrar Ej3b todos los Li con jquery
+
+        function ej3c() {    
+
+                $("#id3c").html("Copia:<br>");
+
+                $("#id3-1 li").each(function() {
+                    $("#id3c").append($(this).text() + "<br>");
+                });
+            }
+
+
+        function ej4() {       
+
+                let $listaEnlaces = $('a').has('b');
+                let cadena = "";
+
+                if ($listaEnlaces.length === 0) {
+                    $('#id4').html('No se han encontrado enlaces con <b>');
+                    return;
+                }
+
+                $listaEnlaces.each(function (i) {
+                    const $a = $(this);
+                    const href = $a.attr('href');
+                    const texto = $a.text().trim();
+                    cadena += (i+1) + ". ";
+                    cadena += "Texto: " + texto + " — ";
+                    cadena += "Href: <a href='" + href + "' target='_blank'>" + href + "</a>" + "<br>";
+                });
+
+                // resaltar los enlaces seleccionados para ver el selector en acción
+                $listaEnlaces.css('background-color', '#fffa8d');
+
+                $('#id4').html(cadena);
+
+            }
+
+
+        function ej5() {
+
+            let salida = "";
+
+            // Seleccionar TODOS los inputs del formulario
+            salida += "<b>Total inputs:</b> " + $("#f1 :input").length + "<br>";
+
+            // Cambiar valor de un input text
+            $("#nombre").val("Nombre cambiado con jQuery");
+
+            // Cambiar password
+            $(":password").val("123456");
+
+            // Marcar un radio
+            $("input:radio[value='opcion2']").prop("checked", true);
+
+            // Marcar un checkbox
+            $("#checkbox1").prop("checked", true);
+
+            // Leer estado de checkbox
+            let chequeado = $("#checkbox1").prop("checked");
+            salida += "<b>Checkbox 1 marcado:</b> " + chequeado + "<br>";
+
+            // Leer radio seleccionado
+            let radio = $("input:radio:checked").val();
+            salida += "<b>Radio seleccionado:</b> " + radio + "<br>";
+
+            // Cambiar opción del select
+            $("#seleccion").val("opcion3");
+
+            // Leer option seleccionada
+            let opcion = $("#seleccion option:selected").text();
+            salida += "<b>Opción seleccionada:</b> " + opcion + "<br>";
+
+            // Contar inputs habilitados
+            salida += "<b>Inputs habilitados:</b> " + $("#f1 :enabled").length + "<br>";
+
+            // Mostrar resultados
+            $("#id5").html("Ej5:<br>" + salida);
+        }
+        function ej6(){
+
+            $("#idEventos")
+                .html("Texto cambiado con jQuery") // setter
+                .addClass("grande")                // clase
+                .width(300)                       // dimensión
+                .height(80)
+                .fadeOut(400)
+                .fadeIn(400);
+
+
+            let ancho = $("#idEventos").width();
+
+            $("#idEventos").append("<br>Ancho: " + ancho + "px");
+        }
+
+
+// EVENTOS (sin onclick → forma PRO)
+$(document).ready(function(){
+
+    $("#botonEventos").click(function(){
+
+        $("#idEventos")
+            .toggleClass("borde") // añade / quita clase
+            .text("Has pulsado el botón");
+
+    });
+
+});
+
+       
+
+        function ej7() {  }        
+       
+
+    </script>
+
+</body>
+
+</html>
