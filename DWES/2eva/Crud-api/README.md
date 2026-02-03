@@ -1,4 +1,4 @@
-# CRUD API - Resumen mínimo para Postman
+# CRUD API
 
 Variables recomendadas en Postman:
 - `baseUrl` = `http://127.0.0.1:8000`
