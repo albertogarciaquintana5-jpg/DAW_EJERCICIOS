@@ -2,7 +2,7 @@
 // config/database.php
 // Devuelve una instancia PDO leyendo variables de entorno (.env) o usando valores por defecto
 
-function getPDO() {
+function getPDO($useDb = true) {
     // Leer variables de entorno (si no existen, usar valores por defecto para desarrollo)
     $host = getenv('DB_HOST') !== false ? getenv('DB_HOST') : '127.0.0.1';
     $db   = getenv('DB_NAME') !== false ? getenv('DB_NAME') : 'crud_api';
@@ -10,7 +10,12 @@ function getPDO() {
     $pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
     $charset = 'utf8mb4';
 
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    if ($useDb) {
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    } else {
+        // conectar sin seleccionar una base de datos (útil para crear la BD)
+        $dsn = "mysql:host=$host;charset=$charset";
+    }
     $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

@@ -1,114 +1,51 @@
-# Proyecto CRUD API en PHP (Trabajo de 2º DAW)
+# CRUD API - Resumen mínimo para Postman
 
-**Descripción**
+Variables recomendadas en Postman:
+- `baseUrl` = `http://127.0.0.1:8000`
+- `token` = (rellenar tras login)
 
-Este proyecto es una API REST.
----
-
-## Contenido
-
-- `public/` - punto de entrada (front controller)
-- `app/` - controladores, modelos, middleware y validadores
-- `config/` - configuración y lectura de `.env`
-- `migrations/ejecutarsql.sql` - SQL para crear la tabla `users`
-- `vendor/` - dependencias instaladas por Composer
-
----
-
-## Cómo ejecutar el proyecto (pasos simples)
-
-
-1. Copiar el archivo de configuración de entrega (ya preparado):
-
-```powershell
-Copy-Item .env.submit .env
-notepad .env  # si quiere cambiar algo (opcional)
-```
-
-2. Instalar dependencias con Composer (desde la carpeta `Crud-api`):
-
-```powershell
-composer install
-```
-
-3. Crear la base de datos y usuario de prueba (el script ejecuta la migración y crea un usuario):
-
-```powershell
-php scripts/seed.php
-# Usuario de prueba creado en ejecutar.sql:
-# Usuario: pilar@example.com
-# Contraseña: 123456
-```
-
-4. Arrancar el servidor de desarrollo:
-
-**IMPORTANTE: Abre PowerShell para este paso y los siguientes. NO uses cmd.exe**
+1) Arrancar servidor (desde la carpeta `Crud-api`):
 
 ```powershell
 php -S 127.0.0.1:8000 -t public
 ```
 
-5. Probar la API (en otra ventana de PowerShell):
+2) Obtener token (login)
+- Método: `POST`
+- URL: `{{baseUrl}}/auth/login`
+- Body (JSON): `{ "email": "pilar@example.com", "password": "123456" }`
+- Copia el valor `token` de la respuesta y pégalo en la variable de entorno `token`.
 
-**Paso 1: Hacer login con el usuario de prueba (Pilar)**
+3) GET - Listar usuarios
+- Método: `GET`
+- URL: `{{baseUrl}}/users`
+- Headers: `Authorization: Bearer {{token}}`
 
-Copia y ejecuta esto en **PowerShell**:
+4) GET - Obtener usuario por id
+- Método: `GET`
+- URL: `{{baseUrl}}/users/:id` (ej: `{{baseUrl}}/users/3`)
+- Headers: `Authorization: Bearer {{token}}`
 
-```powershell
-$body = @{ email = 'pilar@example.com'; password = '123456' } | ConvertTo-Json
-$response = Invoke-RestMethod -Uri 'http://127.0.0.1:8000/auth/login' -Method POST -Body $body -ContentType 'application/json'
-$response | ConvertTo-Json
+5) POST - Crear usuario
+- Método: `POST`
+- URL: `{{baseUrl}}/users`
+- Headers: `Authorization: Bearer {{token}}`, `Content-Type: application/json`
+- Body (JSON ejemplo):
+```json
+{ "nombre":"Luis", "apellido":"Gómez", "email":"luis@mail.com", "password":"P4ss!", "telefono":"600111222" }
 ```
 
-Verás un `token` en la respuesta. **Cópialo**.
+6) PUT/PATCH - Actualizar usuario
+- Método: `PUT` (reemplazo) o `PATCH` (parcial)
+- URL: `{{baseUrl}}/users/:id`
+- Headers: `Authorization: Bearer {{token}}`, `Content-Type: application/json`
+- Body (JSON ejemplo): `{ "nombre":"Ana", "apellido":"García", "email":"ana.nuevo@mail.com" }`
 
-**Paso 2: Listar usuarios con el token**
+7) DELETE - Borrar usuario
+- Método: `DELETE`
+- URL: `{{baseUrl}}/users/:id`
+- Headers: `Authorization: Bearer {{token}}`
 
-Reemplaza `<TOKEN>` con el token que copiaste:
-
-```powershell
-$token = '<TOKEN>'
-Invoke-RestMethod -Uri 'http://127.0.0.1:8000/users' -Method GET -Headers @{ Authorization = "Bearer $token" }
-```
-
-**Opción automática: Ejecuta el script que hace todo**
-
-Ejecuta esto desde la **carpeta raíz del proyecto `Crud-api`** en PowerShell:
-
-```powershell
-.\scripts\run_all.ps1
-```
-
-(Este script hace seed, inicia el servidor y prueba la API automáticamente)
-
-6. Si prefieres hacerlo manualmente en SQL, puedes ejecutar:
-
-```powershell
-mysql -u TU_USUARIO -p crud_api < migrations\ejecutarsql.sql
-```
 ---
 
-## Endpoints principales ejemplos
-
-- Registrar un usuario (POST): `/auth/register`
-  - Body JSON: `{ "nombre":"Ana", "apellido":"Pérez", "email":"ana@mail.com", "password":"P4ss!", "telefono":"600123456" }`
-
-- Login (POST): `/auth/login`
-  - Body JSON: `{ "email":"ana@mail.com", "password":"P4ss!" }`
-  - Respuesta: `{ "token": "..." }` (guardar token)
-
-- Listar usuarios (GET): `/users` (necesita header `Authorization: Bearer <TOKEN>`)
-
-Ejemplo con `curl` en PowerShell:
-
-```powershell
-curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json" -d '{"email":"ana@mail.com","password":"P4ss!"}'
-# Usar el token devuelto para la llamada protegida
-curl http://127.0.0.1:8000/users -H "Authorization: Bearer <TOKEN>"
-```
-
-
-## Autor
-
-ALberto Garcia Quintana (2º DAW)
-
+Autor: ALberto Garcia Quintana (2º DAW)
