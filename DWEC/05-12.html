@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios JSON ALberto Garcia Quintana DWEC</title>
+</head>
+<body>
+
+<h2>Ejercicio 1</h2>
+<div id="ej1"></div>
+
+<h2>Ejercicio 2</h2>
+<ul id="ej2"></ul>
+
+<h2>Ejercicio 3</h2>
+<div id="ej3"></div>
+
+<h2>Ejercicio 4</h2>
+<div id="ej4"></div>
+
+<script>
+// ===============================
+// EJERCICIO 1
+// ===============================
+const JSONCadena =
+'{"nombre":"Pepito","Amiguitos":["Manolo","Juanito","Kiko","Pedrito"],"ciudad":"Torremolinos"}';
+
+try {
+    const JSONObjeto = JSON.parse(JSONCadena);
+    document.getElementById("ej1").innerHTML =
+        JSONObjeto.nombre + ", [" +
+        JSONObjeto.Amiguitos + "], " +
+        JSONObjeto.ciudad;
+} catch (error) {
+    console.log("Error JSON");
+}
+
+// ===============================
+// EJERCICIO 2
+// ===============================
+const lista = document.getElementById("ej2");
+
+for (let i = 0; i < JSONObjeto.Amiguitos.length; i++) {
+    lista.innerHTML += "<li>" + JSONObjeto.Amiguitos[i] + "</li>";
+}
+
+// ===============================
+// EJERCICIO 3
+// ===============================
+const JSONData = `{
+"Alumno1":{"name":"Pepito","favFriends":["Manolo","Juanito","Kiko","Pedrito"],"from":"Torrem"},
+"Alumno2":{"name":"Juanito","favFriends":["Loli","Kiko","Pepito","Pedrito"],"from":"Malaga"},
+"Alumno3":{"name":"Kiko","favFriends":["Loli","Juanito","Inma","Maria"],"from":"Churriana"},
+"Alumno4":{"name":"Loli","favFriends":["Kiko","Juanito","Inma","Maria"],"from":"Torrem"},
+"Alumno5":{"name":"Maria","favFriends":["Loli","Juanito","Inma","Kiko"],"from":"Churriana"}
+}`;
+
+const alumnos = JSON.parse(JSONData);
+const divEj3 = document.getElementById("ej3");
+
+for (let alumno in alumnos) {
+    divEj3.innerHTML += "<h3>" + alumnos[alumno].name + "</h3>";
+    divEj3.innerHTML += "<p>Ciudad: " + alumnos[alumno].from + "</p>";
+    divEj3.innerHTML += "<ul>";
+
+    for (let i = 0; i < alumnos[alumno].favFriends.length; i++) {
+        divEj3.innerHTML += "<li>" + alumnos[alumno].favFriends[i] + "</li>";
+    }
+
+    divEj3.innerHTML += "</ul>";
+}
+
+// ===============================
+// EJERCICIO 4
+// ===============================
+const alumnoNotas = {
+    1:{
+        Alumno: "Paco",
+        DWEC: 9,
+        DIW: 9,
+        DWES: 9,
+        HLC: 9
+    },
+    2:{
+        Alumno: "Pepe",
+        DWEC: 8,
+        DIW: 8,
+        DWES: 8,
+        HLC: 8
+    }
+};
+
+const JSONString = JSON.stringify(alumnoNotas);
+document.getElementById("ej4").innerText = JSONString;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>LocalStorage</title>
+</head>
+<body>
+
+<h2>Ejercicios LocalStorage ALberto Garcia Quintana DWEC</h2>
+
+<button id="b0">Ejercicio 0: Guardar dato fijo</button>
+<br><br>
+
+<button onclick="ejercicio1()">Ejercicio 1: Comprobar Storage</button>
+<p id="ej1"></p>
+
+<input type="text" id="texto" placeholder="Escribe un texto">
+<button onclick="ejercicio2()">Ejercicio 2: Guardar texto</button>
+<br><br>
+
+<select id="selectDatos"></select>
+<br><br>
+
+<button onclick="ejercicio4()">Ejercicio 4: Mostrar LocalStorage</button>
+<ul id="lista"></ul>
+
+<button onclick="ejercicio5()">Ejercicio 5: Borrar seleccionado</button>
+<br><br>
+
+<button onclick="ejercicio6()">Ejercicio 6: Limpiar LocalStorage</button>
+
+<script>
+document.getElementById('b0').addEventListener('click', ejercicio0);
+
+function ejercicio0(){
+    localStorage.setItem('Nombre', 'Miguel Antonio');
+    localStorage.setItem('Apellido', 'Perez');
+    alert("Datos guardados correctamente");
+}
+
+function ejercicio1(){
+    if(typeof(Storage) !== "undefined"){
+        document.getElementById("ej1").innerHTML = "Storage disponible";
+    } else {
+        document.getElementById("ej1").innerHTML = "Storage NO disponible";
+    }
+}
+
+function ejercicio2(){
+    let texto = document.getElementById("texto").value.trim();
+
+    if(texto === ""){
+        alert("Introduce un texto");
+        return;
+    }
+
+    let clave = "dato_" + localStorage.length;
+    localStorage.setItem(clave, texto);
+
+    añadirSelect(clave);
+    document.getElementById("texto").value = "";
+}
+
+function añadirSelect(clave){
+    let select = document.getElementById('selectDatos');
+    let opt = document.createElement('option');
+    opt.value = clave;
+    opt.innerHTML = clave;
+    select.appendChild(opt);
+}
+
+function ejercicio4(){
+    let lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    for(let i = 0; i < localStorage.length; i++){
+        let clave = localStorage.key(i);
+        let li = document.createElement("li");
+        li.innerHTML = clave + " : " + localStorage.getItem(clave);
+        lista.appendChild(li);
+    }
+}
+
+function ejercicio5(){
+    let select = document.getElementById("selectDatos");
+
+    if(select.selectedIndex === -1){
+        alert("No hay elemento seleccionado");
+        return;
+    }
+
+    let clave = select.value;
+    localStorage.removeItem(clave);
+    select.remove(select.selectedIndex);
+}
+
+function ejercicio6(){
+    localStorage.clear();
+    document.getElementById("selectDatos").innerHTML = "";
+    document.getElementById("lista").innerHTML = "";
+    alert("LocalStorage limpio");
+}
+
+window.onload = function(){
+    for(let i = 0; i < localStorage.length; i++){
+        añadirSelect(localStorage.key(i));
+    }
+}
+</script>
+
+</body>
+</html>

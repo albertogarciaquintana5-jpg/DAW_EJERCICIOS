@@ -1,105 +1,51 @@
-# Proyecto CRUD API en PHP (Trabajo de 2º DAW)
+# CRUD API
 
-**Descripción**
+Variables recomendadas en Postman:
+- `baseUrl` = `http://127.0.0.1:8000`
+- `token` = (rellenar tras login)
 
-Este proyecto es una API REST.
----
-
-## Contenido
-
-- `public/` - punto de entrada (front controller)
-- `app/` - controladores, modelos, middleware y validadores
-- `config/` - configuración y lectura de `.env`
-- `migrations/ejecutarsql.sql` - SQL para crear la tabla `users`
-- `vendor/` - dependencias instaladas por Composer
-
----
-
-## Cómo ejecutar el proyecto (pasos simples)
-
-
-1. Copiar el archivo de configuración de entrega (ya preparado):
-
-```powershell
-Copy-Item .env.submit .env
-notepad .env  # si quiere cambiar algo (opcional)
-```
-
-2. Instalar dependencias con Composer (desde la carpeta `Crud-api`):
-
-```powershell
-composer install
-```
-
-3. Crear la base de datos y usuario de prueba (el script ejecuta la migración y crea un usuario):
-
-```powershell
-php scripts/seed.php
-# Usuario de prueba creado en ejecutar.sql:
-# Usuario: pilar@example.com
-# Contraseña: 123456
-```
-
-4. Arrancar el servidor de desarrollo:
+1) Arrancar servidor (desde la carpeta `Crud-api`):
 
 ```powershell
 php -S 127.0.0.1:8000 -t public
 ```
 
-5. Probar la API (registro/login/usuarios):
+2) Obtener token (login)
+- Método: `POST`
+- URL: `{{baseUrl}}/auth/login`
+- Body (JSON): `{ "email": "pilar@example.com", "password": "123456" }`
+- Copia el valor `token` de la respuesta y pégalo en la variable de entorno `token`.
 
-- Hacer login con el usuario de prueba (Pilar):
+3) GET - Listar usuarios
+- Método: `GET`
+- URL: `{{baseUrl}}/users`
+- Headers: `Authorization: Bearer {{token}}`
 
-```powershell
-# Opción manual (PowerShell):
-$body = @{ email = 'pilar@example.com'; password = '123456' } | ConvertTo-Json
-Invoke-RestMethod -Uri 'http://127.0.0.1:8000/auth/login' -Method POST -Body $body -ContentType 'application/json'
+4) GET - Obtener usuario por id
+- Método: `GET`
+- URL: `{{baseUrl}}/users/:id` (ej: `{{baseUrl}}/users/3`)
+- Headers: `Authorization: Bearer {{token}}`
+
+5) POST - Crear usuario
+- Método: `POST`
+- URL: `{{baseUrl}}/users`
+- Headers: `Authorization: Bearer {{token}}`, `Content-Type: application/json`
+- Body (JSON ejemplo):
+```json
+{ "nombre":"Luis", "apellido":"Gómez", "email":"luis@mail.com", "password":"P4ss!", "telefono":"600111222" }
 ```
 
-- Llamada a `/users` usando el token devuelto:
+6) PUT/PATCH - Actualizar usuario
+- Método: `PUT` (reemplazo) o `PATCH` (parcial)
+- URL: `{{baseUrl}}/users/:id`
+- Headers: `Authorization: Bearer {{token}}`, `Content-Type: application/json`
+- Body (JSON ejemplo): `{ "nombre":"Ana", "apellido":"García", "email":"ana.nuevo@mail.com" }`
 
-```powershell
-Invoke-RestMethod -Uri 'http://127.0.0.1:8000/users' -Method GET -Headers @{ Authorization = "Bearer <TOKEN>" }
-```
-
-- Opción rápida: ejecutar el script que hace todo (aplica seed, arranca servidor temporal, hace login y lista usuarios):
-
-```powershell
-.\scripts\run_all.ps1
-```
-
-
-6. Si prefieres hacerlo manualmente en SQL, puedes ejecutar:
-
-```powershell
-mysql -u TU_USUARIO -p crud_api < migrations\ejecutarsql.sql
-```
+7) DELETE - Borrar usuario
+- Método: `DELETE`
+- URL: `{{baseUrl}}/users/:id`
+- Headers: `Authorization: Bearer {{token}}`
 
 ---
 
----
-
-## Endpoints principales ejemplos
-
-- Registrar un usuario (POST): `/auth/register`
-  - Body JSON: `{ "nombre":"Ana", "apellido":"Pérez", "email":"ana@mail.com", "password":"P4ss!", "telefono":"600123456" }`
-
-- Login (POST): `/auth/login`
-  - Body JSON: `{ "email":"ana@mail.com", "password":"P4ss!" }`
-  - Respuesta: `{ "token": "..." }` (guardar token)
-
-- Listar usuarios (GET): `/users` (necesita header `Authorization: Bearer <TOKEN>`)
-
-Ejemplo con `curl` en PowerShell:
-
-```powershell
-curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json" -d '{"email":"ana@mail.com","password":"P4ss!"}'
-# Usar el token devuelto para la llamada protegida
-curl http://127.0.0.1:8000/users -H "Authorization: Bearer <TOKEN>"
-```
-
-
-## Autor
-
-ALberto Garcia Quintana (2º DAW)
-
+Autor: ALberto Garcia Quintana (2º DAW)

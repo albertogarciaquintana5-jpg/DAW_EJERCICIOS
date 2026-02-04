@@ -4,7 +4,8 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../config/database.php';
 
 echo "Aplicando migraciones y creando usuarios de prueba si es necesario...\n";
-$pdo = getPDO();
+// Conectar sin especificar la BD para poder ejecutar CREATE DATABASE si hace falta
+$pdo = getPDO(false);
 
 // Ejecutar SQL de migración (si existe)
 $sql = @file_get_contents(__DIR__ . '/../migrations/ejecutarsql.sql');
