@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Práctica CSS - Flotar y Posicionar</title>
+<br><br>
+<h1>ALberto Garcia Quintana</h1>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+h2 {
+    background-color: #333;
+    color: white;
+    padding: 5px;
+}
+
+/* =========================
+   EJERCICIO 1 - FLOAT
+========================= */
+.ej1 img {
+    width: 150px;
+    margin: 10px;
+    border: 2px solid black;
+}
+
+.float-none { float: none; }
+.float-left { float: left; }
+.float-right { float: right; }
+
+.clear { clear: both; }
+
+/* =========================
+   EJERCICIO 2 - CLEAR
+========================= */
+.ej2 img {
+    width: 150px;
+    float: left;
+    margin: 10px;
+}
+
+.clear-none { clear: none; }
+.clear-left { clear: left; }
+.clear-right { clear: right; }
+.clear-both { clear: both; }
+
+.ej2 p {
+    background-color: #eee;
+    padding: 10px;
+}
+
+/* =========================
+   EJERCICIO 3 Y 4 - CAJAS
+========================= */
+#contenido {
+    width: 700px;
+    margin: auto;
+    border: 1px solid black;
+    background-color: #CCCCCC;
+}
+
+.caja {
+    margin: 10px;
+    border: 1px solid black;
+    color: white;
+    text-align: center;
+    line-height: 100px;
+}
+
+/* Tamaños y colores */
+#caja1 { width: 100px; height: 100px; background-color: red; }
+#caja2 { width: 130px; height: 130px; background-color: green; }
+#caja3 { width: 160px; height: 160px; background-color: blue; }
+
+/* Flotados */
+.derecha { float: right; }
+.izquierda { float: left; }
+.none { float: none; }
+
+.clearboth { clear: both; }
+
+</style>
+</head>
+
+<body>
+
+<h2>EJERCICIO 1 - FLOAT</h2>
+<div class="ej1">
+    <p>Float: none</p>
+    <img src="imagen.jpg" class="float-none">
+
+    <p>Float: left</p>
+    <img src="imagen.jpg" class="float-left">
+
+    <p>Float: right</p>
+    <img src="imagen.jpg" class="float-right">
+
+    <div class="clear"></div>
+</div>
+
+<h2>EJERCICIO 2 - CLEAR</h2>
+<div class="ej2">
+    <img src="imagen.jpg">
+
+    <p class="clear-none">Texto con clear: none</p>
+    <p class="clear-left">Texto con clear: left</p>
+    <p class="clear-right">Texto con clear: right</p>
+    <p class="clear-both">Texto con clear: both</p>
+</div>
+
+<div class="clear"></div>
+
+<h2>EJERCICIO 3.1 - Roja derecha, Verde izquierda, Azul none</h2>
+<div id="contenido">
+    <div id="caja1" class="caja derecha">Caja 1</div>
+    <div id="caja2" class="caja izquierda">Caja 2</div>
+    <div id="caja3" class="caja none">Caja 3</div>
+    <div class="clearboth"></div>
+</div>
+
+<br>
+
+<h2>EJERCICIO 3.2 - Todas a la izquierda</h2>
+<div id="contenido">
+    <div id="caja1" class="caja izquierda">Caja 1</div>
+    <div id="caja2" class="caja izquierda">Caja 2</div>
+    <div id="caja3" class="caja izquierda">Caja 3</div>
+    <div class="clearboth"></div>
+</div>
+
+<br>
+
+<h2>EJERCICIO 3.3 - Todas a la izquierda + clear</h2>
+<div id="contenido">
+    <div id="caja1" class="caja izquierda">Caja 1</div>
+    <div id="caja2" class="caja izquierda">Caja 2</div>
+    <div id="caja3" class="caja izquierda">Caja 3</div>
+    <div class="clearboth"></div>
+</div>
+
+<br>
+
+<h2>EJERCICIO 4 - Ejemplo completo con clearboth</h2>
+<div id="contenido">
+    <div id="caja1" class="caja izquierda" style="background-color:#FFFF00; color:black;">Caja 1</div>
+    <div id="caja2" class="caja izquierda">Caja 2</div>
+    <div id="caja3" class="caja izquierda">Caja 3</div>
+    <div class="clearboth"></div>
+</div>
+
+</body>
+</html>
