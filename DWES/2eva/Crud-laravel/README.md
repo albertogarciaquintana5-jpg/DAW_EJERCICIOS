@@ -30,7 +30,7 @@ Necesitas tener instalado en tu PC:
 ### 1️⃣ Clona o descarga el proyecto
 
 ```bash
-git clone <URL-DEL-REPO>
+git clone https://github.com/albertogarciaquintana5-jpg/DAW_EJERCICIOS/tree/main/DWES/2eva/Crud-laravel
 cd Crud-laravel
 ```
 
