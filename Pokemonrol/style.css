@@ -578,6 +578,21 @@ h3.title {
   border-color: #ffcb05;
 }
 
+.available-move-card.move-locked {
+  opacity: 0.5;
+  background: #e9ecef;
+  border-color: #ccc;
+}
+
+.available-move-card.move-locked:hover {
+  background: #e9ecef;
+  border-color: #ccc;
+}
+
+.available-move-card.move-locked .available-move-name {
+  color: #999;
+}
+
 .available-move-name {
   font-weight: 600;
   flex: 1;

@@ -1,27 +1,33 @@
-# 📖 Índice de Documentación - Sistema de Imágenes
+# 📖 Índice de Documentación - Pokémon Rol
 
 ## 🎯 ¿Por dónde empiezo?
 
+### 🆕 Nuevo: Panel de Master
+Si eres el Game Master del juego de rol:
+- **`MASTER_PANEL_SUMMARY.md`** - Resumen de implementación (2 min)
+- **`MASTER_PANEL_GUIDE.md`** - Guía completa de uso (15 min)
+
+### 📸 Sistema de Imágenes
 Depende de cuánto tiempo tengas:
 
-### ⏱️ Tengo 2 minutos
+#### ⏱️ Tengo 2 minutos
 Lee: **`RESUMEN_IMAGENES.md`**
 - Resumen visual de todo
 - Lo esencial en una hoja
 
-### ⏱️ Tengo 5 minutos
+#### ⏱️ Tengo 5 minutos
 Lee: **`img/GUIA_RAPIDA.md`**
 - 3 pasos para funcionar
 - Tabla de dónde van las imágenes
 - Comandos SQL básicos
 
-### ⏱️ Tengo 15 minutos
+#### ⏱️ Tengo 15 minutos
 Lee: **`img/INSTRUCCIONES_IMAGENES.md`**
 - Guía completa y detallada
 - Explicaciones de cada paso
 - Recomendaciones y buenas prácticas
 
-### ⏱️ Tengo 30 minutos
+#### ⏱️ Tengo 30 minutos
 Lee: **`CAMBIOS_IMAGENES_DETALLADOS.md`**
 - Cambios técnicos exactos
 - Antes/después del código
@@ -31,7 +37,22 @@ Lee: **`CAMBIOS_IMAGENES_DETALLADOS.md`**
 
 ## 📚 Guías Disponibles
 
-### En la raíz (`/Pokemonrol/`)
+### 🎮 Panel de Master (NUEVO)
+```
+MASTER_PANEL_SUMMARY.md          ← RESUMEN: Qué se creó
+MASTER_PANEL_GUIDE.md            ← GUÍA: Cómo usar el panel
+migrations/011-setup-master-user.sql     ← Configurar usuario Master
+migrations/verificacion-master.sql       ← Verificar instalación
+admin.php                        ← Panel de administrador
+```
+
+### 📋 General
+```
+README.md                        ← Documentación principal
+START_HERE.md                    ← Inicio rápido
+```
+
+### 📸 Sistema de Imágenes
 ```
 RESUMEN_IMAGENES.md              ← EMPIEZA AQUÍ
 CAMBIOS_IMAGENES.md              ← Qué se hizo

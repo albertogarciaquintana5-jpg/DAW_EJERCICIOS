@@ -168,17 +168,23 @@ function renderPokemonInfoModal(data) {
           <div class="small-muted" style="padding: 1rem; text-align:center;">
             No hay movimientos disponibles para esta especie
           </div>
-        ` : movimientosDisponibles.map((move) => `
-          <div class="available-move-card">
+        ` : movimientosDisponibles.map((move) => {
+          const nivelRequerido = move.nivel_aprendizaje || 1;
+          const nivelActual = pokemon.nivel || 1;
+          const puedeAprender = nivelActual >= nivelRequerido;
+          return `
+          <div class="available-move-card ${!puedeAprender ? 'move-locked' : ''}">
             <div class="available-move-name">${escapeHtml(move.nombre)}</div>
-            <div class="available-move-level">Nv. ${move.nivel_aprendizaje}</div>
+            <div class="available-move-level">Nv. ${nivelRequerido}${!puedeAprender ? ' 🔒' : ''}</div>
             ${slotAvailable ? `
-              <button class="btn btn-sm btn-primary" onclick="learnMove(${pokemon.id}, ${move.id}, ${slotAvailable})">
-                Enseñar
+              <button class="btn btn-sm btn-primary" 
+                      onclick="learnMove(${pokemon.id}, ${move.id}, ${slotAvailable})" 
+                      ${!puedeAprender ? 'disabled title="Nivel insuficiente"' : ''}>
+                ${puedeAprender ? 'Enseñar' : 'Bloqueado'}
               </button>
             ` : ''}
           </div>
-        `).join('')}
+        `}).join('')}
       </div>
     </div>
   `;

@@ -73,18 +73,60 @@ $check_stmt->close();
 $mysqli->begin_transaction();
 try {
     if ($action === 'add') {
-        // Verificar que el movimiento existe y obtener PP máximo
-        $pp_sql = "SELECT pp FROM movimientos WHERE id = ? LIMIT 1";
-        $pp_stmt = $mysqli->prepare($pp_sql);
-        if (!$pp_stmt) throw new Exception('Prepare failed');
-        $pp_stmt->bind_param('i', $movimiento_id);
-        $pp_stmt->execute();
-        $pp_res = $pp_stmt->get_result();
-        $pp_row = $pp_res->fetch_assoc();
-        $pp_stmt->close();
+        // Obtener nivel Y species_id del Pokémon
+        $nivel_sql = "SELECT pb.nivel, pb.species_id FROM pokemon_box pb WHERE pb.id = ? LIMIT 1";
+        $nivel_stmt = $mysqli->prepare($nivel_sql);
+        if (!$nivel_stmt) throw new Exception('Prepare nivel failed');
+        $nivel_stmt->bind_param('i', $pokemon_box_id);
+        $nivel_stmt->execute();
+        $nivel_res = $nivel_stmt->get_result();
+        $nivel_row = $nivel_res->fetch_assoc();
+        $nivel_stmt->close();
         
-        if (!$pp_row) throw new Exception('Movimiento no encontrado');
-        $pp_max = (int)$pp_row['pp'];
+        if (!$nivel_row) throw new Exception('Pokémon no encontrado');
+        $nivel_pokemon = (int)$nivel_row['nivel'];
+        $species_id = (int)$nivel_row['species_id'];
+        
+        // Verificar que el movimiento existe y obtener PP + nivel requerido desde pokemon_species_movimiento
+        $move_sql = "SELECT m.pp, m.nombre, psm.nivel as nivel_requerido 
+                     FROM movimientos m
+                     LEFT JOIN pokemon_species_movimiento psm ON m.id = psm.movimiento_id AND psm.species_id = ?
+                     WHERE m.id = ? LIMIT 1";
+        $move_stmt = $mysqli->prepare($move_sql);
+        if (!$move_stmt) throw new Exception('Prepare failed');
+        $move_stmt->bind_param('ii', $species_id, $movimiento_id);
+        $move_stmt->execute();
+        $move_res = $move_stmt->get_result();
+        $move_row = $move_res->fetch_assoc();
+        $move_stmt->close();
+        
+        if (!$move_row) throw new Exception('Movimiento no encontrado');
+        
+        $pp_max = (int)$move_row['pp'];
+        $nombre_movimiento = $move_row['nombre'];
+        $nivel_requerido = $move_row['nivel_requerido'] !== null ? (int)$move_row['nivel_requerido'] : null;
+        
+        // Si no existe en pokemon_species_movimiento, el movimiento no es aprendible por esta especie
+        if ($nivel_requerido === null) {
+            $mysqli->rollback();
+            http_response_code(403);
+            echo json_encode([
+                'error' => "Esta especie de Pokémon no puede aprender $nombre_movimiento"
+            ]);
+            exit;
+        }
+        
+        // VALIDAR NIVEL REQUERIDO
+        if ($nivel_pokemon < $nivel_requerido) {
+            $mysqli->rollback();
+            http_response_code(403);
+            echo json_encode([
+                'error' => "Tu Pokémon necesita nivel $nivel_requerido para aprender $nombre_movimiento (nivel actual: $nivel_pokemon)",
+                'nivel_requerido' => $nivel_requerido,
+                'nivel_actual' => $nivel_pokemon
+            ]);
+            exit;
+        }
 
         // Comprobar si el Pokémon ya conoce este movimiento en otro slot
         $exists_sql = "SELECT slot FROM pokemon_movimiento WHERE pokemon_box_id = ? AND movimiento_id = ? LIMIT 1";

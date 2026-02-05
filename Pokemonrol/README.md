@@ -32,6 +32,7 @@ Reemplaza el campo `contraseña` en el INSERT si quieres usar ese hash.
 
 ## Endpoints principales (requieren sesión PHP)
 
+### APIs para Jugadores
 - `api/get_inventory.php` (GET) — devuelve inventario. Si la columna `items.effect_type` existe, el endpoint incluirá `effect_type` y `effect_value`.
 - `api/use_item.php` (POST) — cuerpo JSON `{ item_id, [box_id] }`. Decrementa inventario y, si `box_id` y `items.effect_type` aplican, ejecuta el efecto (soporta `heal_flat`, `heal_percent`, `revive`, `clear_status`). Devuelve `inventory`, `remaining` y `applied` si hubo efecto.
 - `api/get_box.php` (GET) — devuelve `pokemon_box` del usuario; incluye `max_hp`/`status` si existen.
@@ -40,11 +41,38 @@ Reemplaza el campo `contraseña` en el INSERT si quieres usar ese hash.
 - `api/send_item.php` (POST) — `{ item_id, to_email }` mueve 1 unidad (transaccional).
 - `api/mark_pokedex.php` (POST) — `{ species_id, visto?, capturado? }`.
 
+### APIs para el Master (Solo usuario ID 67)
+- `api/admin_get_player.php` (GET) — `?user_id=X` devuelve todos los datos de un jugador (equipo, caja, inventario).
+- `api/admin_get_pokemon.php` (GET) — `?pokemon_id=X` devuelve datos completos de un Pokémon con sus movimientos.
+- `api/admin_update_pokemon.php` (POST) — JSON con `pokemon_id` y campos a actualizar (nivel, HP, exp, status, PP de movimientos).
+- `api/admin_give_pokemon.php` (POST) — `{ user_id, species_id, apodo?, nivel?, hp? }` crea un Pokémon en la caja del jugador.
+- `api/admin_give_item.php` (POST) — `{ user_id, item_id, cantidad }` añade items al inventario.
+- `api/admin_update_money.php` (POST) — `{ user_id, money }` actualiza el dinero del jugador.
+- `api/admin_remove_item.php` (POST) — `{ user_id, item_id }` elimina un item del inventario.
+
+**Nota**: Las APIs de admin verifican que el usuario actual tenga ID 67. Si no, devuelven error 'No autorizado'.
+
 ## Cómo probar desde el navegador
 
 1. Inicia Apache/MySQL con XAMPP.
 2. Importa la migración `004` para obtener datos de ejemplo.
 3. Abre `http://localhost/DAW_EJERCICIOS/Pokemonrol/index.php`, inicia sesión con el usuario de ejemplo (correo: `albertogarciaquintana5@gmail.com`).
+
+### Panel de Master (Game Master)
+El sistema incluye un panel de administrador completo para el Master del juego de rol:
+- **Acceso**: Solo disponible para el usuario con ID 67
+- **Ubicación**: Botón "Panel Master" visible en el dashboard cuando eres Master
+- **Funcionalidades**:
+  - Ver todos los jugadores y sus datos
+  - Gestionar equipos y cajas de Pokémon de cualquier jugador
+  - Modificar stats (HP, nivel, experiencia, estado)
+  - Ajustar PP de movimientos
+  - Dar Pokémon y items a jugadores
+  - Modificar dinero de jugadores
+  
+**Documentación completa**: Ver [MASTER_PANEL_GUIDE.md](MASTER_PANEL_GUIDE.md)
+
+**Configurar usuario Master**: Usa `migrations/011-setup-master-user.sql` para configurar tu usuario con ID 67.
 
 ## Imágenes (Pokémon y Objetos)
 

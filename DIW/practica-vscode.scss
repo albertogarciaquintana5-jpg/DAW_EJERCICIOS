@@ -1,0 +1,14 @@
+// Ejemplo de práctica Sass con Visual Studio Code
+$color-primario: red;
+$color-borde: blue;
+
+.hola {
+  p {
+    color: $color-primario;
+    border-color: $color-borde;
+    
+    &:hover {
+      color: darken($color-primario, 10%);
+    }
+  }
+}

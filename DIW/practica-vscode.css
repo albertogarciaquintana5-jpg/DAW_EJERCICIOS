@@ -1,0 +1,7 @@
+.hola p {
+  color: red;
+  border-color: blue;
+}
+.hola p:hover {
+  color: #cc0000;
+}/*# sourceMappingURL=practica-vscode.css.map */
