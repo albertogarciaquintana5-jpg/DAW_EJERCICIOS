@@ -108,14 +108,19 @@ foreach ($team as $t) {
             <!-- D100 TAB -->
             <div class="tab-pane fade" id="d100" role="tabpanel">
               <div class="card p-3 card-section">
-                <div class="section-title">Tirar D100</div>
-                <div class="small-muted mb-2">Tira un dado de 100 (1–100). Se guarda el historial en tu navegador.</div>
+                <div class="section-title">Tirar Dado</div>
+                <div class="small-muted mb-2">Tira un dado del rango que elijas. Se guarda el historial en tu navegador.</div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <label for="diceRange" class="fw-bold me-2">Rango (1 -</label>
+                  <input type="number" id="diceRange" class="form-control" style="width: 120px;" value="100" min="1" max="10000">
+                  <span class="fw-bold">)</span>
+                </div>
                 <div class="d-flex align-items-center gap-3">
                   <div class="d-flex flex-column">
                     <div>
-                      <button class="btn btn-lg btn-primary me-2" onclick="rollD100()">🎲 Tirar D100</button>
+                      <button class="btn btn-lg btn-primary me-2" onclick="rollD100()">🎲 Tirar Dado</button>
                     </div>
-                    <div class="mt-2"><small class="text-muted">Tirada de D100 (1-100). Se registra si estás autenticado.</small></div>
+                    <div class="mt-2"><small class="text-muted" id="diceRangeText">Tirada de 1-100. Se registra si estás autenticado.</small></div>
                   </div>
                   <div id="d100Result" class="fw-bold fs-3">--</div>
                 </div>
@@ -814,18 +819,25 @@ try {
 <script>
   async function rollD100() {
     try {
-      const val = Math.floor(Math.random() * 100) + 1;
+      const rangeInput = document.getElementById('diceRange');
+      let maxRange = parseInt(rangeInput ? rangeInput.value : 100);
+      if (!maxRange || maxRange < 1) {
+        showToast('El rango debe ser mayor a 0', 'danger');
+        return;
+      }
+      if (maxRange > 10000) maxRange = 10000;
+      const val = Math.floor(Math.random() * maxRange) + 1;
       const resEl = document.getElementById('d100Result');
       if (resEl) {
         resEl.textContent = val;
         resEl.classList.remove('text-success','text-danger','text-dark');
-        if (val === 100) resEl.classList.add('text-success');
+        if (val === maxRange) resEl.classList.add('text-success');
         else if (val === 1) resEl.classList.add('text-danger');
         else resEl.classList.add('text-dark');
       }
-      showToast('Tirada D100: ' + val, 'success');
+      showToast('Tirada 1-' + maxRange + ': ' + val, 'success');
 
-      const entry = { value: val, at: (new Date()).toISOString() };
+      const entry = { value: val, range: maxRange, at: (new Date()).toISOString() };
       try {
         const r = await fetch('api/d100_roll.php', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ value: val }) });
         const jr = await r.json();
@@ -833,7 +845,7 @@ try {
           const hist = document.getElementById('d100History');
           if (hist) {
             const li = document.createElement('li'); li.className = 'list-group-item';
-            const time = new Date().toLocaleTimeString(); li.textContent = time + ' — ' + val; hist.insertBefore(li, hist.firstChild);
+            const time = new Date().toLocaleTimeString(); li.textContent = time + ' — ' + val + ' (1-' + maxRange + ')'; hist.insertBefore(li, hist.firstChild);
           }
           return;
         }
@@ -843,7 +855,7 @@ try {
         const hist = document.getElementById('d100History');
         if (hist) {
           const li = document.createElement('li'); li.className = 'list-group-item';
-          const time = new Date(entry.at).toLocaleTimeString(); li.textContent = time + ' — ' + entry.value; hist.insertBefore(li, hist.firstChild);
+          const time = new Date(entry.at).toLocaleTimeString(); li.textContent = time + ' — ' + entry.value + ' (1-' + entry.range + ')'; hist.insertBefore(li, hist.firstChild);
         }
         const prev = JSON.parse(localStorage.getItem('d100_history') || '[]'); prev.unshift(entry); localStorage.setItem('d100_history', JSON.stringify(prev.slice(0,50)));
       } catch(e) {}
@@ -875,7 +887,10 @@ try {
         hist.innerHTML = '';
         for (const e of prev.slice(0,50)) {
           const li = document.createElement('li'); li.className = 'list-group-item';
-          const time = new Date(e.at).toLocaleTimeString(); li.textContent = time + ' — ' + e.value; hist.appendChild(li);
+          const time = new Date(e.at).toLocaleTimeString(); 
+          const rangeText = e.range ? ' (1-' + e.range + ')' : '';
+          li.textContent = time + ' — ' + e.value + rangeText; 
+          hist.appendChild(li);
         }
         if (prev.length && resEl) resEl.textContent = prev[0].value;
       }
@@ -919,7 +934,31 @@ try {
     }
   }
 
-  try { document.addEventListener('DOMContentLoaded', initD100History); } catch(e) { initD100History(); }
+  // Actualizar texto descriptivo cuando cambia el rango del dado
+  function updateDiceRangeText() {
+    const rangeInput = document.getElementById('diceRange');
+    const rangeText = document.getElementById('diceRangeText');
+    if (rangeInput && rangeText) {
+      let maxRange = parseInt(rangeInput.value);
+      if (!maxRange || maxRange < 1) maxRange = 1;
+      if (maxRange > 10000) maxRange = 10000;
+      rangeText.textContent = `Tirada de 1-${maxRange}. Se registra si estás autenticado.`;
+    }
+  }
+
+  try { 
+    document.addEventListener('DOMContentLoaded', function() {
+      initD100History();
+      // Agregar listener para cambio de rango
+      const rangeInput = document.getElementById('diceRange');
+      if (rangeInput) {
+        rangeInput.addEventListener('input', updateDiceRangeText);
+        updateDiceRangeText(); // Inicializar texto
+      }
+    }); 
+  } catch(e) { 
+    initD100History(); 
+  }
 </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
