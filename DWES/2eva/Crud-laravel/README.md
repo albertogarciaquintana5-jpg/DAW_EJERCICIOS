@@ -15,14 +15,66 @@ Es un proyecto que te permite:
 
 ---
 
+## Como funciona
+
+### 1) Registro y acceso
+El usuario se registra con email y password y entra a su panel.
+
+Captura:
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+
+Explicacion de la captura:
+- Aqui esta el inicio de la web y los formularios de iniciar sesion y registrarse
+
+### 2) Lista de mascotas
+Muestra todas las mascotas del usuario con opciones de ver, editar o borrar.
+
+Captura:
+![alt text](image-4.png)
+![alt text](image.png)
+
+Explicacion de la captura:
+- Aqui se ve la senccion donde puedes ver a tus mascotas tiene botones donde puedes ver sus datos, editarlo o eliminarlos
+
+### 3) Crear o editar mascota
+Formulario con datos basicos y foto opcional.
+
+Captura:
+![Formulario de mascota](docs/capturas/formulario-mascota.png)
+
+Explicacion de la captura:
+- (Describe aqui lo que se ve y que accion se realiza)
+
+### 4) Detalle de mascota
+Pantalla con toda la informacion de la mascota y su imagen.
+
+Captura:
+![alt text](image-5.png)
+![alt text](image-6.png)
+
+Explicacion de la captura:
+- Aqui esta la seccion de registrar a tu mascota, debes poner su nombre, raza, edad, sexo, hasta una imagen suya
+
+---
+
+### 5) Gestión de tu perfil
+
+![alt text](image-7.png)
+![alt text](image-8.png)
+
+Explicacion de la captura:
+- Aqui puedes editar a tu usuario o incluso eliminarlo, para eso necesitas poner su contraseña
+
+---
+
 ## Requisitos
 
 Necesitas tener instalado en tu PC:
 - **PHP** 8.1 o superior
 - **MySQL** (con XAMPP va genial)
 - **Composer** (el gestor de paquetes de PHP)
-- **Git** (opcional)
-
 ---
 
 ## Instalación (¡Es fácil!)
@@ -46,12 +98,6 @@ composer install
 cp .env.example .env
 ```
 
-### 4️⃣ Genera la clave de la aplicación
-
-```bash
-php artisan key:generate
-```
-
 ### 5️⃣ Configura la base de datos
 
 Abre `.env` y modifica estas líneas:
@@ -67,24 +113,13 @@ DB_PASSWORD=
 ### 6️⃣ Crea la base de datos
 
 En **phpMyAdmin**:
-- Crea una base de datos nueva llamada `crud_laravel`
-- o copia lo que hay en `database/schema.sql` y importelo en su sql le saldra una advertencia abajo pero si recarga vera que se le crea todo correctamente.
+- Copia lo que hay en `database/schema.sql` y importelo en su sql le saldra una advertencia abajo pero si recarga vera que se le crea todo correctamente.
 
 ### 7️⃣ Ejecuta las migraciones
 
 ```bash
 php artisan migrate
 ```
-
-### 8️⃣ Carga datos de prueba (opcional)
-
-```bash
-php artisan db:seed
-```
-
-**Usuarios de prueba:**
-- Email: `juan@example.com` | Contraseña: `password123`
-- Email: `maria@example.com` | Contraseña: `password123`
 
 ### 9️⃣ Crea el link de almacenamiento
 
@@ -97,6 +132,8 @@ php artisan storage:link
 ```bash
 php artisan serve
 ```
+
+Si `php artisan serve` falla por `vendor/autoload.php`, primero ejecuta `composer install`.
 
 Abre tu navegador en **http://127.0.0.1:8000** 🎉
 
@@ -113,19 +150,6 @@ Abre tu navegador en **http://127.0.0.1:8000** 🎉
 | **Ver detalles** | Pantalla con toda la info de la mascota |
 
 ---
-
-## 🔒 Seguridad
-
-- 🔐 Las contraseñas están **encriptadas**
-- 🔑 Solo ves **TUS mascotas** (no las de otros usuarios)
-- ✅ Validación de **todos los datos** antes de guardar
-- 📸 Las fotos se guardan de forma **segura**
-
-## 💡 Consejos para usar el proyecto
-
-1. Siempre **registra un usuario nuevo** antes de crear mascotas
-2. Las fotos deben ser **JPG, PNG o WEBP** (menos de 2MB)
-
 
 ## Autor
 
