@@ -87,8 +87,8 @@ try {
         $nivel_pokemon = (int)$nivel_row['nivel'];
         $species_id = (int)$nivel_row['species_id'];
         
-        // Verificar que el movimiento existe y obtener PP + nivel requerido desde pokemon_species_movimiento
-        $move_sql = "SELECT m.pp, m.nombre, psm.nivel as nivel_requerido 
+        // Verificar que el movimiento existe y obtener nivel requerido desde pokemon_species_movimiento
+        $move_sql = "SELECT m.nombre, psm.nivel as nivel_requerido 
                      FROM movimientos m
                      LEFT JOIN pokemon_species_movimiento psm ON m.id = psm.movimiento_id AND psm.species_id = ?
                      WHERE m.id = ? LIMIT 1";
@@ -102,7 +102,6 @@ try {
         
         if (!$move_row) throw new Exception('Movimiento no encontrado');
         
-        $pp_max = (int)$move_row['pp'];
         $nombre_movimiento = $move_row['nombre'];
         $nivel_requerido = $move_row['nivel_requerido'] !== null ? (int)$move_row['nivel_requerido'] : null;
         
@@ -145,7 +144,7 @@ try {
                 echo json_encode(['error' => 'El Pokémon ya conoce ese movimiento']);
                 exit;
             }
-            // Si es el mismo slot y la misma move, seguimos y actualizamos PP
+            // Si es el mismo slot y la misma move, continuamos
         } else {
             $exists_stmt->close();
         }
@@ -159,11 +158,11 @@ try {
         $del_slot_stmt->close();
 
         // Insertar el nuevo movimiento en el slot
-        $insert_sql = "INSERT INTO pokemon_movimiento (pokemon_box_id, movimiento_id, slot, pp_actual) 
-                       VALUES (?, ?, ?, ?)";
+        $insert_sql = "INSERT INTO pokemon_movimiento (pokemon_box_id, movimiento_id, slot) 
+                       VALUES (?, ?, ?)";
         $insert_stmt = $mysqli->prepare($insert_sql);
         if (!$insert_stmt) throw new Exception('Prepare insert failed');
-        $insert_stmt->bind_param('iiii', $pokemon_box_id, $movimiento_id, $slot, $pp_max);
+        $insert_stmt->bind_param('iii', $pokemon_box_id, $movimiento_id, $slot);
         if (!$insert_stmt->execute()) throw new Exception('Execute insert failed');
         $insert_stmt->close();
 
@@ -185,12 +184,10 @@ try {
     // Devolver movimientos actualizados
     $movimientos_sql = "SELECT 
                             pm.slot,
-                            pm.pp_actual,
                             m.id AS movimiento_id,
                             m.nombre,
                             m.potencia,
                             m.precision,
-                            m.pp,
                             m.categoria,
                             m.descripcion,
                             t.nombre AS tipo,

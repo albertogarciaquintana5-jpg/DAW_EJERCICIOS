@@ -1,0 +1,280 @@
+/*
+ * PRÁCTICA 2: ANIDACIÓN Y VARIABLES EN SASS
+ * ALberto Garcia Quintana
+ * Fecha: 5 de febrero de 2026
+ */
+
+/* ============================================================================
+   EJERCICIO 1: Prueba los ejemplos de anidación
+   ============================================================================ */
+
+/* Ejemplo 1: Anidación básica */
+#content {
+  border: 1px solid black;
+  
+  p.info {
+    color: #fff;
+    
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+/* Ejemplo 2: Anidación de propiedades */
+.bordemolon {
+  border: {
+    style: solid;
+    left: {
+      width: 4px;
+      color: #888;
+    }
+    right: {
+      width: 2px;
+      color: #ccc;
+    }
+  }
+}
+
+/* ============================================================================
+   EJERCICIO 2: Anidar 5 niveles con p, div, h1, b y span
+   ============================================================================ */
+
+div {
+  background-color: #f0f0f0;
+  padding: 20px;
+  
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+    
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      
+      b {
+        color: #333;
+        text-transform: uppercase;
+        
+        span {
+          font-style: italic;
+          color: #666;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+/* ============================================================================
+   EJERCICIO 3: Clases anidadas (clase1 es padre de todas las clases1x)
+   ============================================================================ */
+
+.clase1 {
+  .clase11 {
+    color: red;
+  }
+  
+  .clase12 {
+    color: green;
+    
+    .clase122 {
+      color: olive;
+    }
+    
+    .clase123 {
+      color: brown;
+    }
+  }
+  
+  .clase13 {
+    color: brown;
+  }
+}
+
+.clase2 {
+  .clase21 {
+    .clase211 {
+      color: red;
+    }
+  }
+}
+
+/* ============================================================================
+   EJERCICIO 4: Hijos directos con el operador >
+   ============================================================================ */
+
+.clase2 {
+  > div {
+    border: 1px;
+    border-color: green;
+  }
+  
+  > .clase21 {
+    > .clase211 {
+      color: red;
+    }
+  }
+}
+
+/* ============================================================================
+   EJERCICIO 5: Operador & para pseudoclases
+   ============================================================================ */
+
+.clase21 {
+  border-width: 5px;
+  border-color: blue;
+  
+  &:hover {
+    border-width: 10px;
+    border-color: black;
+    
+    .clase211 {
+      color: red;
+    }
+  }
+}
+
+/* ============================================================================
+   EJERCICIO 6: Prueba los ejemplos de variables
+   ============================================================================ */
+
+/* Ejemplo 1: Variables básicas */
+$color_link: blue;
+$default_border: 1px solid black;
+$std_margin: 5px;
+
+a {
+  color: $color_link;
+  border: $default_border;
+  margin: $std_margin 0px $std_margin 0px;
+}
+
+/* Ejemplo 2: Variables globales y locales */
+$color_link_global: blue;
+
+p {
+  a {
+    color: $color_link_global;
+    $var_local: white;
+    
+    &.link {
+      color: $var_local;
+    }
+  }
+}
+
+/* ============================================================================
+   EJERCICIO 7: Variables para propiedades (border-width y border-color)
+   ============================================================================ */
+
+$border_width_global: 10px;
+$border_color_global: #fea;
+
+.clase1, .clase2, .clase3, .clase4, .clase5, .clase6, .clase7, .clase8 {
+  border-width: $border_width_global;
+  border-color: $border_color_global;
+}
+
+/* ============================================================================
+   EJERCICIO 8: Variables globales y locales en diferentes contextos
+   ============================================================================ */
+
+// Variable global (usada en todos los bloques)
+$border_width_ej8: 10px;
+
+div {
+  // Variable local para div
+  $border_color_div: #fea;
+  
+  > .clase1, .clase2, .clase3 {
+    border-width: $border_width_ej8;  // variable global
+    border-color: $border_color_div;   // variable local
+  }
+  
+  // Redefinición de variable local para este bloque
+  $border_color_div: #aef;
+  
+  > .clase4, .clase5 {
+    border-width: $border_width_ej8;  // variable global
+    border-color: $border_color_div;   // variable local
+  }
+}
+
+body {
+  // Variable local para body
+  $border_color_body: #efa;
+  
+  > .clase6, .clase7, .clase8 {
+    border-width: $border_width_ej8;  // variable global
+    border-color: $border_color_body; // variable local
+  }
+}
+
+/* ============================================================================
+   EJEMPLOS ADICIONALES: Operador > con anidaciones complejas
+   ============================================================================ */
+
+.blog {
+  > .post {
+    width: 800px;
+    
+    > .title {
+      font-weight: bold;
+    }
+  }
+  
+  .comments {
+    margin-left: 20px;
+  }
+}
+
+/* ============================================================================
+   EJEMPLOS ADICIONALES: Uso avanzado del operador &
+   ============================================================================ */
+
+/* Insertar .blog entre .post y p */
+.blog {
+  .post & p {
+    em {
+      color: #fff;
+    }
+  }
+}
+
+/* Insertar el padre al final */
+.blog {
+  .post p {
+    em & {
+      color: #fff;
+    }
+  }
+}
+
+/* Pseudoclase :hover en p */
+.blog {
+  .post p {
+    &:hover {
+      em {
+        color: #fff;
+      }
+    }
+  }
+}
+
+/* ============================================================================
+   EJEMPLOS ADICIONALES: Variables con !default
+   ============================================================================ */
+
+$color_principal: red !default;
+$tamaño_fuente: 16px !default;
+
+.ejemplo-default {
+  color: $color_principal;
+  font-size: $tamaño_fuente;
+}
+
+/* ============================================================================
+   FIN DE LA PRÁCTICA 2
+   ============================================================================ */

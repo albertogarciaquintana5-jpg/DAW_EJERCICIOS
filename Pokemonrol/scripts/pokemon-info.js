@@ -7,6 +7,32 @@
 let currentPokemonData = null;
 
 /**
+ * Función helper para oscurecer/aclarar colores hexadecimales
+ * @param {string} color - Color en formato hexadecimal (#RRGGBB)
+ * @param {number} percent - Porcentaje de cambio (-100 a 100)
+ * @returns {string} Color modificado
+ */
+function shadeColor(color, percent) {
+  let R = parseInt(color.substring(1,3), 16);
+  let G = parseInt(color.substring(3,5), 16);
+  let B = parseInt(color.substring(5,7), 16);
+
+  R = parseInt(R * (100 + percent) / 100);
+  G = parseInt(G * (100 + percent) / 100);
+  B = parseInt(B * (100 + percent) / 100);
+
+  R = (R < 255) ? R : 255;
+  G = (G < 255) ? G : 255;
+  B = (B < 255) ? B : 255;
+
+  const RR = ((R.toString(16).length == 1) ? "0" + R.toString(16) : R.toString(16));
+  const GG = ((G.toString(16).length == 1) ? "0" + G.toString(16) : G.toString(16));
+  const BB = ((B.toString(16).length == 1) ? "0" + B.toString(16) : B.toString(16));
+
+  return "#" + RR + GG + BB;
+}
+
+/**
  * Muestra el modal con información detallada del Pokémon
  */
 async function showPokemonInfo(boxId) {
@@ -73,6 +99,19 @@ function renderPokemonInfoModal(data) {
 
   const container = document.getElementById('pokemonInfoContent');
   
+  // Construir badges de tipos con gradientes
+  let tiposHTML = '';
+  if (pokemon.tipo_primario) {
+    const color1 = pokemon.tipo_primario_color || '#888';
+    const gradientStyle = `background: linear-gradient(135deg, ${color1} 0%, ${shadeColor(color1, -20)} 100%);`;
+    tiposHTML += `<span class="type-badge" style="${gradientStyle}">${escapeHtml(pokemon.tipo_primario)}</span>`;
+  }
+  if (pokemon.tipo_secundario) {
+    const color2 = pokemon.tipo_secundario_color || '#888';
+    const gradientStyle = `background: linear-gradient(135deg, ${color2} 0%, ${shadeColor(color2, -20)} 100%);`;
+    tiposHTML += `<span class="type-badge" style="${gradientStyle}">${escapeHtml(pokemon.tipo_secundario)}</span>`;
+  }
+  
   // Construir HTML del modal
   let html = `
     <div class="pokemon-info-header" style="margin: -1rem -1rem 1rem -1rem;">
@@ -82,6 +121,11 @@ function renderPokemonInfoModal(data) {
       <div class="pokemon-info-sprite">
         ${pokemon.sprite ? `<img src="img/pokemon/${escapeHtml(pokemon.sprite)}" alt="${escapeHtml(pokemon.nombre_especie)}">` : '⚡'}
       </div>
+      ${tiposHTML ? `
+      <div class="pokemon-types-display">
+        ${tiposHTML}
+      </div>
+      ` : ''}
       <div class="pokemon-info-meta">
         <div class="pokemon-info-meta-item">
           <strong>Especie</strong>
@@ -91,7 +135,6 @@ function renderPokemonInfoModal(data) {
           <strong>Nivel</strong>
           ${pokemon.nivel}
         </div>
-
         <div class="pokemon-info-meta-item">
           <strong>HP</strong>
           ${pokemon.hp_actual}/${pokemon.hp_maximo}
@@ -143,14 +186,7 @@ function renderPokemonInfoModal(data) {
               <div class="move-stats">
                 ${move.potencia > 0 ? `<div class="move-stat-item"><strong>Potencia:</strong> ${move.potencia}</div>` : ''}
                 ${move.categoria !== 'estado' ? `<div class="move-stat-item"><strong>Precisión:</strong> ${move.precision}%</div>` : ''}
-                <div class="move-stat-item"><strong>PP:</strong> ${move.pp}</div>
               </div>
-            </div>
-            <div class="move-pp">
-              <div class="move-pp-bar">
-                <div class="move-pp-fill" style="width: ${((move.pp_actual || move.pp) / move.pp) * 100}%"></div>
-              </div>
-              <small>${move.pp_actual || move.pp}/${move.pp}</small>
             </div>
             <button class="btn btn-sm btn-outline-danger" onclick="forgetMove(${pokemon.id}, ${move.slot})">Olvidar</button>
           </div>

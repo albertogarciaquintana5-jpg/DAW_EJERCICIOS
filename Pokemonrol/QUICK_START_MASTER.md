@@ -81,7 +81,6 @@ Panel → Seleccionar jugador → Tab "Equipo" o "Caja" → Botón "Editar"
 ```
 Puedes cambiar:
 - Nivel, HP, EXP, Estado, CP
-- PP de cada movimiento
 
 ### Dar Pokémon
 ```
@@ -136,20 +135,17 @@ Panel → Seleccionar jugador → Botón "Editar dinero" junto al saldo
 1. Jugador inicia combate
    → Tú ves su equipo en el panel
 
-2. Pokémon usa movimiento
-   → Editas el Pokémon → Reduces PP
-
-3. Pokémon recibe daño
+2. Pokémon recibe daño
    → Editas el Pokémon → Reduces HP
 
-4. Jugador usa poción
+3. Jugador usa poción
    → El jugador lo hace desde SU dashboard
    → HP se restaura automáticamente
 
-5. Victoria: Pokémon sube de nivel
+4. Victoria: Pokémon sube de nivel
    → Editas el Pokémon → Subes nivel y HP max
 
-6. Recompensa
+5. Recompensa
    → Das items/dinero/Pokémon según corresponda
 ```
 

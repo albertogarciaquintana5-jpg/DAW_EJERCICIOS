@@ -120,7 +120,12 @@ foreach ($team as $t) {
                   <div id="d100Result" class="fw-bold fs-3">--</div>
                 </div>
                 <div class="mt-3">
-                  <div class="fw-bold">Historial</div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="fw-bold">Historial</div>
+                    <button class="btn btn-sm btn-outline-danger" onclick="clearD100History()" title="Borrar todo el historial">
+                      🗑️ Limpiar
+                    </button>
+                  </div>
                   <ul id="d100History" class="list-group mt-2"></ul>
                 </div>
               </div>
@@ -234,7 +239,7 @@ foreach ($team as $t) {
                   <div class="pokemon-card" data-box-id="<?= (int)$pb['id'] ?>" data-species-id="<?= (int)$pb['species_id'] ?>">
                     <div class="pokemon-avatar">
                       <?php if (!empty($pb['sprite'])): ?>
-                        <img src="img/pokemon/<?= htmlspecialchars($pb['sprite']) ?>" class="pokemon-img" alt="<?= htmlspecialchars($pb['apodo'] ?? $pb['especie'] ?? 'Pokémon') ?>">
+                        <img src="img/pokemon/<?= htmlspecialchars($pb['sprite']) ?>.jpg" class="pokemon-img" alt="<?= htmlspecialchars($pb['apodo'] ?? $pb['especie'] ?? 'Pokémon') ?>">
                       <?php else: ?>
                         ⚡
                       <?php endif; ?>
@@ -275,7 +280,7 @@ foreach ($team as $t) {
                       <?php if (!$slot): ?>
                         ✨
                       <?php elseif (!empty($slot['sprite'])): ?>
-                        <img src="img/pokemon/<?= htmlspecialchars($slot['sprite']) ?>" class="pokemon-img" alt="<?= htmlspecialchars($slot['especie'] ?? ($slot['apodo'] ?? 'Pokémon')) ?>">
+                        <img src="img/pokemon/<?= htmlspecialchars($slot['sprite']) ?>.jpg" class="pokemon-img" alt="<?= htmlspecialchars($slot['especie'] ?? ($slot['apodo'] ?? 'Pokémon')) ?>">
                       <?php else: ?>
                         ⚔️
                       <?php endif; ?>
@@ -317,7 +322,7 @@ foreach ($team as $t) {
                       <div class="unknown-item" data-species-id="<?= $sp['id'] ?>" data-seen="<?= $seen ? '1' : '0' ?>">
                         <div class="unknown-avatar">
                           <?php if ($seen && !empty($sp['sprite'])): ?>
-                            <img src="img/pokemon/<?= htmlspecialchars($sp['sprite']) ?>" class="pokemon-img" alt="<?= htmlspecialchars($sp['nombre']) ?>">
+                            <img src="img/pokemon/<?= htmlspecialchars($sp['sprite']) ?>.jpg" class="pokemon-img" alt="<?= htmlspecialchars($sp['nombre']) ?>">
                           <?php else: ?>
                             <?= $seen ? '🐾' : '?' ?>
                           <?php endif; ?>
@@ -605,7 +610,7 @@ try {
       const actions = slotEl.querySelector('.item-actions');
       if (t && t.box_id) {
         if (t.sprite) {
-          avatar.innerHTML = '<img src="img/pokemon/' + t.sprite + '" class="pokemon-img">';
+          avatar.innerHTML = '<img src="img/pokemon/' + t.sprite + '.jpg" class="pokemon-img">';
         } else {
           avatar.innerHTML = '⚔️';
         }
@@ -754,7 +759,7 @@ try {
           const smallEl = el.querySelector('.small-muted');
           if (entry.visto) {
             if (entry.sprite) {
-              avatar.innerHTML = '<img src="img/pokemon/' + entry.sprite + '" class="pokemon-img">';
+              avatar.innerHTML = '<img src="img/pokemon/' + entry.sprite + '.jpg" class="pokemon-img">';
             } else {
               avatar.textContent = '🐾';
             }
@@ -877,11 +882,48 @@ try {
     } catch(e) { }
   }
 
+  async function clearD100History() {
+    if (!confirm('¿Estás seguro de que quieres borrar todo el historial de dados?')) {
+      return;
+    }
+    
+    try {
+      // Intentar borrar del servidor
+      try {
+        const r = await fetch('api/d100_clear.php', { 
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'}
+        });
+        const j = await r.json();
+        
+        if (j && j.success) {
+          showToast('Historial borrado correctamente', 'success');
+        }
+      } catch (e) {
+        // Si falla el servidor, continuar con localStorage
+        console.log('Error al borrar del servidor:', e);
+      }
+      
+      // Borrar localStorage
+      localStorage.removeItem('d100_history');
+      
+      // Limpiar la UI
+      const hist = document.getElementById('d100History');
+      const resEl = document.getElementById('d100Result');
+      if (hist) hist.innerHTML = '';
+      if (resEl) resEl.textContent = '--';
+      
+    } catch(e) {
+      console.error('Error al limpiar historial:', e);
+      showToast('Error al borrar el historial', 'danger');
+    }
+  }
+
   try { document.addEventListener('DOMContentLoaded', initD100History); } catch(e) { initD100History(); }
 </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="scripts/pokemon-info.js?v=2"></script>
+  <script src="scripts/pokemon-info.js?v=6"></script>
   <script>
     // Restaurar pestaña activa guardada en localStorage (se ejecuta después de cargar Bootstrap)
     (function(){

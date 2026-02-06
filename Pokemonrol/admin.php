@@ -51,7 +51,7 @@ if ($stmt = $mysqli->prepare($sql)) {
 
 // Obtener todos los movimientos
 $movimientos = [];
-$sql = "SELECT id, nombre, tipo_id, categoria, potencia, pp, nivel_requerido FROM movimientos ORDER BY nivel_requerido, nombre";
+$sql = "SELECT id, nombre, tipo_id, categoria, potencia, nivel_requerido FROM movimientos ORDER BY nivel_requerido, nombre";
 if ($stmt = $mysqli->prepare($sql)) {
   $stmt->execute();
   $res = $stmt->get_result();
@@ -101,7 +101,6 @@ if ($stmt = $mysqli->prepare($sql)) {
     .stat-hp { background-color: #ff5959; color: white; }
     .stat-level { background-color: #4CAF50; color: white; }
     .stat-exp { background-color: #2196F3; color: white; }
-    .stat-pp { background-color: #FF9800; color: white; }
     .pokemon-item {
       border: 1px solid #ddd;
       border-radius: 8px;
@@ -354,7 +353,7 @@ if ($stmt = $mysqli->prepare($sql)) {
             <select class="form-select" id="teach-move-select" size="10">
               <?php foreach ($movimientos as $mov): ?>
                 <option value="<?= $mov['id'] ?>" data-nivel="<?= isset($mov['nivel_requerido']) ? $mov['nivel_requerido'] : 1 ?>">
-                  <?= htmlspecialchars($mov['nombre']) ?> (Nv.<?= isset($mov['nivel_requerido']) ? $mov['nivel_requerido'] : 1 ?>) - PP:<?= $mov['pp'] ?> - POT:<?= $mov['potencia'] ? $mov['potencia'] : '-' ?>
+                  <?= htmlspecialchars($mov['nombre']) ?> (Nv.<?= isset($mov['nivel_requerido']) ? $mov['nivel_requerido'] : 1 ?>) - POT:<?= $mov['potencia'] ? $mov['potencia'] : '-' ?>
                 </option>
               <?php endforeach; ?>
             </select>
@@ -496,7 +495,7 @@ if ($stmt = $mysqli->prepare($sql)) {
 
       let html = '<div class="row">';
       pokemon.forEach(p => {
-        const img = p.sprite ? `img/pokemon/${escapeHtml(p.sprite)}` : '';
+        const img = p.sprite ? `img/pokemon/${escapeHtml(p.sprite)}.jpg` : '';
         const fallback = p.emoji || '❔';
         const nombre = escapeHtml(p.apodo || p.especie);
         const especie = escapeHtml(p.especie);
@@ -634,8 +633,6 @@ if ($stmt = $mysqli->prepare($sql)) {
         const nombre = escapeHtml(move.nombre);
         const categoria = escapeHtml(move.categoria);
         const potencia = move.potencia ? parseInt(move.potencia) : null;
-        const ppActual = parseInt(move.pp_actual) || 0;
-        const ppMax = parseInt(move.pp_max) || 0;
         const pokemonBoxId = parseInt(move.pokemon_box_id);
         const movimientoId = parseInt(move.movimiento_id);
         
@@ -645,12 +642,6 @@ if ($stmt = $mysqli->prepare($sql)) {
               <strong>${nombre}</strong>
               <span class="badge bg-secondary">${categoria}</span>
               ${potencia ? `<span class="badge bg-danger">${potencia} POW</span>` : ''}
-            </div>
-            <div>
-              <span class="stat-badge stat-pp">${ppActual}/${ppMax} PP</span>
-              <input type="number" class="form-control form-control-sm d-inline-block" style="width: 70px;" 
-                     id="move-pp-${pokemonBoxId}-${movimientoId}" 
-                     value="${ppActual}" min="0" max="${ppMax}">
             </div>
           </div>
         `;
@@ -695,22 +686,6 @@ if ($stmt = $mysqli->prepare($sql)) {
         experiencia: exp,
         status: document.getElementById('edit-status').value
       };
-
-      // Recoger PPs de movimientos
-      const moveInputs = document.querySelectorAll('[id^="move-pp-"]');
-      const moves = [];
-      moveInputs.forEach(input => {
-        const parts = input.id.split('-');
-        const ppActual = parseInt(input.value);
-        if (ppActual >= 0) { // Solo incluir si es válido
-          moves.push({
-            pokemon_box_id: parseInt(parts[2]),
-            movimiento_id: parseInt(parts[3]),
-            pp_actual: ppActual
-          });
-        }
-      });
-      data.moves = moves;
 
       fetch('api/admin_update_pokemon.php', {
         method: 'POST',
@@ -1003,7 +978,7 @@ if ($stmt = $mysqli->prepare($sql)) {
         return;
       }
       
-      if (!confirm('¿Curar todos los Pokémon de este jugador? (Restaurará HP, PP y eliminará estados)')) {
+      if (!confirm('¿Curar todos los Pokémon de este jugador? (Restaurará HP y eliminará estados)')) {
         return;
       }
       

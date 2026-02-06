@@ -62,7 +62,7 @@ $stmt->close();
 
 $passHash = password_hash($password, PASSWORD_DEFAULT);
 $passCol = '`' . str_replace('`', '``', $DB_PASSWORD_COLUMN) . '`';
-$insertSql = "INSERT INTO {$tableBacktick} (nombre, apellido, correo, {$passCol}, money) VALUES (?, ?, ?, ?, 50000)";
+$insertSql = "INSERT INTO {$tableBacktick} (nombre, apellido, correo, {$passCol}, money) VALUES (?, ?, ?, ?, 0)";
 $stmt = $mysqli->prepare($insertSql);
 if (!$stmt) {
     $_SESSION['error'] = 'Error interno (preparando inserción).';
@@ -76,36 +76,6 @@ if (!$stmt->execute()) {
 }
 $new_user_id = $mysqli->insert_id;
 $stmt->close();
-
-// Asignar solo los primeros 5 Pokémon de pokemon_species a la pokedex y caja del usuario
-$pokemonSql = "SELECT id FROM pokemon_species LIMIT 5";
-$pokemonStmt = $mysqli->prepare($pokemonSql);
-if ($pokemonStmt) {
-    $pokemonStmt->execute();
-    $pokemonRes = $pokemonStmt->get_result();
-    while ($pokRow = $pokemonRes->fetch_assoc()) {
-        $species_id = (int)$pokRow['id'];
-        
-        // Añadir a pokedex
-        $pokedexSql = "INSERT IGNORE INTO pokedex (user_id, species_id, visto, capturado) VALUES (?, ?, 1, 0)";
-        $pokedexStmt = $mysqli->prepare($pokedexSql);
-        if ($pokedexStmt) {
-            $pokedexStmt->bind_param('ii', $new_user_id, $species_id);
-            $pokedexStmt->execute();
-            $pokedexStmt->close();
-        }
-        
-        // Añadir a pokemon_box (sin CP)
-        $boxSql = "INSERT INTO pokemon_box (user_id, species_id, nivel, hp) VALUES (?, ?, 5, 30)";
-        $boxStmt = $mysqli->prepare($boxSql);
-        if ($boxStmt) {
-            $boxStmt->bind_param('ii', $new_user_id, $species_id);
-            $boxStmt->execute();
-            $boxStmt->close();
-        }
-    }
-    $pokemonStmt->close();
-}
 
 $_SESSION['success'] = 'Cuenta creada correctamente. Ya puedes optar por iniciar sesión.';
 // Redirigimos al login y pasamos el correo para que el campo quede pre-rellenado

@@ -54,11 +54,19 @@ $sql = "SELECT
             n.stat_aumentado,
             n.stat_reducido,
             h.nombre AS habilidad,
-            h.descripcion AS habilidad_desc
+            h.descripcion AS habilidad_desc,
+            t1.id AS tipo_primario_id,
+            t1.nombre AS tipo_primario,
+            t1.color AS tipo_primario_color,
+            t2.id AS tipo_secundario_id,
+            t2.nombre AS tipo_secundario,
+            t2.color AS tipo_secundario_color
         FROM pokemon_box pb
         JOIN pokemon_species ps ON pb.species_id = ps.id
         LEFT JOIN naturalezas n ON pb.naturaleza_id = n.id
         LEFT JOIN habilidades h ON pb.habilidad_id = h.id
+        LEFT JOIN tipos t1 ON ps.tipo_primario_id = t1.id
+        LEFT JOIN tipos t2 ON ps.tipo_secundario_id = t2.id
         WHERE pb.id = ? AND pb.user_id = ?
         LIMIT 1";
 
@@ -142,12 +150,10 @@ $stats = [
 // ============================================
 $movimientos_sql = "SELECT 
                         pm.slot,
-                        pm.pp_actual,
                         m.id AS movimiento_id,
                         m.nombre,
                         m.potencia,
                         m.precision,
-                        m.pp,
                         m.categoria,
                         m.descripcion,
                         t.nombre AS tipo,
@@ -177,7 +183,6 @@ $available_sql = "SELECT
                     m.nombre,
                     m.potencia,
                     m.precision,
-                    m.pp,
                     m.categoria,
                     m.descripcion,
                     t.nombre AS tipo,
@@ -221,6 +226,10 @@ $response = [
         'stat_reducido' => $pokemon['stat_reducido'],
         'habilidad' => $pokemon['habilidad'] ?? 'Desconocida',
         'habilidad_descripcion' => $pokemon['habilidad_desc'],
+        'tipo_primario' => $pokemon['tipo_primario'] ?? null,
+        'tipo_primario_color' => $pokemon['tipo_primario_color'] ?? null,
+        'tipo_secundario' => $pokemon['tipo_secundario'] ?? null,
+        'tipo_secundario_color' => $pokemon['tipo_secundario_color'] ?? null,
     ],
     'stats' => $stats,
     'stats_base' => [

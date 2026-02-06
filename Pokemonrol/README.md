@@ -44,7 +44,7 @@ Reemplaza el campo `contraseña` en el INSERT si quieres usar ese hash.
 ### APIs para el Master (Solo usuario ID 67)
 - `api/admin_get_player.php` (GET) — `?user_id=X` devuelve todos los datos de un jugador (equipo, caja, inventario).
 - `api/admin_get_pokemon.php` (GET) — `?pokemon_id=X` devuelve datos completos de un Pokémon con sus movimientos.
-- `api/admin_update_pokemon.php` (POST) — JSON con `pokemon_id` y campos a actualizar (nivel, HP, exp, status, PP de movimientos).
+- `api/admin_update_pokemon.php` (POST) — JSON con `pokemon_id` y campos a actualizar (nivel, HP, exp, status).
 - `api/admin_give_pokemon.php` (POST) — `{ user_id, species_id, apodo?, nivel?, hp? }` crea un Pokémon en la caja del jugador.
 - `api/admin_give_item.php` (POST) — `{ user_id, item_id, cantidad }` añade items al inventario.
 - `api/admin_update_money.php` (POST) — `{ user_id, money }` actualiza el dinero del jugador.
@@ -66,7 +66,6 @@ El sistema incluye un panel de administrador completo para el Master del juego d
   - Ver todos los jugadores y sus datos
   - Gestionar equipos y cajas de Pokémon de cualquier jugador
   - Modificar stats (HP, nivel, experiencia, estado)
-  - Ajustar PP de movimientos
   - Dar Pokémon y items a jugadores
   - Modificar dinero de jugadores
   

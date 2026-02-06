@@ -1,5 +1,5 @@
 <?php
-// API: Actualizar datos de un Pokémon (HP, nivel, exp, status, PP de movimientos)
+// API: Actualizar datos de un Pokémon (HP, nivel, exp, status)
 ob_start();
 header('Content-Type: application/json');
 error_reporting(0);
@@ -112,7 +112,7 @@ if ($nivel_cambiado) {
   if ($experiencia === null) $experiencia = 0;
 
   $sql = "UPDATE pokemon_box SET 
-          apodo = ?, $mensaje, 'level_up' => $nivel_cambiado
+          apodo = ?, 
           nivel = ?, 
           hp = ?, 
           max_hp = ?, 
@@ -137,27 +137,6 @@ if ($nivel_cambiado) {
   }
   
   $mensaje = "Pokémon actualizado correctamente";
-}
-
-// Actualizar PP de movimientos
-if (isset($input['moves']) && is_array($input['moves'])) {
-  foreach ($input['moves'] as $move) {
-    $pokemon_box_id = (int)$move['pokemon_box_id'];
-    $movimiento_id = (int)$move['movimiento_id'];
-    $pp_actual = (int)$move['pp_actual'];
-
-    // Validación: PP no puede ser negativo
-    if ($pp_actual < 0) {
-      continue; // Saltar este movimiento
-    }
-
-    $sql = "UPDATE pokemon_movimiento SET pp_actual = ? WHERE pokemon_box_id = ? AND movimiento_id = ?";
-    if ($stmt = $mysqli->prepare($sql)) {
-      $stmt->bind_param('iii', $pp_actual, $pokemon_box_id, $movimiento_id);
-      $stmt->execute();
-      $stmt->close();
-    }
-  }
 }
 
 echo json_encode(['success' => true, 'message' => $mensaje, 'level_up' => $nivel_cambiado]);

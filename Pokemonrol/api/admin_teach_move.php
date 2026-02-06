@@ -43,7 +43,7 @@ if ($pokemon = $result->fetch_assoc()) {
     $stmt->close();
     
     // Obtener información del movimiento
-    $sql = "SELECT nombre, nivel_requerido, pp FROM movimientos WHERE id = ? LIMIT 1";
+    $sql = "SELECT nombre, nivel_requerido FROM movimientos WHERE id = ? LIMIT 1";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $movimiento_id);
     $stmt->execute();
@@ -52,7 +52,6 @@ if ($pokemon = $result->fetch_assoc()) {
     if ($movimiento = $result->fetch_assoc()) {
         $nivel_requerido = (int)$movimiento['nivel_requerido'];
         $nombre_movimiento = $movimiento['nombre'];
-        $pp_max = (int)$movimiento['pp'];
         $stmt->close();
         
         // VALIDAR NIVEL
@@ -99,9 +98,9 @@ if ($pokemon = $result->fetch_assoc()) {
         }
         
         // Enseñar el movimiento
-        $sql = "INSERT INTO pokemon_movimiento (pokemon_box_id, movimiento_id, pp_actual) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO pokemon_movimiento (pokemon_box_id, movimiento_id, slot) VALUES (?, ?, 1)";
         $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param('iii', $pokemon_box_id, $movimiento_id, $pp_max);
+        $stmt->bind_param('ii', $pokemon_box_id, $movimiento_id);
         
         if ($stmt->execute()) {
             echo json_encode([

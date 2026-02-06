@@ -240,7 +240,7 @@
 2. **Verifica que las columnas existen en `pokemon_species`:**
    ```sql
    DESCRIBE pokemon_species; 
-   -- Debe incluir: hp, ataque, defensa, sp_ataque, sp_defensa, velocidad
+   -- Debe incluir: hp, ataque, defensa, velocidad, sp_ataque, sp_defensa
    ```
 
 3. **Si faltan columnas:**

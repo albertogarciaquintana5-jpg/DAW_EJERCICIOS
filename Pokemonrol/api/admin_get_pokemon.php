@@ -43,7 +43,7 @@ if ($stmt = $mysqli->prepare($sql)) {
 
 // Movimientos
 $response['moves'] = [];
-$sql = "SELECT pm.*, m.nombre, m.categoria, m.potencia, m.pp AS pp_max 
+$sql = "SELECT pm.*, m.nombre, m.categoria, m.potencia
         FROM pokemon_movimiento pm 
         JOIN movimientos m ON pm.movimiento_id = m.id 
         WHERE pm.pokemon_box_id = ?

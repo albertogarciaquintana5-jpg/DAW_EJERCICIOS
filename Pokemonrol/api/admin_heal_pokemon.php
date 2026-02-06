@@ -48,18 +48,6 @@ if ($stmt = $mysqli->prepare($sql)) {
   $stmt->close();
 }
 
-// Restaurar PP de todos los movimientos de los Pokémon del usuario
-$sql = "UPDATE pokemon_movimiento pm 
-        JOIN pokemon_box pb ON pm.pokemon_box_id = pb.id 
-        JOIN movimientos m ON pm.movimiento_id = m.id 
-        SET pm.pp_actual = m.pp 
-        WHERE pb.user_id = ?";
-if ($stmt = $mysqli->prepare($sql)) {
-  $stmt->bind_param('i', $user_id);
-  $stmt->execute();
-  $stmt->close();
-}
-
 echo json_encode([
   'success' => true, 
   'message' => 'Pokémon curados correctamente',

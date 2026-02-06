@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 02 - TypeScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        input[type="checkbox"] {
+            margin-left: 10px;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        button.secondary {
+            background-color: #28a745;
+        }
+        
+        button.secondary:hover {
+            background-color: #218838;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+        }
+        
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        #resultado, #resultadoArea {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            min-height: 50px;
+        }
+        
+        .button-group {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Práctica 02 - TypeScript: Ranking de Jugadores y Cálculo de Áreas</h1>
+    
+    <!-- Sección 1: Ranking de Jugadores -->
+    <div class="container">
+        <h2>📊 Ranking de Jugadores</h2>
+        
+        <div class="form-group">
+            <label for="playerName">Nombre del Jugador:</label>
+            <input type="text" id="playerName" placeholder="Ingresa el nombre">
+        </div>
+        
+        <div class="form-group">
+            <label for="finishedGame">Juego Terminado:</label>
+            <input type="checkbox" id="finishedGame">
+        </div>
+        
+        <div class="button-group">
+            <button id="btnAgregar">Agregar Jugador</button>
+            <button class="secondary" id="btnOrdenar">Ordenar por Nombre</button>
+        </div>
+        
+        <div id="resultado"></div>
+    </div>
+    
+    <!-- Sección 2: Cálculo de Área -->
+    <div class="container">
+        <h2>📐 Calculadora de Áreas</h2>
+        
+        <div class="form-group">
+            <label for="forma">Forma:</label>
+            <input type="text" id="forma" placeholder="rectangulo o triangulo">
+        </div>
+        
+        <div class="form-group">
+            <label for="ancho">Ancho (cm):</label>
+            <input type="number" id="ancho" placeholder="30">
+        </div>
+        
+        <div class="form-group">
+            <label for="alto">Alto (cm):</label>
+            <input type="number" id="alto" placeholder="15">
+        </div>
+        
+        <div class="button-group">
+            <button id="btnCalcular">Calcular Área</button>
+        </div>
+        
+        <div id="resultadoArea"></div>
+    </div>
+    
+    <script src="practica02.js"></script>
+</body>
+</html>
